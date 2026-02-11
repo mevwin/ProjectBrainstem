@@ -1,0 +1,45 @@
+/* Center text in all Canvas cards */
+.canvas-node .markdown-preview-view {
+  text-align: center;
+}
+
+/* Make sure headings inside cards also center */
+.canvas-node .markdown-preview-view h1,
+.canvas-node .markdown-preview-view h2,
+.canvas-node .markdown-preview-view h3,
+.canvas-node .markdown-preview-view p {
+  text-align: center;
+}
+
+/* First line = title */
+.canvas-node .markdown-preview-view p:first-of-type {
+  font-size: 1.2em;        /* bigger text */
+  font-weight: bold;       /* make it stand out */
+  margin-bottom: 0.5em;    /* spacing below title */
+  text-align: center;      /* keep it centered */
+}
+
+/* Every line after the first = body */
+.canvas-node .markdown-preview-view p:not(:first-of-type) {
+  font-size: 1em;
+  font-weight: normal;
+  text-align: center;      /* body text also centered */
+}
+
+a.internal-link code {
+  font-family: var(--font-monospace);
+  background-color: var(--code-background);
+  padding: 0.1em 0.25em;
+  border-radius: 4px;
+}
+
+/* Remove underline from all links */
+a.internal-link,
+a.external-link {
+  text-decoration: none !important;
+}
+
+/* Optional: also remove the link icon that shows on hover for external links */
+a.external-link::after {
+  display: none !important;
+}

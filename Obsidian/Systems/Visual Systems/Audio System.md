@@ -1,0 +1,1 @@
+Handles audio triggers and overlapping sound clips

@@ -1,0 +1,1 @@
+The stored settings that the player has

@@ -1,0 +1,1 @@
+Handles highlights, particle creation, outline and any visual feeback effects for the player
