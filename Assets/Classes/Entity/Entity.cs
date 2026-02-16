@@ -45,6 +45,16 @@ public abstract class Entity : MonoBehaviour
         stateManager.CurrentStateFixedUpdate();
     }
 
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        stateManager.CurrentStateOnTriggerEnter(other);
+    }
+
+    public virtual void OnTriggerExit(Collider other)
+    {
+        stateManager.CurrentStateOnTriggerExit(other);
+    }
+
     protected abstract void InitializeStates();
 
     // General Entity Functions

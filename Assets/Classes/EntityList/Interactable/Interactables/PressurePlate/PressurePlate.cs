@@ -4,20 +4,12 @@ public class PressurePlate : Interactable
 {
     protected override void InitializeStates()
     {
-        
-    }
-
-    public override void Update()
-    {
-        DetectActivation();
+        AddState("Unpressed", new PressurePlateUnpressed(this));
+        AddState("Pressed", new PressurePlatePressed(this));
     }
 
     public override void DetectActivation()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            isActive = true;
-        }
 
         base.DetectActivation();
     }

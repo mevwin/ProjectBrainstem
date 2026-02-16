@@ -43,6 +43,16 @@ public class StateManager : MonoBehaviour
         currentState.FixedUpdateState();
     }
 
+    public void CurrentStateOnTriggerEnter(Collider other)
+    {
+        currentState.OnTriggerEnterState(other);
+    }
+
+    public void CurrentStateOnTriggerExit(Collider other)
+    {
+        currentState.OnTriggerExitState(other);
+    }
+
     public void SetStartingState(int index)
     {
         currentState = stateMap[stateMap.Keys.ToArray()[index]];

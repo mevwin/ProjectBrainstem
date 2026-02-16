@@ -13,6 +13,10 @@ PrefabInstance:
       value: PressurePlate
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -115,3 +119,4 @@ MonoBehaviour:
   audioManager: {fileID: 7324120566381823882}
   movementSpeed: 0
   isActive: 0
+  listeners: []

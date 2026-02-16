@@ -41,6 +41,20 @@ public abstract class State
     }
 
     /// <summary>
+    /// Used for entities with trigger colliders
+    /// Called whenever another collider enters a collision with this entity
+    /// </summary>
+    /// <param name="other"></param>
+    public virtual void OnTriggerEnterState(Collider other) { }
+
+    /// <summary>
+    /// Used for entities with trigger colliders
+    /// Called whenever another collider exits a collision with this entity
+    /// </summary>
+    /// <param name="other"></param>
+    public virtual void OnTriggerExitState(Collider other) { }
+
+    /// <summary>
     /// <para>End behavior for the given State.</para>
     /// 
     /// <para>Example uses: resetting any variables/behaviors, setting up new data points</para>
