@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class BoulderIdle : InteractableState
 {
@@ -17,7 +16,7 @@ public class BoulderIdle : InteractableState
 
     public override void FixedUpdateState()
     {
-        interactable.UpdateMovementVector(Vector3.zero);
+        // interactable.UpdateMovementVector(Vector3.zero);
     }
 
     public override void ExitState(Dictionary<string, object> args = null)
