@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerIdle : PlayerState
 {
@@ -17,7 +16,7 @@ public class PlayerIdle : PlayerState
 
     public override void FixedUpdateState()
     {
-        player.UpdateMovementVector(Vector3.zero);
+        player.UpdateMovementVector(new(0, player.GetRigidbodyVelocity().y, 0f));
         if (player.IsMoving()){
             player.ChangeState("Move");
         }

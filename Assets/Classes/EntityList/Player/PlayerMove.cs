@@ -21,7 +21,7 @@ public class PlayerMove : PlayerState
         {
             Vector3 rotatedVector = player.gameObject.transform.rotation * player.GetMovementVector();
 
-            player.UpdateMovementVector(rotatedVector, true);
+            player.UpdateMovementVector(rotatedVector.normalized);
         }
         else player.ChangeState("Idle");
     }

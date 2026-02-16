@@ -48,20 +48,20 @@ public abstract class Entity : MonoBehaviour
     protected abstract void InitializeStates();
 
     // General Entity Functions
-    public void UpdateMovementVector(Vector3 direction, bool normalize = false)
+    public void UpdateMovementVector(Vector3 direction)
     {
         Vector3 vector = direction;
 
-        if (normalize) vector = vector.normalized;
-
-        vector *= movementSpeed;
-
-        if (this is Player player)
-        {
-            vector.y = player.jumpSpeed;
-        }
+        vector.x *= movementSpeed;
+        vector.y = Math.Max(rigidBody.linearVelocity.y, -65f);
+        vector.z *= movementSpeed;
         
         rigidBody.linearVelocity = vector;
+    }
+
+    public Vector3 GetRigidbodyVelocity()
+    {
+        return rigidBody.linearVelocity;
     }
 
     // State Manager Wrapper Functions

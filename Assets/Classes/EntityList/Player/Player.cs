@@ -6,8 +6,10 @@ public class Player : Entity
 {
     [Header("==Player GameObjects==")]
     [SerializeField] private InputActionAsset inputActions;
+    [SerializeField] private float jumpSpeed = 25f;
 
-    [NonSerialized] public float jumpSpeed = 0f;
+    bool hasJumped = false;
+
     InputAction move;
     InputAction jump;
 
@@ -29,17 +31,22 @@ public class Player : Entity
 
         if (HasJumped()) {
             PlayAudioSource("Footsteps");
-            jumpSpeed = 20f;
+            hasJumped = true;
         }
-
-        if (jumpSpeed > 0f)
-            jumpSpeed -= Time.deltaTime * 50f;
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
         rigidBody.angularVelocity = Vector3.zero;
+
+        if (hasJumped) {
+            Vector3 vector = rigidBody.linearVelocity;
+            vector.y = jumpSpeed;
+            rigidBody.linearVelocity = vector;
+            hasJumped = false;
+        }
+        // Debug.Log(rigidBody.linearVelocity);
     }
 
     protected override void InitializeStates()
@@ -63,6 +70,8 @@ public class Player : Entity
 
     public bool HasJumped()
     {
-        return jump.WasPressedThisFrame();
+        return jump.WasPressedThisFrame() && 
+               rigidBody.linearVelocity.y >= -0.01f &&
+               rigidBody.linearVelocity.y <= 0.01f;
     }
 }
