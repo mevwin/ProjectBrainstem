@@ -55,6 +55,11 @@ public abstract class Entity : MonoBehaviour
         if (normalize) vector = vector.normalized;
 
         vector *= movementSpeed;
+
+        if (this is Player player)
+        {
+            vector.y = player.jumpSpeed;
+        }
         
         rigidBody.linearVelocity = vector;
     }

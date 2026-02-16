@@ -262,6 +262,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_Drag
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Mass
       value: 1000
       objectReference: {fileID: 0}
@@ -324,7 +328,7 @@ MonoBehaviour:
   collider: {fileID: 6463622167366396985}
   stateManager: {fileID: 6074706642034747607}
   audioManager: {fileID: 5474462412648063665}
-  movementSpeed: 5
+  movementSpeed: 30
   inputActions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
 --- !u!114 &3685064267221564299
 MonoBehaviour:

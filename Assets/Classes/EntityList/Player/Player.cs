@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,7 @@ public class Player : Entity
     [Header("==Player GameObjects==")]
     [SerializeField] private InputActionAsset inputActions;
 
+    [NonSerialized] public float jumpSpeed = 0f;
     InputAction move;
     InputAction jump;
 
@@ -13,6 +15,7 @@ public class Player : Entity
     {
         base.Start();
 
+        // TODO: make input dictionary
         if (InputSystem.actions) 
         {
             move = InputSystem.actions.FindAction("Player/Move");
@@ -24,8 +27,13 @@ public class Player : Entity
     {
         base.Update();
 
-        if (HasJumped())
+        if (HasJumped()) {
             PlayAudioSource("Footsteps");
+            jumpSpeed = 20f;
+        }
+
+        if (jumpSpeed > 0f)
+            jumpSpeed -= Time.deltaTime * 50f;
     }
 
     public override void FixedUpdate()
@@ -47,6 +55,7 @@ public class Player : Entity
         return movementVector;
     }
 
+    // Movement Checks
     public bool IsMoving()
     {
         return move.ReadValue<Vector2>() != Vector2.zero;
