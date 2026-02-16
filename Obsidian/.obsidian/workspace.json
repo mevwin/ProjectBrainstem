@@ -11,17 +11,14 @@
             "id": "e7d050728f7cafc6",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Structure/File Structure.canvas",
-                "viewState": {
-                  "x": 127.89022316684378,
-                  "y": 399.08682252922426,
-                  "zoom": -0.5959591708316526
-                }
+                "file": "Classes/Entity/Interactable.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "File Structure"
+              "icon": "lucide-file",
+              "title": "Interactable"
             }
           },
           {
@@ -190,11 +187,13 @@
   },
   "active": "e7d050728f7cafc6",
   "lastOpenFiles": [
+    "Classes/Entity/Entity.md",
+    "Classes/Entity/Interactable.md",
+    "Structure/File Structure.canvas",
     "Classes/Managers/Save Manager.md",
     "Structure/Code Structure.canvas",
     "Data & Assets/Audio/Music.md",
     "Data & Assets/Audio/Sound Clips.md",
-    "Structure/File Structure.canvas",
     "Data & Assets/Player Settings/Save Data.md",
     "Systems/Utility Systems/Save Load System.md",
     "Systems/Utility Systems/Settings System.md",
@@ -216,8 +215,6 @@
     "Systems/Visual Systems/Narration System.md",
     "Systems/Visual Systems/Audio Manager.md",
     "Systems/Utility Systems/Event System.md",
-    "Systems/Interaction and Puzzle/Interaction System.md",
-    "Systems/Interaction and Puzzle/Item System.md",
     "Classes/Audio Management",
     "Classes/Entity",
     "Classes/Managers/UI Util",

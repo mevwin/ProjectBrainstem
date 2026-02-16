@@ -3,7 +3,18 @@ using UnityEngine;
 
 public abstract class Interactable : Entity
 {
-    [SerializeField] private bool isActive = false;
+    [SerializeField] protected bool isActive = false;
 
-    // public abstract void Activated(Dictionary<string, object> args = null);
+    public virtual void DetectActivation()
+    {
+        if (isActive)
+        {
+            Activated();
+        }
+    }
+
+    public virtual void Activated(Dictionary<string, object> args = null)
+    {
+        Debug.Log("This is Active");
+    }
 }
