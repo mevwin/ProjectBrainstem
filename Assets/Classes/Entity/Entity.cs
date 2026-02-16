@@ -6,8 +6,8 @@ public abstract class Entity : MonoBehaviour
 {
     [Header("==Entity Components==")]
     //[SerializeField] private Animator animator;
-    [SerializeField] private Rigidbody rigidBody;
-    [SerializeField] private new Collider collider;
+    [SerializeField] protected Rigidbody rigidBody;
+    [SerializeField] protected new Collider collider;
     [SerializeField] private StateManager stateManager;
     [SerializeField] private AudioManager audioManager;
 
@@ -15,14 +15,14 @@ public abstract class Entity : MonoBehaviour
     //[SerializedField] protected float rotationSpeed;
     public float movementSpeed;
 
-    [Header("==Game Stats==")]
-    public float currentHealth;
-    public float maxHealth;
+    // [Header("==Game Stats==")]
+    // public float currentHealth;
+    // public float maxHealth;
 
     public virtual void Awake()
     {
         // handle edge cases for input data here
-        if (currentHealth < 0 || currentHealth > maxHealth) currentHealth = maxHealth;
+        // if (currentHealth < 0 || currentHealth > maxHealth) currentHealth = maxHealth;
 
         if (audioManager != null)
             audioManager.InitializeAudioDictionary();

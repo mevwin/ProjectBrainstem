@@ -31,6 +31,7 @@ public class Player : Entity
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        rigidBody.angularVelocity = Vector3.zero;
     }
 
     protected override void InitializeStates()

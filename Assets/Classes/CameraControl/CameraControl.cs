@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour
     public Transform CameraOffsetX;
     public Transform CameraOffsetY;
     public GameObject mainCamera;
-    public float lookSpeed = 1;
+    [SerializeField] private float maxLookSpeed = 25f;
 
     InputAction look;
     Vector2 lookAmt;
@@ -36,7 +36,10 @@ public class CameraControl : MonoBehaviour
     {
         if (lookAmt.x != 0)
         {
-            gameObject.transform.Rotate(0, lookAmt.x * lookSpeed, 0);
+            if (Mathf.Abs(lookAmt.x) > maxLookSpeed)
+                lookAmt.x = lookAmt.x / Mathf.Abs(lookAmt.x) * maxLookSpeed;
+
+            gameObject.transform.Rotate(0, lookAmt.x, 0);
         }
 
         if (lookAmt.y != 0)
@@ -50,14 +53,14 @@ public class CameraControl : MonoBehaviour
             {
                 if (CameraOffsetY.localEulerAngles.x > 0 && CameraOffsetY.localEulerAngles.x < 350)
                 {
-                    CameraOffsetY.Rotate(lookAmt.y * lookSpeed, 0, 0, Space.Self);
+                    CameraOffsetY.Rotate(lookAmt.y, 0, 0, Space.Self);
                 }
             }
             else
             {
                 if (CameraOffsetY.localEulerAngles.x < 24|| CameraOffsetY.localEulerAngles.x > 350)
                 {
-                    CameraOffsetY.Rotate(lookAmt.y * lookSpeed, 0, 0, Space.Self);
+                    CameraOffsetY.Rotate(lookAmt.y, 0, 0, Space.Self);
                 }
             }
         }

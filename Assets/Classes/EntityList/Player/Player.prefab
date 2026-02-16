@@ -262,8 +262,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Constraints
-      value: 64
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -317,8 +325,6 @@ MonoBehaviour:
   stateManager: {fileID: 6074706642034747607}
   audioManager: {fileID: 5474462412648063665}
   movementSpeed: 5
-  currentHealth: 0
-  maxHealth: 0
   inputActions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
 --- !u!114 &3685064267221564299
 MonoBehaviour:
@@ -335,7 +341,7 @@ MonoBehaviour:
   CameraOffsetX: {fileID: 7221403878181916280}
   CameraOffsetY: {fileID: 6571695529832023508}
   mainCamera: {fileID: 6780200429520697166}
-  lookSpeed: 1
+  maxLookSpeed: 20
 --- !u!114 &6074706642034747607 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}

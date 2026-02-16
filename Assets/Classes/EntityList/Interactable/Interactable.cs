@@ -1,16 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public abstract class Interactable : Entity
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private bool isActive = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // public abstract void Activated(Dictionary<string, object> args = null);
 }

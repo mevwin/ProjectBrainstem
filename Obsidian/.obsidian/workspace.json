@@ -15,8 +15,8 @@
               "state": {
                 "file": "Structure/File Structure.canvas",
                 "viewState": {
-                  "x": 76.5,
-                  "y": 453.5,
+                  "x": 127.89022316684378,
+                  "y": 399.08682252922426,
                   "zoom": -0.5959591708316526
                 }
               },
@@ -32,8 +32,8 @@
               "state": {
                 "file": "Structure/Code Structure.canvas",
                 "viewState": {
-                  "x": 2032.933989099629,
-                  "y": -1409.8958867058934,
+                  "x": 1869.3735463802268,
+                  "y": -1744.5331313345314,
                   "zoom": -1.1290331600428603
                 }
               },
@@ -41,8 +41,7 @@
               "title": "Code Structure"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -189,8 +188,9 @@
       "bases:Create new base": false
     }
   },
-  "active": "bfcd76cd3fd57a02",
+  "active": "e7d050728f7cafc6",
   "lastOpenFiles": [
+    "Classes/Managers/Save Manager.md",
     "Structure/Code Structure.canvas",
     "Data & Assets/Audio/Music.md",
     "Data & Assets/Audio/Sound Clips.md",
