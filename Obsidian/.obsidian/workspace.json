@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Classes/Entity/Interactable.md",
+                "file": "Classes/Entity/Listeners.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Interactable"
+              "title": "Listeners"
             }
           },
           {
@@ -187,8 +187,10 @@
   },
   "active": "e7d050728f7cafc6",
   "lastOpenFiles": [
-    "Classes/Entity/Entity.md",
     "Classes/Entity/Interactable.md",
+    "Classes/Entity/Entity.md",
+    "Classes/Entity/Item.md",
+    "Classes/Entity/Listeners.md",
     "Structure/File Structure.canvas",
     "Classes/Managers/Save Manager.md",
     "Structure/Code Structure.canvas",
@@ -208,13 +210,11 @@
     "Classes/Managers/Inventory Manager.md",
     "Classes/Audio Management/Audio Effect.md",
     "Classes/Audio Management/Audio Manager.md",
-    "Classes/Entity/Item.md",
     "Classes/Managers/Game Manager.md",
     "Systems/Visual Systems/Visual Effect System.md",
     "Systems/Visual Systems/UI System.md",
     "Systems/Visual Systems/Narration System.md",
     "Systems/Visual Systems/Audio Manager.md",
-    "Systems/Utility Systems/Event System.md",
     "Classes/Audio Management",
     "Classes/Entity",
     "Classes/Managers/UI Util",

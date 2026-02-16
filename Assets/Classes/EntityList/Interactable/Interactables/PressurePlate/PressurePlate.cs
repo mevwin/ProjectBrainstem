@@ -10,7 +10,6 @@ public class PressurePlate : Interactable
 
     public override void DetectActivation()
     {
-
         base.DetectActivation();
     }
 }
