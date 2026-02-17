@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
-    private Dictionary<string, State> stateMap = new();
+    private readonly Dictionary<string, State> stateMap = new();
     private State currentState;
 
     /// <summary>
@@ -33,6 +33,7 @@ public class StateManager : MonoBehaviour
         else Debug.LogError(string.Format("State does not exist: {0}", newState));
     }
 
+    // Wrapper Functions that utilize currentState private variable
     public void CurrentStateUpdate()
     {
         currentState?.UpdateState();
@@ -55,6 +56,9 @@ public class StateManager : MonoBehaviour
 
     public void SetStartingState(int index)
     {
+        string[] keys = stateMap.Keys.ToArray();
+        if (index >= keys.Length) return; // validation
+
         currentState = stateMap[stateMap.Keys.ToArray()[index]];
     }
 }

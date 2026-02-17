@@ -27,18 +27,12 @@ public abstract class State
     /// <summary>
     /// Execution of the desired state behavior with respect to frame rate
     /// </summary>
-    public virtual void UpdateState()
-    {
-        float delta = Time.deltaTime;
-    }
+    public virtual void UpdateState() { }
 
     /// <summary>
     /// Execution of the desired state behavior with respect to real time intervals
     /// </summary>
-    public virtual void FixedUpdateState()
-    {
-        float delta = Time.fixedDeltaTime;
-    }
+    public virtual void FixedUpdateState() { }
 
     /// <summary>
     /// Used for entities with trigger colliders
