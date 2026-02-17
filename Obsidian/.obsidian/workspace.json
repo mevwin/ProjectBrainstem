@@ -13,29 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Classes/Entity/Listeners.md",
+                "file": "Classes/Entity/Interactable.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Listeners"
+              "title": "Interactable"
             }
           },
           {
             "id": "bfcd76cd3fd57a02",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Structure/Code Structure.canvas",
-                "viewState": {
-                  "x": 1869.3735463802268,
-                  "y": -1744.5331313345314,
-                  "zoom": -1.1290331600428603
-                }
+                "file": "Classes/Entity/Interactable.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Code Structure"
+              "icon": "lucide-file",
+              "title": "Interactable"
             }
           }
         ]
@@ -95,7 +92,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "636c3faad4c272d6",
@@ -187,13 +185,18 @@
   },
   "active": "e7d050728f7cafc6",
   "lastOpenFiles": [
+    "Classes/Entity/Listeners.md",
     "Classes/Entity/Interactable.md",
+    "Classes/Entity/Player.md",
     "Classes/Entity/Entity.md",
     "Classes/Entity/Item.md",
-    "Classes/Entity/Listeners.md",
-    "Structure/File Structure.canvas",
+    "Classes/Managers/Inventory Manager.md",
+    "Classes/Managers/Level Manager.md",
+    "Classes/Managers/Narration Manager.md",
     "Classes/Managers/Save Manager.md",
+    "Data & Assets/Entity Prefabs.md",
     "Structure/Code Structure.canvas",
+    "Structure/File Structure.canvas",
     "Data & Assets/Audio/Music.md",
     "Data & Assets/Audio/Sound Clips.md",
     "Data & Assets/Player Settings/Save Data.md",
@@ -201,20 +204,15 @@
     "Systems/Utility Systems/Settings System.md",
     "Systems/World and Level/Checkpoint Reset System.md",
     "Systems/World and Level/Level Transition System.md",
-    "Data & Assets/Entity Prefabs.md",
     "Systems/Interaction and Puzzle/Puzzle Logic System.md",
     "Data & Assets/Audio/Narration Line.md",
-    "Classes/Managers/Narration Manager.md",
     "Systems/World and Level/Level System.md",
-    "Classes/Managers/Level Manager.md",
-    "Classes/Managers/Inventory Manager.md",
     "Classes/Audio Management/Audio Effect.md",
     "Classes/Audio Management/Audio Manager.md",
     "Classes/Managers/Game Manager.md",
     "Systems/Visual Systems/Visual Effect System.md",
     "Systems/Visual Systems/UI System.md",
     "Systems/Visual Systems/Narration System.md",
-    "Systems/Visual Systems/Audio Manager.md",
     "Classes/Audio Management",
     "Classes/Entity",
     "Classes/Managers/UI Util",

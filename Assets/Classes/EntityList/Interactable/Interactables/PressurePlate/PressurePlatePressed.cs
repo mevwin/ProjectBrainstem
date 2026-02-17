@@ -24,7 +24,6 @@ public class PressurePlatePressed : InteractableState
     {
         base.OnTriggerExitState(other);
 
-
         interactable.isActive = false;
         interactable.DetectActivation();
         interactable.ChangeState("Unpressed");

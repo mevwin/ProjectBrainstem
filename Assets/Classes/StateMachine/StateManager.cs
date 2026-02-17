@@ -35,22 +35,22 @@ public class StateManager : MonoBehaviour
 
     public void CurrentStateUpdate()
     {
-        currentState.UpdateState();
+        currentState?.UpdateState();
     }
 
     public void CurrentStateFixedUpdate()
     {
-        currentState.FixedUpdateState();
+        currentState?.FixedUpdateState();
     }
 
     public void CurrentStateOnTriggerEnter(Collider other)
     {
-        currentState.OnTriggerEnterState(other);
+        currentState?.OnTriggerEnterState(other);
     }
 
     public void CurrentStateOnTriggerExit(Collider other)
     {
-        currentState.OnTriggerExitState(other);
+        currentState?.OnTriggerExitState(other);
     }
 
     public void SetStartingState(int index)

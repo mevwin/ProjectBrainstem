@@ -3,11 +3,11 @@ using UnityEngine;
 
 public abstract class Interactable : Entity
 {
-    [SerializeField] public bool isActive = false;
+    public bool isActive = false;
 
-    [SerializeField] private List<MonoBehaviour> listeners = new List<MonoBehaviour>();
+    [SerializeField] private List<MonoBehaviour> listeners = new();
 
-    private List<ITriggerListener> cachedListeners = new List<ITriggerListener>();
+    private readonly List<ITriggerListener> cachedListeners = new();
 
     public override void Awake()
     {
