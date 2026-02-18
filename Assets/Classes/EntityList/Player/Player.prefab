@@ -223,15 +223,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: c8b0c576cf96b4448a4520d60ecb6b15, type: 2}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 11.75
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.148
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 22.87
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalRotation.w
@@ -264,7 +264,7 @@ PrefabInstance:
     - target: {fileID: 5303559942510410153, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+      objectReference: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Drag
       value: 0.1
@@ -279,7 +279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8824144102717917447, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -301,7 +305,7 @@ PrefabInstance:
       addedObject: {fileID: 3685064267221564299}
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2272265593504260005}
+      addedObject: {fileID: 1160910475077599160}
   m_SourcePrefab: {fileID: 100100000, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
 --- !u!54 &4330462771821805626 stripped
 Rigidbody:
@@ -337,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 4330462771821805626}
-  collider: {fileID: 2272265593504260005}
+  collider: {fileID: 1160910475077599160}
   stateManager: {fileID: 6074706642034747607}
   audioManager: {fileID: 5474462412648063665}
   movementSpeed: 10
@@ -359,8 +363,8 @@ MonoBehaviour:
   CameraOffsetY: {fileID: 6571695529832023508}
   mainCamera: {fileID: 6780200429520697166}
   maxLookSpeed: 20
---- !u!64 &2272265593504260005
-MeshCollider:
+--- !u!136 &1160910475077599160
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -377,10 +381,11 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &6074706642034747607 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
