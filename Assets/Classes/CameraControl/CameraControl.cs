@@ -3,13 +3,15 @@ using UnityEngine.InputSystem;
 
 public class CameraControl : MonoBehaviour
 {
-    public Transform CameraOffsetX;
     public Transform CameraOffsetY;
     public GameObject mainCamera;
     [SerializeField] private float maxLookSpeed = 25f;
+    [SerializeField] private float sensitivity, lowerBound, upperBound;
 
     InputAction look;
     Vector2 lookAmt;
+
+    float vertRotation;
 
     void Start()
     {
@@ -25,45 +27,53 @@ public class CameraControl : MonoBehaviour
     private void Update()
     {
         lookAmt = look.ReadValue<Vector2>();
+        Rotating();
+        Positioning();
     }
 
     private void FixedUpdate()
     {
-        Rotating();
+        //Rotating();
     }
 
     private void Rotating()
     {
-        if (lookAmt.x != 0)
+        if (lookAmt.x != 0f)
         {
-            if (Mathf.Abs(lookAmt.x) > maxLookSpeed)
-                lookAmt.x = lookAmt.x / Mathf.Abs(lookAmt.x) * maxLookSpeed;
+            lookAmt.x *= sensitivity;
 
             gameObject.transform.Rotate(0, lookAmt.x, 0);
         }
 
-        if (lookAmt.y != 0)
+        if (lookAmt.y != 0f)
         {
-            if (Mathf.Abs(lookAmt.y) > 1)
-            {
-                lookAmt.y /= Mathf.Abs(lookAmt.y);
-            }
+            lookAmt.y *= sensitivity;
 
-            if (lookAmt.y < 0)
+            vertRotation = Mathf.Clamp(vertRotation - lookAmt.y, lowerBound, upperBound);
+
+            CameraOffsetY.transform.localRotation = Quaternion.Euler(vertRotation, 0, 0);
+        }
+    }
+
+    private void Positioning()
+    {
+        if (Physics.Raycast(gameObject.transform.position, mainCamera.transform.forward * -1, out RaycastHit hit))
+        {
+            if (hit.distance < 6f)
             {
-                if (CameraOffsetY.localEulerAngles.x > 0 && CameraOffsetY.localEulerAngles.x < 350)
-                {
-                    CameraOffsetY.Rotate(lookAmt.y, 0, 0, Space.Self);
-                }
+                Debug.Log(hit.transform.gameObject.name);
+                CameraOffsetY.transform.position = hit.point + mainCamera.transform.forward;
             }
             else
             {
-                if (CameraOffsetY.localEulerAngles.x < 24|| CameraOffsetY.localEulerAngles.x > 350)
-                {
-                    CameraOffsetY.Rotate(lookAmt.y, 0, 0, Space.Self);
-                }
+                CameraOffsetY.transform.position = gameObject.transform.position + mainCamera.transform.forward * -6;
             }
         }
+        else
+        {
+            CameraOffsetY.transform.position = gameObject.transform.position + mainCamera.transform.forward * -6;
+        }
+
     }
 
     private void LateUpdate()

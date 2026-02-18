@@ -25,43 +25,11 @@ Transform:
   m_GameObject: {fileID: 4774069115524011446}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.70000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6532663680637376037}
-  m_Father: {fileID: 7221403878181916280}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5287270168562022973
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7221403878181916280}
-  m_Layer: 0
-  m_Name: CamOffsetX
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7221403878181916280
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5287270168562022973}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.7, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6571695529832023508}
   m_Father: {fileID: 8737386657339942497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6780200429520697166
@@ -295,7 +263,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7221403878181916280}
+      addedObject: {fileID: 6571695529832023508}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
@@ -359,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd77c2752a6f408478d76f46a22e1156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraOffsetX: {fileID: 7221403878181916280}
+  CameraOffsetX: {fileID: 0}
   CameraOffsetY: {fileID: 6571695529832023508}
   mainCamera: {fileID: 6780200429520697166}
   maxLookSpeed: 20
