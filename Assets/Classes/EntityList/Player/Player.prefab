@@ -327,10 +327,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd77c2752a6f408478d76f46a22e1156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraOffsetX: {fileID: 0}
   CameraOffsetY: {fileID: 6571695529832023508}
   mainCamera: {fileID: 6780200429520697166}
-  maxLookSpeed: 20
+  sensitivity: 0.5
+  lowerBound: -90
+  upperBound: 90
 --- !u!136 &1160910475077599160
 CapsuleCollider:
   m_ObjectHideFlags: 0

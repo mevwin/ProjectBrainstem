@@ -5,7 +5,6 @@ public class CameraControl : MonoBehaviour
 {
     public Transform CameraOffsetY;
     public GameObject mainCamera;
-    [SerializeField] private float maxLookSpeed = 25f;
     [SerializeField] private float sensitivity, lowerBound, upperBound;
 
     InputAction look;
@@ -76,9 +75,4 @@ public class CameraControl : MonoBehaviour
 
     }
 
-    private void LateUpdate()
-    {
-        // mainCamera.transform.LookAt(transform.position);
-        // mainCamera.transform.Rotate(0, 0, -transform.rotation.z, Space.Self);
-    }
 }

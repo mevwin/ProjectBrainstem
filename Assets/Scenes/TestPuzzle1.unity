@@ -1942,6 +1942,18 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 13400000, guid: 9bc7ad0355fdafd478f53c554eb262b4, type: 2}
+    - target: {fileID: 3685064267221564299, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: lowerBound
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685064267221564299, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: upperBound
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685064267221564299, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: sensitivity
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6023534201621546915, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
       propertyPath: m_Name
       value: Player
