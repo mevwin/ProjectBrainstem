@@ -40,13 +40,15 @@ public class Player : Entity
         base.FixedUpdate();
         rigidBody.angularVelocity = Vector3.zero;
 
+        
+
         if (hasJumped) {
             Vector3 vector = rigidBody.linearVelocity;
             vector.y = jumpSpeed;
             rigidBody.linearVelocity = vector;
             hasJumped = false;
         }
-        // Debug.Log(rigidBody.linearVelocity);
+        Debug.Log(rigidBody.linearVelocity);
     }
 
     protected override void InitializeStates()

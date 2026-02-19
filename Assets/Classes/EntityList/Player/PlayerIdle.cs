@@ -6,7 +6,7 @@ public class PlayerIdle : PlayerState
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        
+        player.SetColliderStaticFriction(1f);
     }
 
     public override void UpdateState()

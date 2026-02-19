@@ -74,6 +74,21 @@ public abstract class Entity : MonoBehaviour
         return rigidBody.linearVelocity;
     }
 
+    public void SetRigidbodyKinematic(bool value)
+    {
+        rigidBody.isKinematic = value;
+    }
+
+    public void SetColliderStaticFriction(float value)
+    {
+        collider.material.staticFriction = value;
+    }
+
+    public void SetColliderDynamicFriction(float value)
+    {
+        collider.material.dynamicFriction = value;
+    }
+
     // State Manager Wrapper Functions
     protected void AddState(string name, State state)
     {

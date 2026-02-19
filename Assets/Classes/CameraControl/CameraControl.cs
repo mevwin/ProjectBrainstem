@@ -60,7 +60,7 @@ public class CameraControl : MonoBehaviour
         {
             if (hit.distance < 6f)
             {
-                Debug.Log(hit.transform.gameObject.name);
+                //Debug.Log(hit.transform.gameObject.name);
                 CameraOffsetY.transform.position = hit.point + mainCamera.transform.forward;
             }
             else
