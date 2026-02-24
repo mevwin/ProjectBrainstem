@@ -73,7 +73,6 @@ public class Player : Entity
     public bool HasJumped()
     {
         return jump.WasPressedThisFrame() && 
-               rigidBody.linearVelocity.y >= -0.01f &&
-               rigidBody.linearVelocity.y <= 0.01f;
+               Physics.Raycast(gameObject.transform.position, Vector3.down, 1.5f);
     }
 }
