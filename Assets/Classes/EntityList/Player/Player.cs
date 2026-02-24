@@ -1,30 +1,32 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
-    [Header("==Player GameObjects==")]
-    [SerializeField] private InputActionAsset inputActions;
+    public enum InputKey
+    {
+        MOVE,
+        JUMP,
+        INTERACT,
+    }
+
+    [Header("==Player Fields==")]
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
 
     // Private Vars
-    InputAction move;
-    InputAction jump;
+    readonly Dictionary<InputKey, InputAction> inputActions = new();
 
     // Movement Flags
     bool hasJumped = false;
+
 
     public override void Start()
     {
         base.Start();
 
-        // TODO: make input dictionary
-        if (InputSystem.actions) 
-        {
-            move = InputSystem.actions.FindAction("Player/Move");
-            jump = InputSystem.actions.FindAction("Player/Jump");
-        }
+        InitializeInputActionDict();
     }
 
     public override void Update()
@@ -58,16 +60,34 @@ public class Player : Entity
         AddState("Move", new PlayerMove(this));
     }
 
+    private void InitializeInputActionDict()
+    {
+        if (InputSystem.actions) 
+        {
+            inputActions.Add(InputKey.MOVE, InputSystem.actions.FindAction("Player/Move"));
+            inputActions.Add(InputKey.JUMP, InputSystem.actions.FindAction("Player/Jump"));
+            inputActions.Add(InputKey.INTERACT, InputSystem.actions.FindAction("Player/Interact"));
+        }
+    }
+
+    // Getter Functions
     public Vector3 GetMovementVector()
     {
+        InputAction move = GetInputAction(InputKey.MOVE);
         Vector2 inputVector = move.ReadValue<Vector2>();
         Vector3 movementVector = new(inputVector.x, 0, inputVector.y);
         return movementVector;
     }
 
+    public InputAction GetInputAction(InputKey key)
+    {
+        return inputActions[key];
+    }
+
     // Movement Checks
     public bool IsMoving()
     {
+        InputAction move = GetInputAction(InputKey.MOVE);
         return move.ReadValue<Vector2>() != Vector2.zero;
     }
 
@@ -82,9 +102,11 @@ public class Player : Entity
 
     public bool HasJumped()
     {
+        InputAction jump = GetInputAction(InputKey.JUMP);
         return jump.WasPressedThisFrame() && IsGrounded();
     }
 
+    // Debug
     void OnDrawGizmosSelected()
     {
         CapsuleCollider capsuleCollider = collider as CapsuleCollider;
