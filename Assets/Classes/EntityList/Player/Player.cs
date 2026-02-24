@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +6,7 @@ public class Player : Entity
     [Header("==Player GameObjects==")]
     [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private float jumpSpeed = 25f;
+    [SerializeField] private float groundDistanceCheck = 0.05f;
 
     bool hasJumped = false;
 
@@ -30,7 +30,7 @@ public class Player : Entity
         base.Update();
 
         if (HasJumped()) {
-            PlayAudioSource("Footsteps");
+            // PlayAudioSource("Footsteps");
             hasJumped = true;
         }
     }
@@ -40,15 +40,14 @@ public class Player : Entity
         base.FixedUpdate();
         rigidBody.angularVelocity = Vector3.zero;
 
-        
-
         if (hasJumped) {
             Vector3 vector = rigidBody.linearVelocity;
             vector.y = jumpSpeed;
             rigidBody.linearVelocity = vector;
             hasJumped = false;
         }
-        Debug.Log(rigidBody.linearVelocity);
+
+        //Debug.Log(rigidBody.linearVelocity);
     }
 
     protected override void InitializeStates()
@@ -70,9 +69,34 @@ public class Player : Entity
         return move.ReadValue<Vector2>() != Vector2.zero;
     }
 
+    public bool IsGrounded()
+    {
+        float radius = (collider as CapsuleCollider).radius;
+        float maxDistance = radius + groundDistanceCheck;
+        Vector3 bottom = gameObject.transform.position;
+
+        if (Physics.SphereCast(bottom, radius, Vector3.down, out RaycastHit hit, maxDistance))
+        {
+            //Debug.Log("Hit: " + hit.collider.name + " at " + hit.point);
+            return true;
+        }
+
+        return false;
+    }
+
     public bool HasJumped()
     {
-        return jump.WasPressedThisFrame() && 
-               Physics.Raycast(gameObject.transform.position, Vector3.down, 1.5f);
+        return jump.WasPressedThisFrame() && IsGrounded();
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        CapsuleCollider capsuleCollider = collider as CapsuleCollider;
+        if (capsuleCollider != null)
+        {
+            Vector3 capsuleBottom = gameObject.transform.position;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(capsuleBottom + Vector3.down * (capsuleCollider.radius + groundDistanceCheck), capsuleCollider.radius);
+        }
     }
 }

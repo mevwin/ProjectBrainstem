@@ -63,7 +63,7 @@ public abstract class Entity : MonoBehaviour
         Vector3 vector = direction;
 
         vector.x *= movementSpeed;
-        vector.y = Math.Max(rigidBody.linearVelocity.y, -65f);
+        vector.y = Mathf.Max(rigidBody.linearVelocity.y, -65f);
         vector.z *= movementSpeed;
         
         rigidBody.linearVelocity = vector;
