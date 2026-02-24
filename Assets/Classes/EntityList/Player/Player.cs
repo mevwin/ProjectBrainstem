@@ -8,10 +8,12 @@ public class Player : Entity
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
 
-    bool hasJumped = false;
-
+    // Private Vars
     InputAction move;
     InputAction jump;
+
+    // Movement Flags
+    bool hasJumped = false;
 
     public override void Start()
     {
@@ -75,13 +77,7 @@ public class Player : Entity
         float maxDistance = radius + groundDistanceCheck;
         Vector3 bottom = gameObject.transform.position;
 
-        if (Physics.SphereCast(bottom, radius, Vector3.down, out RaycastHit hit, maxDistance))
-        {
-            //Debug.Log("Hit: " + hit.collider.name + " at " + hit.point);
-            return true;
-        }
-
-        return false;
+        return Physics.SphereCast(bottom, radius, Vector3.down, out RaycastHit hit, maxDistance);
     }
 
     public bool HasJumped()

@@ -7,7 +7,8 @@ public class PlayerMove : PlayerState
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        
+        player.SetColliderStaticFriction(0f);
+        player.SetColliderFrictionCombine(PhysicsMaterialCombine.Minimum);
     }
 
     public override void UpdateState()

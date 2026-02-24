@@ -89,6 +89,11 @@ public abstract class Entity : MonoBehaviour
         collider.material.dynamicFriction = value;
     }
 
+    public void SetColliderFrictionCombine(PhysicsMaterialCombine toggle)
+    {
+        collider.material.frictionCombine = toggle;
+    }
+
     // State Manager Wrapper Functions
     protected void AddState(string name, State state)
     {

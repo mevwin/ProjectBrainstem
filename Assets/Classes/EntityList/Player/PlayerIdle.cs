@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +5,10 @@ public class PlayerIdle : PlayerState
 {
     public PlayerIdle(Player player): base(player) { }
 
-    private float verticalSpeed = 0f;
-
     public override void EnterState(Dictionary<string, object> args = null)
     {
-
+        player.SetColliderStaticFriction(1f);
+        player.SetColliderFrictionCombine(PhysicsMaterialCombine.Maximum);
     }
 
     public override void UpdateState()
