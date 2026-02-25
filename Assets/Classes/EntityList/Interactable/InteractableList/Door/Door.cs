@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Door : Interactable, ITriggerListener
 {
-    private Vector3 startPoint;
-    [SerializeField] private Transform stopPoint;
+    protected Vector3 startPoint;
+    [SerializeField] protected Transform stopPoint;
 
     public override void Start()
     {
@@ -12,15 +12,17 @@ public class Door : Interactable, ITriggerListener
 
     protected override void InitializeStates() { }
 
-    public void OnTriggerEvent(TriggerEventType eventType)
+    public virtual void OnTriggerEvent(TriggerEventType eventType)
     {
         if (eventType == TriggerEventType.Activated)
         {
             gameObject.transform.position = stopPoint.position;
+            isActive = true;
         }
         else if (eventType == TriggerEventType.Deactivated)
         {
             gameObject.transform.position = startPoint;
+            isActive = false;
         }
     }
 }
