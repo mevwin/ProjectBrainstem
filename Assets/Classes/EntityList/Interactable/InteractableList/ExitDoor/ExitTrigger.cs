@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 
-public class ExitTrigger : MonoBehaviour
+public class ExitTrigger : Interactable
 {
-    [NonSerialized] public bool isActive = false;
+    protected override void InitializeStates() { }
 
-    public void OnTriggerEnter(Collider collider)
+    public override void OnTriggerEnter(Collider collider)
     {
         if (isActive && collider.gameObject.TryGetComponent(out Player player))
         {
