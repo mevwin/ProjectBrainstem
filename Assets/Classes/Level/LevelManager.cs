@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        
     }
 
     public void LoadLevel(string levelName)
@@ -19,7 +20,7 @@ public class LevelManager : MonoBehaviour
             SceneManager.LoadSceneAsync(levelName);
     }
 
-    public void LoadNextLevel(string levelName)
+    public void LoadNextLevel()
     {
         currentLevelIndex++;
         LoadLevel(levelList[currentLevelIndex]);

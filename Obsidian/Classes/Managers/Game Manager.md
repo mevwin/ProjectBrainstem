@@ -1,1 +1,3 @@
-Stores global game state like transition, pause, booting, and all the game scenes
+- Keeps track of current game state
+- Handles the transitioning between game states
+- Loads Scenes and other necessary assets
