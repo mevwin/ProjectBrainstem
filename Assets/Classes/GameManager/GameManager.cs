@@ -62,8 +62,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.IN_PLAY:
                 LevelManager levelManager = LevelManager.GetManager();
-                operation = levelManager.CurrentLevelIndex == 0 ? 
-                            levelManager.LoadFirstLevel() : levelManager.LoadNextLevel();
+                operation = levelManager.LoadFirstLevel(); // TODO: change later
                 currentGameState = GameState.IN_PLAY;
 
                 break;

@@ -4,12 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    // Public Attributes
     public static GameObject Instance { get; private set; }
+    public int CurrentLevelIndex { get; private set; } = 0;
 
     [SerializeField] private List<string> levelList = new();
 
-    // Private Vars
-    public int CurrentLevelIndex { get; private set; } = 0;
 
     void Awake()
     {
