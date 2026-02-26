@@ -5,7 +5,7 @@ public class AudioManager : MonoBehaviour
 {
     public GameObject audioPlayer;
     [SerializeField] private List<AudioEffect> audioEffects = new();
-    private Dictionary<string, AudioSource> privateDict = new();
+    private readonly Dictionary<string, AudioSource> privateDict = new();
 
     public void InitializeAudioDictionary()
     {

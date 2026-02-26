@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
         MAIN_MENU,
         PAUSE_MENU,
         IN_PLAY,
-        LOADING,
     }
 
     public static GameObject Instance { get; private set; }
@@ -40,32 +39,32 @@ public class GameManager : MonoBehaviour
     {
         //InitializeGameStates();
 
+        // TODO: change to be set in inspector
         LoadGameState(GameState.MAIN_MENU);
     }
 
-    void Update()
+    public static GameManager GetManager()
     {
-        
+        return Instance.GetComponent<GameManager>();
     }
 
     public void LoadGameState(GameState state)
     {
-        AsyncOperation operation = null;
+        AsyncOperation operation;
 
         switch (state)
         {
             case GameState.MAIN_MENU:
                 operation = SceneManager.LoadSceneAsync("MainMenu");
-
-                break;
-            
-            case GameState.PAUSE_MENU:
-                operation = SceneManager.LoadSceneAsync("PauseMenu");
+                currentGameState = GameState.MAIN_MENU;
 
                 break;
 
             case GameState.IN_PLAY:
-                // TODO
+                LevelManager levelManager = LevelManager.GetManager();
+                operation = levelManager.CurrentLevelIndex == 0 ? 
+                            levelManager.LoadFirstLevel() : levelManager.LoadNextLevel();
+                currentGameState = GameState.IN_PLAY;
 
                 break;
             
@@ -94,9 +93,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    public static GameManager GetGameManager()
+    // Button Functions
+    public void StartGameButton()
     {
-        return Instance.GetComponent<GameManager>();
+        LoadGameState(GameState.IN_PLAY);
     }
 }

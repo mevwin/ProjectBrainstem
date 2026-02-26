@@ -260,7 +260,7 @@ PrefabInstance:
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: levelManager
       value: 
-      objectReference: {fileID: 278759616}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -282,52 +282,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c073650f098c4624ba77a3941adc7eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &278759615
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 278759617}
-  - component: {fileID: 278759616}
-  m_Layer: 0
-  m_Name: LevelManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &278759616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278759615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3744cd7e9e087e34fbe94b3c2f8bc3d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelList:
-  - TestPuzzle1
---- !u!4 &278759617
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278759615}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.588587, y: 6.1521397, z: -14.535147}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,4 +2136,3 @@ SceneRoots:
   - {fileID: 2115980226}
   - {fileID: 1388870654}
   - {fileID: 902868116}
-  - {fileID: 278759617}
