@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         pauseMenuCanvas.SetActive(false);
+        Time.timeScale = 1f;
         LoadGameState(GameState.MAIN_MENU);
     }
 }
