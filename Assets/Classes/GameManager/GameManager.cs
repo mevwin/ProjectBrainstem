@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,20 +10,24 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         MAIN_MENU,
-        PAUSE_MENU,
         IN_PLAY,
     }
 
     public static GameObject Instance { get; private set; }
 
     public GameState currentGameState = GameState.MAIN_MENU;
+    [SerializeField] private GameObject eventSystem;
 
     [Header("==Loading Screen==")]
     [SerializeField] private GameObject loadingScreenCanvas;
     [SerializeField] private Slider progressBar;
     
+    [Header("==Pause Screen==")]
+    [SerializeField] private GameObject pauseMenuCanvas;
+    private InputAction pauseAction;
 
     [NonSerialized] public Player player;
+
 
     void Awake()
     {
@@ -33,14 +38,25 @@ public class GameManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
+
+        if (eventSystem)
+            DontDestroyOnLoad(eventSystem);
     }
 
     void Start()
     {
-        //InitializeGameStates();
+        pauseAction = InputSystem.actions.FindAction("UI/Pause");
 
         // TODO: change to be set in inspector
         LoadGameState(GameState.MAIN_MENU);
+    }
+
+    void Update()
+    {
+        if (currentGameState == GameState.IN_PLAY && pauseAction.WasPressedThisFrame())
+        {
+            TogglePauseMenu();
+        }
     }
 
     public static GameManager GetManager()
@@ -48,6 +64,7 @@ public class GameManager : MonoBehaviour
         return Instance.GetComponent<GameManager>();
     }
 
+    // Async Loading Functions
     public void LoadGameState(GameState state)
     {
         AsyncOperation operation;
@@ -55,15 +72,18 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case GameState.MAIN_MENU:
-                operation = SceneManager.LoadSceneAsync("MainMenu");
                 currentGameState = GameState.MAIN_MENU;
+                Cursor.lockState = CursorLockMode.None;
 
+                operation = SceneManager.LoadSceneAsync("MainMenu");
+                
                 break;
 
             case GameState.IN_PLAY:
+                currentGameState = GameState.IN_PLAY;
+
                 LevelManager levelManager = LevelManager.GetManager();
                 operation = levelManager.LoadFirstLevel(); // TODO: change later
-                currentGameState = GameState.IN_PLAY;
 
                 break;
             
@@ -71,8 +91,11 @@ public class GameManager : MonoBehaviour
                 return;
         }
 
-        loadingScreenCanvas.SetActive(true);
-        StartCoroutine(LoadGameStateAsync(operation));
+        if (operation != null)
+        {
+            loadingScreenCanvas.SetActive(true);
+            StartCoroutine(LoadGameStateAsync(operation));
+        }
     }
 
     private IEnumerator LoadGameStateAsync(AsyncOperation operation)
@@ -88,13 +111,31 @@ public class GameManager : MonoBehaviour
             if (operation.progress >= 0.9f)
                 loadingScreenCanvas.SetActive(false);
 
-            yield return null; // Wait until the next frame
+            yield return null;
         }
     }
 
-    // Button Functions
-    public void StartGameButton()
+    /** 
+     * MENU BUTTON FUNCTIONS
+     */
+
+    // Main Menu
+    public void StartGame()
     {
         LoadGameState(GameState.IN_PLAY);
+    }
+
+    // Pause Menu
+    public void TogglePauseMenu()
+    {
+        Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
+        Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.None : CursorLockMode.Confined;
+        pauseMenuCanvas.SetActive(Time.timeScale == 0f);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        pauseMenuCanvas.SetActive(false);
+        LoadGameState(GameState.MAIN_MENU);
     }
 }

@@ -14,25 +14,19 @@ public class CameraControl : MonoBehaviour
 
     void Start()
     {
-        // Get InputAction references from Project-wide input actions.
-        if (InputSystem.actions)
-        {
+        if (InputSystem.actions) // Get InputAction references from Project-wide input actions.
             look = InputSystem.actions.FindAction("Player/Look");
-        }
 
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
-        lookAmt = look.ReadValue<Vector2>();
-        Rotating();
-        Positioning();
-    }
-
-    private void FixedUpdate()
-    {
-        //Rotating();
+        if (Time.timeScale == 1f) {
+            lookAmt = look.ReadValue<Vector2>();
+            Rotating();
+            Positioning();
+        }
     }
 
     private void Rotating()
@@ -40,16 +34,13 @@ public class CameraControl : MonoBehaviour
         if (lookAmt.x != 0f)
         {
             lookAmt.x *= sensitivity;
-
             gameObject.transform.Rotate(0, lookAmt.x, 0);
         }
 
         if (lookAmt.y != 0f)
         {
             lookAmt.y *= sensitivity;
-
             vertRotation = Mathf.Clamp(vertRotation - lookAmt.y, lowerBound, upperBound);
-
             CameraOffsetY.transform.localRotation = Quaternion.Euler(vertRotation, 0, 0);
         }
     }

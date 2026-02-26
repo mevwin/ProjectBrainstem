@@ -37,6 +37,13 @@ public class Player : Entity
             // PlayAudioSource("Footsteps");
             hasJumped = true;
         }
+
+        
+        /*
+        if player pressed the pause button:
+            get game manager
+            gamemanager.togglePause()
+        */
     }
 
     public override void FixedUpdate()
