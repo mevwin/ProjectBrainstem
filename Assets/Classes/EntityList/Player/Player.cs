@@ -21,6 +21,10 @@ public class Player : Entity
     // Movement Flags
     bool hasJumped = false;
 
+    // Item Detection
+    [SerializeField] private GameObject cam;
+    GrabbyCube itemPresent;
+
 
     public override void Start()
     {
@@ -38,7 +42,14 @@ public class Player : Entity
             hasJumped = true;
         }
 
-        
+        if (HasGrabbed())
+        {
+            Vector3 position = transform.position + cam.transform.forward * 3;
+            itemPresent.Grabbed(position);
+        }
+
+        DetectItem();
+
         /*
         if player pressed the pause button:
             get game manager
@@ -111,6 +122,31 @@ public class Player : Entity
     {
         InputAction jump = GetInputAction(InputKey.JUMP);
         return jump.WasPressedThisFrame() && IsGrounded();
+    }
+
+    public bool HasGrabbed()
+    {
+        InputAction grab = GetInputAction(InputKey.INTERACT);
+        return grab.IsPressed() && (itemPresent != null);
+    }
+
+    public void DetectItem()
+    {
+        if (Physics.Raycast(this.transform.position, cam.transform.forward, out RaycastHit hit))
+        {
+            if (hit.transform.gameObject.GetComponent<GrabbyCube>())
+            {
+                itemPresent = hit.transform.gameObject.GetComponent<GrabbyCube>();
+                itemPresent.DisableGrav();
+                return;
+            }
+        }
+        InputAction grab = GetInputAction(InputKey.INTERACT);
+        if (grab.WasReleasedThisFrame())
+        {
+            itemPresent.EnableGrav();
+            itemPresent = null;
+        }
     }
 
     // Debug

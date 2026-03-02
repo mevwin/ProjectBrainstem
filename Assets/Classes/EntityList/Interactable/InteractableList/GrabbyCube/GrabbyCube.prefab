@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8824144102717917447, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -105,3 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b967c2a1ff7794d984bab7dbfb20b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 0}
+  collider: {fileID: 0}
+  stateManager: {fileID: 0}
+  audioManager: {fileID: 0}
+  movementSpeed: 0
+  isActive: 0
+  listeners: []
