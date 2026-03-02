@@ -16,8 +16,6 @@ public class CameraControl : MonoBehaviour
     {
         if (InputSystem.actions) // Get InputAction references from Project-wide input actions.
             look = InputSystem.actions.FindAction("Player/Look");
-
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()

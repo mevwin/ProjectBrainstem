@@ -11,6 +11,8 @@ public class Player : Entity
         INTERACT,
     }
 
+    public static GameObject Instance { get; private set; }
+
     [Header("==Player Fields==")]
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
@@ -21,6 +23,18 @@ public class Player : Entity
     // Movement Flags
     bool hasJumped = false;
 
+    public override void Awake()
+    {
+        base.Awake();
+
+        if (!Instance)
+        {
+            Instance = gameObject;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+    }
 
     public override void Start()
     {
@@ -94,8 +108,7 @@ public class Player : Entity
     // Movement Checks
     public bool IsMoving()
     {
-        InputAction move = GetInputAction(InputKey.MOVE);
-        return move.ReadValue<Vector2>() != Vector2.zero;
+        return inputActions[InputKey.MOVE].ReadValue<Vector2>() != Vector2.zero;
     }
 
     public bool IsGrounded()
@@ -109,8 +122,7 @@ public class Player : Entity
 
     public bool HasJumped()
     {
-        InputAction jump = GetInputAction(InputKey.JUMP);
-        return jump.WasPressedThisFrame() && IsGrounded();
+        return inputActions[InputKey.JUMP].WasPressedThisFrame() && IsGrounded();
     }
 
     // Debug
