@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         MAIN_MENU,
-        IN_PLAY,
+        IN_HUB,
+        IN_PUZZLE,
     }
 
     public static GameObject Instance { get; private set; }
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (currentGameState == GameState.IN_PLAY && pauseAction.WasPressedThisFrame())
+        if (currentGameState == GameState.IN_PUZZLE && pauseAction.WasPressedThisFrame())
         {
             TogglePauseMenu();
         }
@@ -95,8 +96,14 @@ public class GameManager : MonoBehaviour
                 
                 break;
 
-            case GameState.IN_PLAY:
-                currentGameState = GameState.IN_PLAY;
+            case GameState.IN_HUB:
+                currentGameState = GameState.IN_HUB;
+                operation = SceneManager.LoadSceneAsync("HubWorld");
+
+                break;
+
+            case GameState.IN_PUZZLE:
+                currentGameState = GameState.IN_PUZZLE;
 
                 LevelManager levelManager = LevelManager.GetManager();
                 operation = levelManager.LoadFirstLevel(); // TODO: change later
@@ -138,7 +145,7 @@ public class GameManager : MonoBehaviour
     // Main Menu
     public void StartGame()
     {
-        LoadGameState(GameState.IN_PLAY);
+        LoadGameState(GameState.IN_HUB);
     }
 
     // Pause Menu

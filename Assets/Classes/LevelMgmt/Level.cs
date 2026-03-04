@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] private Transform playerSpawnPoint;
-    private GameManager gameManager;
+    [SerializeField] protected Transform playerSpawnPoint;
+    protected GameManager gameManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    protected virtual void Awake()
     {
         gameManager = GameManager.GetManager();
 
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Start()
+    protected virtual void Start()
     {
         if (gameManager && gameManager.player){
             gameManager.player.SetActive(true);

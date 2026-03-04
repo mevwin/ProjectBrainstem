@@ -4,6 +4,13 @@ public class ExitDoor : Door
 {
     [SerializeField] private ExitTrigger exitTrigger;
 
+    public override void Start()
+    {
+        base.Start();
+        if (isActive)
+            OnTriggerEvent(TriggerEventType.Activated);
+    }
+
     public override void OnTriggerEvent(TriggerEventType eventType)
     {
         base.OnTriggerEvent(eventType);
