@@ -57,7 +57,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (currentGameState == GameState.IN_PUZZLE && pauseAction.WasPressedThisFrame())
+        if ((currentGameState == GameState.IN_PUZZLE || currentGameState == GameState.IN_HUB)
+            && pauseAction.WasPressedThisFrame())
         {
             TogglePauseMenu();
         }
