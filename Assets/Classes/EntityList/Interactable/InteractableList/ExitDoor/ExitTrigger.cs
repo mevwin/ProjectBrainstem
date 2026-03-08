@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ExitTrigger : Interactable
 {
-    [SerializeField] private GameManager.GameState nextGameState;
     [SerializeField] private DungeonLevelList dungeonLevelList;
 
     protected override void InitializeStates() { }
@@ -22,7 +21,7 @@ public class ExitTrigger : Interactable
         if (isActive && collider.gameObject.TryGetComponent(out Player player))
         {
             GameManager gameManager = GameManager.GetManager();
-            gameManager.LoadGameState(nextGameState);
+            gameManager.LoadGameState(GameManager.GameState.IN_PUZZLE);
         }
     }
 }

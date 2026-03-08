@@ -14,5 +14,6 @@ public class PauseMenu : Menu
     {
         buttonDict["ResumeButton"].onClick.AddListener(gameManager.TogglePauseMenu);
         buttonDict["MainMenuButton"].onClick.AddListener(gameManager.ReturnToMainMenu);
+        buttonDict["ReturnToHubButton"].onClick.AddListener(gameManager.ReturnToHubWorld);
     }
 }

@@ -98,19 +98,10 @@ public class GameManager : MonoBehaviour
                 
                 break;
 
-            case GameState.ENTER_DUNGEON:
-                currentGameState = GameState.ENTER_DUNGEON;
-                LevelManager levelManager = LevelManager.GetManager();
-                
-                operation = levelManager.LoadNextLevel();
-
-                break;
-
             case GameState.IN_PUZZLE:
                 currentGameState = GameState.IN_PUZZLE;
 
-                levelManager = LevelManager.GetManager();
-                
+                LevelManager levelManager = LevelManager.GetManager();
                 if (!levelManager.IsDungeonComplete())
                     operation = levelManager.LoadNextLevel();
                 else 
@@ -179,5 +170,13 @@ public class GameManager : MonoBehaviour
         player.SetActive(false);
         Time.timeScale = 1f;
         LoadGameState(GameState.MAIN_MENU);
+    }
+
+    public void ReturnToHubWorld()
+    {
+        pauseMenuCanvas.SetActive(false);
+        player.SetActive(false);
+        Time.timeScale = 1f;
+        LoadGameState(GameState.IN_HUB);
     }
 }
