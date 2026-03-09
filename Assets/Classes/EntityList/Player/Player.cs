@@ -13,15 +13,6 @@ public class Player : Entity
         ABILITY,
     }
 
-    public enum Job
-    {
-        NONE,
-        BUILDER,
-        MUSICIAN,
-        ATHLETE,
-        ARTIST,
-    }
-
     public static GameObject Instance { get; private set; }
 
     [Header("==Player Fields==")]
@@ -29,9 +20,9 @@ public class Player : Entity
     [SerializeField] private float groundDistanceCheck = 0.05f;
 
     // Jop Mgmt
-    private readonly StateManager jobManager = new();
-    private Job currentJob = Job.NONE;
-
+    [SerializeField] private JobManager jobManager;
+    private JobManager.Job currentJob = JobManager.Job.NONE;
+    
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
 
@@ -83,13 +74,13 @@ public class Player : Entity
 
         // Job Ability Logic
         // Input Check
-        if (IsAbilityPressed() && currentJob > Job.NONE && !abilityActive)
+        if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive)
         {
             abilityActive = true;
-            jobManager.ChangeState(JobEnumToString(currentJob));
+            jobManager.ChangeState(jobManager.JobEnumToString(currentJob));
         }
 
-        if (abilityActive && currentJob > Job.NONE)
+        if (abilityActive && currentJob > JobManager.Job.NONE)
         {
             jobManager.CurrentStateUpdate();
         }
@@ -107,7 +98,7 @@ public class Player : Entity
             hasJumped = false;
         }
 
-        if (abilityActive && currentJob > Job.NONE)
+        if (abilityActive && currentJob > JobManager.Job.NONE)
         {
             jobManager.CurrentStateFixedUpdate();
         }
@@ -140,7 +131,7 @@ public class Player : Entity
         jobManager.AddState("None", new NoJob(this));
         jobManager.AddState("Builder", new Builder(this));
 
-        SetPlayerJobAbility(Job.BUILDER);
+        SetPlayerJobAbility(JobManager.Job.BUILDER);
         jobManager.SetStartingState("None");
     }
 
@@ -179,31 +170,20 @@ public class Player : Entity
     }
 
     // Job Mgmt
-    public void SetPlayerJobAbility(Job newJob)
-    {
-        currentJob = newJob;
-    }
-
     public bool IsAbilityPressed()
     {
         return inputActions[InputKey.ABILITY].WasPressedThisFrame();
     }
 
-    public string JobEnumToString(Job job)
+    public void SetPlayerJobAbility(JobManager.Job newJob)
     {
-        string title = job switch {
-            Job.ARTIST => "Artist",
-            Job.ATHLETE => "Athlete",
-            Job.BUILDER => "Builder",
-            Job.MUSICIAN => "Musician",
-            _ => "None"
-        };
-        return title;
+        currentJob = newJob;
     }
 
     public void ExitJobState()
     {
-        jobManager.ChangeState("None");
+        abilityActive = false;
+        jobManager.ExitJobState();
     }
 
     // Interact

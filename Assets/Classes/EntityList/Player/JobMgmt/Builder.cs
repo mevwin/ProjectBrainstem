@@ -32,7 +32,6 @@ public class Builder : JobState
 
     public override void ExitState(Dictionary<string, object> args = null)
     {
-        player.abilityActive = false;
         Debug.Log("Exitted Builder Ability");
     }
 }
