@@ -313,8 +313,10 @@ MonoBehaviour:
   stateManager: {fileID: 6074706642034747607}
   audioManager: {fileID: 5474462412648063665}
   movementSpeed: 10
-  inputActions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   jumpSpeed: 15
+  groundDistanceCheck: 0.05
+  jobManager: {fileID: 0}
+  cam: {fileID: 6780200429520697166}
 --- !u!114 &3685064267221564299
 MonoBehaviour:
   m_ObjectHideFlags: 0

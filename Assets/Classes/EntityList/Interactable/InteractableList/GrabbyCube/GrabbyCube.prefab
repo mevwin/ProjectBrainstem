@@ -71,6 +71,22 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -8055131235639129691}
   m_SourcePrefab: {fileID: 100100000, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+--- !u!54 &1555615146765107938 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+  m_PrefabInstance: {fileID: 8294135126626921600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7095264836103528553 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1255904180571901161, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+  m_PrefabInstance: {fileID: 8294135126626921600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8798247208710915451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e92597144b7e7448f6657cc2802bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8798247208710915451 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
@@ -109,10 +125,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b967c2a1ff7794d984bab7dbfb20b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 0}
-  collider: {fileID: 0}
-  stateManager: {fileID: 0}
-  audioManager: {fileID: 0}
+  rigidBody: {fileID: 1555615146765107938}
+  collider: {fileID: 9033984993301218919}
+  stateManager: {fileID: 9062353819839965711}
+  audioManager: {fileID: 7095264836103528553}
   movementSpeed: 0
   isActive: 0
   listeners: []
+--- !u!114 &9062353819839965711 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+  m_PrefabInstance: {fileID: 8294135126626921600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8798247208710915451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e00193780c4fb4f9f1cfa007aff57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

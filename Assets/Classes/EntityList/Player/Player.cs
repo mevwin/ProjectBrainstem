@@ -17,8 +17,8 @@ public class Player : Entity
     [Header("==Player Fields==")]
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
-    [SerializeField] private StateManager jobManager;
-    private string job = "";
+    private readonly StateManager jobManager = new();
+    private string currentJob = "";
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -149,7 +149,7 @@ public class Player : Entity
     // Job Mgmt
     public void SetPlayerJobAbility(string jobTitle)
     {
-        job = jobTitle;
+        currentJob = jobTitle;
     }
 
     public bool HasGrabbed()
@@ -179,7 +179,7 @@ public class Player : Entity
             itemPresent = null;
         }
         InputAction grab = GetInputAction(InputKey.INTERACT);
-        if (grab.WasReleasedThisFrame())
+        if (grab.WasReleasedThisFrame() && itemPresent)
         {
             itemPresent.Ungrabbed();
             itemPresent = null;
