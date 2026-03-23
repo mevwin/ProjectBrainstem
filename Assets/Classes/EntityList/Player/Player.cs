@@ -22,7 +22,7 @@ public class Player : Entity
     [Header("==Job-Related Fields==")]
     public Transform poleVaultTarget;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
-    private const float poleVaultBoostDecayRate = 10f;
+    [NonSerialized] public float poleVaultBoostDecayRate = 10f;
 
     // Jop Mgmt
     [SerializeField] private JobManager jobManager;
