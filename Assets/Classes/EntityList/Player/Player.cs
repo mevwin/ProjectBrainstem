@@ -114,9 +114,7 @@ public class Player : Entity
         // Decrease poleVaultBoost overtime
         if (poleVaultBoost.magnitude > 0)
         {
-            poleVaultBoost.x = Mathf.MoveTowards(poleVaultBoost.x, 0, poleVaultBoostDecayRate * Time.fixedDeltaTime);
-            poleVaultBoost.y = Mathf.MoveTowards(poleVaultBoost.y, 0, poleVaultBoostDecayRate * Time.fixedDeltaTime);
-            poleVaultBoost.z = Mathf.MoveTowards(poleVaultBoost.z, 0, poleVaultBoostDecayRate * Time.fixedDeltaTime);
+            poleVaultBoost = Vector3.MoveTowards(poleVaultBoost, Vector3.zero, poleVaultBoostDecayRate * Time.fixedDeltaTime);
         }
 
         //Debug.Log(rigidBody.linearVelocity);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,11 +6,14 @@ public class Athlete : JobState
 {
     public Athlete(Player player): base(player) { }
 
-    private readonly float poleDistance = 25f;
+    private const float poleDistance = 25f;
+    private const float speedIncRate = 0.1f;
+
     private bool vaultActive = false;
 
+    private float defaultSpeed = 0f;
+    private float vaultCircularSpeed = 0f;
     private float targetDistance = 0f;
-    private float rotationSpeed = 0f;
     private float currentAngle = 0f;
 
     private Vector3 output = Vector3.zero;
@@ -21,7 +25,7 @@ public class Athlete : JobState
         //Debug.Log("Activated Athlete Ability");
         currentAngle = 0f;
 
-        player.movementSpeed *= 2.0f;
+        defaultSpeed = player.movementSpeed;
         vaultActive = false;
     }
 
@@ -30,20 +34,31 @@ public class Athlete : JobState
         //Debug.Log("Updating Athlete Ability State");
 
         // Update Pole Raycast
-        Quaternion rotation = Quaternion.Euler(5f, 0, 0);
+        Quaternion rotation = Quaternion.Euler(2.5f, 0, 0);
         Vector3 direction = rotation * Vector3.forward;
         Vector3 rotatedDirection = player.gameObject.transform.rotation * direction;
 
         if (player.HasJumped() && !vaultActive &&
+            player.movementSpeed > 2f * defaultSpeed &&
             Physics.Raycast(player.gameObject.transform.position, rotatedDirection, out RaycastHit hit) &&
-            player.GetRigidbodyVelocity().magnitude > 2f
-        ) {
+            hit.distance <= poleDistance && hit.distance > poleDistance * 0.5f
+        ) { 
             vaultActive = true;
-            rotationSpeed = player.GetRigidbodyVelocity().magnitude * 0.2f;
-            targetDistance = hit.distance * 5f;
+            vaultCircularSpeed = player.movementSpeed * 0.125f;
+            targetDistance = hit.distance;
             player.ChangeState("NoState");
         }
-        else Debug.DrawRay(player.gameObject.transform.position, rotatedDirection * poleDistance, Color.red);
+        else if (!vaultActive)
+        {
+            Debug.DrawRay(player.gameObject.transform.position, rotatedDirection * poleDistance, Color.red);
+
+            if (player.IsMoving())
+            {
+                if (player.movementSpeed <= defaultSpeed * 4f)
+                    player.movementSpeed += speedIncRate;
+            }
+            else player.movementSpeed = defaultSpeed;
+        }
     }
 
     /*
@@ -57,23 +72,26 @@ public class Athlete : JobState
 
         if (vaultActive)
         {
-            currentAngle += rotationSpeed * Time.fixedDeltaTime;
-            Vector3 circularMotion = new(0, Mathf.Cos(currentAngle) * targetDistance, Mathf.Sin(currentAngle) * targetDistance);
+            currentAngle += vaultCircularSpeed * Time.fixedDeltaTime;
+            Vector3 circularMotion = new(0, 
+                                        Mathf.Sin(currentAngle) * targetDistance * 2f,
+                                        Mathf.Cos(currentAngle) * targetDistance);
             output = player.gameObject.transform.rotation * circularMotion;
+            // output *= player.movementSpeed/defaultSpeed;
             player.UpdateMovementVector(output, true);
         }
 
-        if (currentAngle > 0.85f)
+        if (currentAngle > Math.PI * 0.5f)
             player.ExitJobState();
     }
 
     public override void ExitState(Dictionary<string, object> args = null)
     {
-        //Debug.Log("Exitted Athlete Ability");
-
-        player.movementSpeed *= 0.5f;
-        player.poleVaultBoost = player.GetRigidbodyVelocity().magnitude * output.normalized;
-        player.poleVaultBoostDecayRate = targetDistance * 1.1f;
+        //Debug.Log("Exitted Athlete Ability")
+        Debug.Log(player.gameObject.transform.position + $" {player.movementSpeed/defaultSpeed}");
+        player.poleVaultBoost = player.movementSpeed * output.normalized;
+        player.movementSpeed = defaultSpeed;
+        player.poleVaultBoostDecayRate = targetDistance;
         player.ChangeState("Move");
     }
 }
