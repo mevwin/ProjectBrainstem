@@ -58,15 +58,17 @@ public abstract class Entity : MonoBehaviour
     protected abstract void InitializeStates();
 
     // General Entity Functions
-    public void UpdateMovementVector(Vector3 direction)
+    public void UpdateMovementVector(Vector3 input, bool overrideGravity = false)
     {
-        Vector3 vector = direction;
+        Vector3 output = input;
 
-        vector.x *= movementSpeed;
-        vector.y = Mathf.Max(rigidBody.linearVelocity.y, -65f);
-        vector.z *= movementSpeed;
+        if (overrideGravity)
+        {
+            output.y = input.y;
+        }
+        else output.y = Mathf.Max(rigidBody.linearVelocity.y, -65f);
         
-        rigidBody.linearVelocity = vector;
+        rigidBody.linearVelocity = output;
     }
 
     public Vector3 GetRigidbodyVelocity()

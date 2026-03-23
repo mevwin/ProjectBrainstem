@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4174429126689296570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5792850620412180414}
+  m_Layer: 0
+  m_Name: PoleVaultEndPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5792850620412180414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4174429126689296570}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 16.39, z: 11.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8737386657339942497}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4774069115524011446
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +295,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6571695529832023508}
+    - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5792850620412180414}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: 4
@@ -318,6 +352,7 @@ MonoBehaviour:
   movementSpeed: 10
   jumpSpeed: 15
   groundDistanceCheck: 0.05
+  athletePoleVaultEndPos: {fileID: 5792850620412180414}
   jobManager: {fileID: 7641687114105757430}
   cam: {fileID: 6780200429520697166}
 --- !u!114 &7641687114105757430

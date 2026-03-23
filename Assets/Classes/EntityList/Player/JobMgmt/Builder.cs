@@ -18,7 +18,6 @@ public class Builder : JobState
     public override void UpdateState()
     {
         Debug.Log("Updating Builder Ability State");
-        timer += Time.deltaTime;
         if (timer > 2.0f) 
         {
             player.ExitJobState();
@@ -28,6 +27,8 @@ public class Builder : JobState
     public override void FixedUpdateState()
     {
         Debug.Log("Fixed Updating Builder Ability State");
+
+        timer += Time.fixedDeltaTime;
     }
 
     public override void ExitState(Dictionary<string, object> args = null)

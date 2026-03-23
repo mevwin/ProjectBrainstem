@@ -5,6 +5,8 @@ public class PlayerIdle : PlayerState
 {
     public PlayerIdle(Player player): base(player) { }
 
+    Vector3 output = new();
+
     public override void EnterState(Dictionary<string, object> args = null)
     {
         player.SetColliderStaticFriction(1f);
@@ -18,7 +20,10 @@ public class PlayerIdle : PlayerState
 
     public override void FixedUpdateState()
     {
-        player.UpdateMovementVector(new Vector3(0, player.GetRigidbodyVelocity().y, 0f));
+        output = new(player.poleVaultBoost.x, 
+                     player.GetRigidbodyVelocity().y + player.poleVaultBoost.y, 
+                     player.poleVaultBoost.z);
+        player.UpdateMovementVector(output);
         if (player.IsMoving()){
             player.ChangeState("Move");
         }

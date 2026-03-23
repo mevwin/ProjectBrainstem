@@ -19,6 +19,11 @@ public class Player : Entity
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
 
+    [Header("==Job-Related Fields==")]
+    public Transform poleVaultTarget;
+    [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
+    private const float poleVaultBoostDecayRate = 10f;
+
     // Jop Mgmt
     [SerializeField] private JobManager jobManager;
     private JobManager.Job currentJob = JobManager.Job.NONE;
@@ -94,7 +99,7 @@ public class Player : Entity
         
         rigidBody.angularVelocity = Vector3.zero;
 
-        if (hasJumped) {
+        if (hasJumped && !abilityActive) {
             Vector3 vector = rigidBody.linearVelocity;
             vector.y = jumpSpeed;
             rigidBody.linearVelocity = vector;
@@ -106,6 +111,14 @@ public class Player : Entity
             jobManager.CurrentStateFixedUpdate();
         }
 
+        // Decrease poleVaultBoost overtime
+        if (poleVaultBoost.magnitude > 0)
+        {
+            poleVaultBoost.x = Mathf.MoveTowards(poleVaultBoost.x, 0, poleVaultBoostDecayRate * Time.fixedDeltaTime);
+            poleVaultBoost.y = Mathf.MoveTowards(poleVaultBoost.y, 0, poleVaultBoostDecayRate * Time.fixedDeltaTime);
+            poleVaultBoost.z = Mathf.MoveTowards(poleVaultBoost.z, 0, poleVaultBoostDecayRate * Time.fixedDeltaTime);
+        }
+
         //Debug.Log(rigidBody.linearVelocity);
     }
 
@@ -114,6 +127,7 @@ public class Player : Entity
     {
         AddState("Idle", new PlayerIdle(this));
         AddState("Move", new PlayerMove(this));
+        AddState("NoState", new PlayerNoState(this));
 
         SetStartingState("Idle");
     }
@@ -133,8 +147,9 @@ public class Player : Entity
     {
         jobManager.AddState("None", new NoJob(this));
         jobManager.AddState("Builder", new Builder(this));
+        jobManager.AddState("Athlete", new Athlete(this));
 
-        SetPlayerJobAbility(JobManager.Job.BUILDER);
+        SetPlayerJobAbility(JobManager.Job.ATHLETE);
         jobManager.SetStartingState("None");
     }
 
