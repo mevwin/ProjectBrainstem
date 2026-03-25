@@ -21,7 +21,7 @@ public class Player : Entity
 
     // Jop Mgmt
     [SerializeField] private JobManager jobManager;
-    private JobManager.Job currentJob = JobManager.Job.NONE;
+    [SerializeField] private JobManager.Job currentJob = JobManager.Job.NONE;
     
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -133,7 +133,7 @@ public class Player : Entity
         jobManager.AddState("None", new NoJob(this));
         jobManager.AddState("Builder", new Builder(this));
 
-        SetPlayerJobAbility(JobManager.Job.BUILDER);
+        SetPlayerJobAbility(JobManager.Job.NONE);
         jobManager.SetStartingState("None");
     }
 
@@ -214,8 +214,7 @@ public class Player : Entity
             itemPresent.Drop();
             itemPresent = null;
         }
-        InputAction grab = GetInputAction(InputKey.INTERACT);
-        if (grab.WasReleasedThisFrame() && itemPresent)
+        if (inputActions[InputKey.INTERACT].WasReleasedThisFrame() && itemPresent)
         {
             itemPresent.Drop();
             itemPresent = null;

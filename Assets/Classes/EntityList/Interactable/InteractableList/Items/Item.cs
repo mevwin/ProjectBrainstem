@@ -16,6 +16,7 @@ public class Item : Interactable
 
     public virtual void Drop()
     {
+        if (!rigidBody) return;
         rigidBody.linearVelocity = Vector3.zero;
     }
 }

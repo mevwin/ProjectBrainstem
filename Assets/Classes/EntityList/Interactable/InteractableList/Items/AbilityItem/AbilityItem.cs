@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class AbilityItem : MonoBehaviour
+public class AbilityItem : Item
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private JobManager.Job job;
+    public override void Pickup(Player player)
     {
-        
+        base.Pickup(player);
+        Debug.Log("Ability Pickup");
+        player.SetPlayerJobAbility(job);
+        Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Drop()
     {
-        
+        base.Drop();
     }
 }
