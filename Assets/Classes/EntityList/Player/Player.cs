@@ -26,7 +26,7 @@ public class Player : Entity
 
     // Jop Mgmt
     [SerializeField] private JobManager jobManager;
-    private JobManager.Job currentJob = JobManager.Job.NONE;
+    [SerializeField] private JobManager.Job currentJob = JobManager.Job.NONE;
     
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -36,8 +36,8 @@ public class Player : Entity
     [NonSerialized] public bool abilityActive = false;
 
     // Item Detection
-    [SerializeField] private GameObject cam;
-    GrabbyCube itemPresent;
+    [SerializeField] public GameObject cam;
+    Item itemPresent;
 
     public override void Awake()
     {
@@ -72,15 +72,14 @@ public class Player : Entity
 
         if (HasGrabbed())
         {
-            Vector3 position = transform.position + cam.transform.forward * 3;// + transform.right * 2;
-            itemPresent.Grabbed(position);
+            itemPresent.Pickup(this);
         }
 
         DetectItem();
 
         // Job Ability Logic
         // Input Check
-        if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive)
+        if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive && itemPresent == null)
         {
             abilityActive = true;
             jobManager.ChangeState(jobManager.JobEnumToString(currentJob));
@@ -212,28 +211,32 @@ public class Player : Entity
     {
         if (Physics.Raycast(this.transform.position, cam.transform.forward, out RaycastHit hit))
         {
-            if (hit.transform.gameObject.GetComponent<GrabbyCube>() && hit.distance <= 3f)
+            if (hit.transform.gameObject.GetComponent<Item>() && hit.distance <= 3f)
             {
-                itemPresent = hit.transform.gameObject.GetComponent<GrabbyCube>();
+                itemPresent = hit.transform.gameObject.GetComponent<Item>();
                 return;
             }
             else if (!HasGrabbed() && itemPresent != null)
             {
-                itemPresent.Ungrabbed();
+                itemPresent.Drop();
                 itemPresent = null;
             }
         }
         else if (!HasGrabbed() && itemPresent != null)
         {
-            itemPresent.Ungrabbed();
+            itemPresent.Drop();
             itemPresent = null;
         }
-        InputAction grab = GetInputAction(InputKey.INTERACT);
-        if (grab.WasReleasedThisFrame() && itemPresent)
+        if (inputActions[InputKey.INTERACT].WasReleasedThisFrame() && itemPresent)
         {
-            itemPresent.Ungrabbed();
+            itemPresent.Drop();
             itemPresent = null;
         }
+    }
+
+    public void RemoveItem()
+    {
+        itemPresent = null;
     }
 
     // Debug

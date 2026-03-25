@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuCanvas;
     private InputAction pauseAction;
 
+    [Header("==Debug==")]
+    [SerializeField] private Boolean debugMode;
+
     public GameObject player;
 
 
@@ -43,6 +46,12 @@ public class GameManager : MonoBehaviour
 
         if (eventSystem)
             DontDestroyOnLoad(eventSystem);
+
+        if (debugMode)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Destroy(gameObject);
+        }
     }
 
     void Start()
