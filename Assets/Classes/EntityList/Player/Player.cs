@@ -36,7 +36,7 @@ public class Player : Entity
     [NonSerialized] public bool abilityActive = false;
 
     // Item Detection
-    [SerializeField] public GameObject cam;
+    public GameObject cam;
     Item itemPresent;
 
     public override void Awake()
@@ -146,7 +146,7 @@ public class Player : Entity
         jobManager.AddState("Builder", new Builder(this));
         jobManager.AddState("Athlete", new Athlete(this));
 
-        SetPlayerJobAbility(JobManager.Job.ATHLETE);
+        SetPlayerJobAbility(JobManager.Job.NONE);
         jobManager.SetStartingState("None");
     }
 

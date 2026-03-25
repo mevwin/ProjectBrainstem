@@ -169,7 +169,6 @@ public class GameManager : MonoBehaviour
     public void TogglePauseMenu()
     {
         Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
-        Debug.Log(Time.timeScale);
         Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
         pauseMenuCanvas.SetActive(Time.timeScale == 0f);
     }

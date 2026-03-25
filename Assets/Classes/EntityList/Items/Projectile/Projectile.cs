@@ -12,7 +12,7 @@ public class Projectile : Item
         Vector3 dir = position - transform.position;
         float mag = dir.magnitude;
         mag = Mathf.Clamp(mag, 0f, 10f);
-        dir = dir.normalized * mag * 10;
+        dir = 10 * mag * dir.normalized;
         rigidBody.linearVelocity = dir;
         rigidBody.angularVelocity *= 0.99f;
         if (player.GetInputAction(Player.InputKey.ABILITY).WasPressedThisFrame())
