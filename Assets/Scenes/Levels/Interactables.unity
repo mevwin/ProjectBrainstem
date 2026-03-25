@@ -464,7 +464,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1283089804108197533, guid: 242622584e691f44f85a449582c91cff, type: 3}
       propertyPath: job
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6612313921637654513, guid: 242622584e691f44f85a449582c91cff, type: 3}
       propertyPath: m_LocalPosition.x
