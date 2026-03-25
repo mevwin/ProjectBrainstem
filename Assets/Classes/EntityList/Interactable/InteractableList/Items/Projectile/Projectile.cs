@@ -1,9 +1,12 @@
 using UnityEngine;
+using static JobManager;
 
-public class MoveableCube : Item
+public class Projectile : Item
 {
+    private bool shot;
     public override void Pickup(Player player)
     {
+        if (shot) return;
         base.Pickup(player);
         Vector3 position = player.transform.position + player.cam.transform.forward * 3;
         Vector3 dir = position - transform.position;
@@ -12,12 +15,22 @@ public class MoveableCube : Item
         dir = dir.normalized * mag * 10;
         rigidBody.linearVelocity = dir;
         rigidBody.angularVelocity *= 0.99f;
+        if (player.GetInputAction(Player.InputKey.ABILITY).WasPressedThisFrame())
+        {
+            player.RemoveItem();
+            rigidBody.linearVelocity = player.cam.transform.forward * 100;
+            shot = true;
+        }
     }
 
     public override void Drop()
     {
+        if (shot) return;
         base.Drop();
-        rigidBody.linearVelocity = Vector3.zero;
-        Debug.Log("Drop");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        shot = false;
     }
 }

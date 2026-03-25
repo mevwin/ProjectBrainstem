@@ -74,7 +74,7 @@ public class Player : Entity
 
         // Job Ability Logic
         // Input Check
-        if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive)
+        if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive && itemPresent == null)
         {
             abilityActive = true;
             jobManager.ChangeState(jobManager.JobEnumToString(currentJob));
@@ -219,6 +219,11 @@ public class Player : Entity
             itemPresent.Drop();
             itemPresent = null;
         }
+    }
+
+    public void RemoveItem()
+    {
+        itemPresent = null;
     }
 
     // Debug
