@@ -1,16 +1,11 @@
 using UnityEngine;
 
-public class GrabbyCube : Interactable
+public class MoveableCube : Item
 {
-    public override void Start()
+    public override void Pickup(Player player)
     {
-        base.Start();
-    }
-
-    protected override void InitializeStates() { }
-
-    public void Grabbed(Vector3 position)
-    {
+        base.Pickup(player);
+        Vector3 position = player.transform.position + player.cam.transform.forward * 3;
         Vector3 dir = position - transform.position;
         float mag = dir.magnitude;
         mag = Mathf.Clamp(mag, 0f, 10f);
@@ -19,8 +14,9 @@ public class GrabbyCube : Interactable
         rigidBody.angularVelocity *= 0.99f;
     }
 
-    public void Ungrabbed()
+    public override void Drop()
     {
+        base.Drop();
         rigidBody.linearVelocity = Vector3.zero;
     }
 }

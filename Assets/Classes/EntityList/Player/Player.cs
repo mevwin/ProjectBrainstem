@@ -31,8 +31,8 @@ public class Player : Entity
     [NonSerialized] public bool abilityActive = false;
 
     // Item Detection
-    [SerializeField] private GameObject cam;
-    GrabbyCube itemPresent;
+    [SerializeField] public GameObject cam;
+    Item itemPresent;
 
     public override void Awake()
     {
@@ -67,8 +67,7 @@ public class Player : Entity
 
         if (HasGrabbed())
         {
-            Vector3 position = transform.position + cam.transform.forward * 3;// + transform.right * 2;
-            itemPresent.Grabbed(position);
+            itemPresent.Pickup(this);
         }
 
         DetectItem();
@@ -199,26 +198,26 @@ public class Player : Entity
     {
         if (Physics.Raycast(this.transform.position, cam.transform.forward, out RaycastHit hit))
         {
-            if (hit.transform.gameObject.GetComponent<GrabbyCube>() && hit.distance <= 3f)
+            if (hit.transform.gameObject.GetComponent<Item>() && hit.distance <= 3f)
             {
-                itemPresent = hit.transform.gameObject.GetComponent<GrabbyCube>();
+                itemPresent = hit.transform.gameObject.GetComponent<Item>();
                 return;
             }
             else if (!HasGrabbed() && itemPresent != null)
             {
-                itemPresent.Ungrabbed();
+                itemPresent.Drop();
                 itemPresent = null;
             }
         }
         else if (!HasGrabbed() && itemPresent != null)
         {
-            itemPresent.Ungrabbed();
+            itemPresent.Drop();
             itemPresent = null;
         }
         InputAction grab = GetInputAction(InputKey.INTERACT);
         if (grab.WasReleasedThisFrame() && itemPresent)
         {
-            itemPresent.Ungrabbed();
+            itemPresent.Drop();
             itemPresent = null;
         }
     }
