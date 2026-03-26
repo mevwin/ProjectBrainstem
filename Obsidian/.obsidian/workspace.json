@@ -11,14 +11,17 @@
             "id": "404a9539f6c240cb",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Classes/Managers/Level Manager.md",
-                "mode": "source",
-                "source": false
+                "file": "Structure/File Structure.canvas",
+                "viewState": {
+                  "x": 89.59959165469746,
+                  "y": 458.5382725487607,
+                  "zoom": -0.5959591708316526
+                }
               },
-              "icon": "lucide-file",
-              "title": "Level Manager"
+              "icon": "lucide-layout-dashboard",
+              "title": "File Structure"
             }
           }
         ]
@@ -170,9 +173,9 @@
   },
   "active": "404a9539f6c240cb",
   "lastOpenFiles": [
-    "Classes/Managers/Game Manager.md",
-    "Classes/Managers/Level Manager.md",
     "Structure/Code Structure.canvas",
+    "Classes/Managers/Level Manager.md",
+    "Classes/Managers/Game Manager.md",
     "Structure/File Structure.canvas",
     "Data & Assets/Game Scenes.md",
     "Untitled.canvas",

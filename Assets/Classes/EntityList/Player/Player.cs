@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,15 +20,19 @@ public class Player : Entity
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
 
-    [Header("==Job-Related Fields==")]
-    public Transform poleVaultTarget;
+    [Header("==Model Fields==")]
+    private Vector3 lastPos;
+    private float modelIdleTimer = 0f;
+    [SerializeField] private Animator HeadAnimator;
+    [SerializeField] private Animator BodyAnimator;
+
+    [Header("==Job Fields==")]
+    [SerializeField] private JobManager jobManager;
+    [SerializeField] private JobManager.Job currentJob = JobManager.Job.NONE;
+    [SerializeField] private BlockManager blockManager;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
     [NonSerialized] public float poleVaultBoostDecayRate = 10f;
 
-    // Jop Mgmt
-    [SerializeField] private JobManager jobManager;
-    [SerializeField] private JobManager.Job currentJob = JobManager.Job.NONE;
-    
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
 
@@ -71,14 +76,11 @@ public class Player : Entity
         }
 
         if (HasGrabbed())
-        {
             itemPresent.Pickup(this);
-        }
 
         DetectItem();
 
-        // Job Ability Logic
-        // Input Check
+        // Input Check For Job Abilities
         if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive && itemPresent == null)
         {
             abilityActive = true;
@@ -86,15 +88,15 @@ public class Player : Entity
         }
 
         if (abilityActive && currentJob > JobManager.Job.NONE)
-        {
             jobManager.CurrentStateUpdate();
-        }
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
         if (Time.timeScale == 0f) return;
+
+        lastPos = transform.position;
         
         rigidBody.angularVelocity = Vector3.zero;
 
@@ -117,6 +119,26 @@ public class Player : Entity
         }
 
         //Debug.Log(rigidBody.linearVelocity);
+    }
+
+    void LateUpdate()
+    {
+        Vector3 delta = transform.position - lastPos;
+
+        if (delta.magnitude < 1)
+            modelIdleTimer += 1f;
+        else
+            modelIdleTimer++;
+
+        if (modelIdleTimer > 700f)
+        {
+            HeadAnimator.SetBool("goIdle", true);
+            BodyAnimator.SetBool("goIdle", true);
+
+            modelIdleTimer = 0f;
+
+            StartCoroutine(ResetModelState());
+        }
     }
 
     // Initialization
@@ -184,6 +206,14 @@ public class Player : Entity
         return inputActions[InputKey.JUMP].WasPressedThisFrame() && IsGrounded();
     }
 
+    // Player Model
+    IEnumerator ResetModelState()
+    {
+        yield return new WaitForSeconds(4.1f);
+        HeadAnimator.SetBool("goIdle", false);
+        BodyAnimator.SetBool("goIdle", false);
+    }
+
     // Job Mgmt
     public bool IsAbilityPressed()
     {
@@ -199,6 +229,16 @@ public class Player : Entity
     {
         abilityActive = false;
         jobManager.ExitJobState();
+    }
+
+    public void BuilderCreateBlock()
+    {
+        blockManager.CreateBlock();
+    }
+
+    public void BuilderUpdateBlocks()
+    {
+        blockManager.UpdateBlocks();
     }
 
     // Interact

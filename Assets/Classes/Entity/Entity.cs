@@ -91,6 +91,16 @@ public abstract class Entity : MonoBehaviour
         collider.material.dynamicFriction = value;
     }
 
+    public void AddForce(Vector3 force)
+    {
+        rigidBody.AddForce(force);
+    }
+
+    public void AddTorque(Vector3 torque)
+    {
+        rigidBody.AddTorque(torque);
+    }
+
     public void SetColliderFrictionCombine(PhysicsMaterialCombine toggle)
     {
         collider.material.frictionCombine = toggle;

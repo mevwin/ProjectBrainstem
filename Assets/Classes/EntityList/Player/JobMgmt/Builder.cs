@@ -7,17 +7,18 @@ public class Builder : JobState
 
     private float timer = 0f;
 
-
     // TODO: implement me
     public override void EnterState(Dictionary<string, object> args = null)
     {
         Debug.Log("Activated Builder Ability");
         timer = 0f;
+        player.BuilderCreateBlock();
     }
 
     public override void UpdateState()
     {
-        Debug.Log("Updating Builder Ability State");
+        // Debug.Log("Updating Builder Ability State");
+        player.BuilderUpdateBlocks();
         if (timer > 2.0f) 
         {
             player.ExitJobState();
@@ -26,7 +27,7 @@ public class Builder : JobState
 
     public override void FixedUpdateState()
     {
-        Debug.Log("Fixed Updating Builder Ability State");
+        // Debug.Log("Fixed Updating Builder Ability State");
 
         timer += Time.fixedDeltaTime;
     }
