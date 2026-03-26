@@ -29,9 +29,10 @@ public class GameManager : MonoBehaviour
     private InputAction pauseAction;
 
     [Header("==Debug==")]
-    [SerializeField] private Boolean debugMode;
+    [SerializeField] private bool debugMode;
 
     public GameObject player;
+    [SerializeField] private GameObject BlockParent;
 
 
     void Awake()
@@ -81,8 +82,6 @@ public class GameManager : MonoBehaviour
             go back to main menu
             deload player
         */
-
-
     }
 
     public static GameManager GetManager()
@@ -95,6 +94,12 @@ public class GameManager : MonoBehaviour
     // Async Loading Functions
     public void LoadGameState(GameState state)
     {
+        // Destroy all non-player objects attached to the GameManager
+        for (int i = BlockParent.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(BlockParent.transform.GetChild(i).gameObject);
+        }
+
         AsyncOperation operation;
 
         switch (state)

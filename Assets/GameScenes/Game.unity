@@ -381,6 +381,7 @@ MonoBehaviour:
   pauseMenuCanvas: {fileID: 800212436}
   debugMode: 0
   player: {fileID: 1870481896}
+  BlockParent: {fileID: 513305257}
 --- !u!4 &485825734
 Transform:
   m_ObjectHideFlags: 0

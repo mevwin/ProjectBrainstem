@@ -75,7 +75,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4959368680994018757}
-  - component: {fileID: 4739381651341185628}
   - component: {fileID: 3099772035385520837}
   m_Layer: 0
   m_Name: Marketus_Mesh
@@ -100,24 +99,6 @@ Transform:
   - {fileID: 1233977592193927054}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4739381651341185628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6528895653165676640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42e9a0953b396c74eb19c7c3d7535793, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  HeadAnimator: {fileID: 4154358747586933614}
-  BodyAnimator: {fileID: 4695790229993133790}
-  idleTimer: 0
-  lastPos: {x: 0, y: 0, z: 0}
-  delta: {x: 0, y: 0, z: 0}
 --- !u!54 &3099772035385520837
 Rigidbody:
   m_ObjectHideFlags: 0
