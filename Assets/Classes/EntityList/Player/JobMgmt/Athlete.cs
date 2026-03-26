@@ -48,6 +48,10 @@ public class Athlete : JobState
             targetDistance = hit.distance;
             player.ChangeState("NoState");
         }
+        else if (!vaultActive && player.IsAbilityPressed() && player.movementSpeed > 1.1f * defaultSpeed)
+        {
+            player.ExitJobState();
+        }
         else if (!vaultActive)
         {
             Debug.DrawRay(player.gameObject.transform.position, rotatedDirection * poleDistance, Color.red);
@@ -82,13 +86,15 @@ public class Athlete : JobState
         }
 
         if (currentAngle > Math.PI * 0.5f)
+        {
             player.ExitJobState();
+            Debug.Log(player.gameObject.transform.position + $" {player.movementSpeed/defaultSpeed}");
+        }
     }
 
     public override void ExitState(Dictionary<string, object> args = null)
     {
-        //Debug.Log("Exitted Athlete Ability")
-        Debug.Log(player.gameObject.transform.position + $" {player.movementSpeed/defaultSpeed}");
+        //Debug.Log("Exitted Athlete Ability");
         player.poleVaultBoost = player.movementSpeed * output.normalized;
         player.movementSpeed = defaultSpeed;
         player.poleVaultBoostDecayRate = targetDistance;

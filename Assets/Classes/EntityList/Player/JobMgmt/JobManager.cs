@@ -12,7 +12,7 @@ public class JobManager : StateManager
         ARTIST,
     }
 
-    public string JobEnumToString(Job job)
+    public static string JobEnumToString(Job job)
     {
         string title = job switch {
             Job.ARTIST => "Artist",

@@ -16,6 +16,7 @@ public class Level : MonoBehaviour
         if (gameManager && gameManager.player){
             gameManager.player.SetActive(true);
             gameManager.player.transform.position = playerSpawnPoint.position;   
+            gameManager.player.transform.rotation = playerSpawnPoint.rotation;
         }
     }
 }

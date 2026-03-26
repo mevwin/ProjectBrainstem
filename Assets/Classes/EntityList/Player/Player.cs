@@ -84,7 +84,7 @@ public class Player : Entity
         if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive && itemPresent == null)
         {
             abilityActive = true;
-            jobManager.ChangeState(jobManager.JobEnumToString(currentJob));
+            jobManager.ChangeState(JobManager.JobEnumToString(currentJob));
         }
 
         if (abilityActive && currentJob > JobManager.Job.NONE)
