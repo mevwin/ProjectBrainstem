@@ -6,8 +6,8 @@ public class Athlete : JobState
 {
     public Athlete(Player player): base(player) { }
 
-    private const float poleDistance = 25f;
-    private const float speedIncRate = 0.1f;
+    private const float poleDistance = 20f;
+    private const float speedIncRate = 0.5f;
 
     private bool vaultActive = false;
 
@@ -17,6 +17,8 @@ public class Athlete : JobState
     private float currentAngle = 0f;
 
     private Vector3 output = Vector3.zero;
+    private Quaternion targetRotation = Quaternion.identity;
+    Vector3 rotatedDirection = Vector3.zero;
 
 
     // TODO: implement me
@@ -25,43 +27,31 @@ public class Athlete : JobState
         //Debug.Log("Activated Athlete Ability");
         currentAngle = 0f;
 
+        targetRotation = player.gameObject.transform.rotation;
         defaultSpeed = player.movementSpeed;
         vaultActive = false;
+        player.ChangeState("NoState");
     }
 
     public override void UpdateState()
     {
         //Debug.Log("Updating Athlete Ability State");
 
-        // Update Pole Raycast
-        Quaternion rotation = Quaternion.Euler(2.5f, 0, 0);
-        Vector3 direction = rotation * Vector3.forward;
-        Vector3 rotatedDirection = player.gameObject.transform.rotation * direction;
-
-        if (player.HasJumped() && !vaultActive &&
-            player.movementSpeed > 2f * defaultSpeed &&
+        if (!vaultActive && player.movementSpeed >= 1.5f * defaultSpeed &&
             Physics.Raycast(player.gameObject.transform.position, rotatedDirection, out RaycastHit hit) &&
             hit.distance <= poleDistance && hit.distance > poleDistance * 0.5f
         ) { 
             vaultActive = true;
             vaultCircularSpeed = player.movementSpeed * 0.125f;
             targetDistance = hit.distance;
-            player.ChangeState("NoState");
         }
-        else if (!vaultActive && player.IsAbilityPressed() && player.movementSpeed > 1.1f * defaultSpeed)
+        else if (!vaultActive && player.HasJumped() && player.movementSpeed > 1.1f * defaultSpeed)
         {
             player.ExitJobState();
         }
         else if (!vaultActive)
         {
             Debug.DrawRay(player.gameObject.transform.position, rotatedDirection * poleDistance, Color.red);
-
-            if (player.IsMoving())
-            {
-                if (player.movementSpeed <= defaultSpeed * 4f)
-                    player.movementSpeed += speedIncRate;
-            }
-            else player.movementSpeed = defaultSpeed;
         }
     }
 
@@ -74,21 +64,30 @@ public class Athlete : JobState
     {
         //Debug.Log("Fixed Updating Athlete Ability State");
 
+        // Update Pole Raycast
+        Vector3 angleOffset = Quaternion.Euler(2.5f, 0, 0) * Vector3.forward;
+        rotatedDirection = targetRotation * angleOffset;
+
         if (vaultActive)
         {
             currentAngle += vaultCircularSpeed * Time.fixedDeltaTime;
             Vector3 circularMotion = new(0, 
-                                        Mathf.Sin(currentAngle) * targetDistance * 2f,
+                                        Mathf.Sin(currentAngle) * targetDistance * 1.4f,
                                         Mathf.Cos(currentAngle) * targetDistance);
             output = player.gameObject.transform.rotation * circularMotion;
             // output *= player.movementSpeed/defaultSpeed;
             player.UpdateMovementVector(output, true);
         }
+        else
+        {
+            player.movementSpeed += speedIncRate;
+            player.UpdateMovementVector(player.movementSpeed * (targetRotation * Vector3.forward));
+        }
 
         if (currentAngle > Math.PI * 0.5f)
         {
             player.ExitJobState();
-            Debug.Log(player.gameObject.transform.position + $" {player.movementSpeed/defaultSpeed}");
+            // Debug.Log(player.gameObject.transform.position + $" {player.movementSpeed/defaultSpeed}");
         }
     }
 
