@@ -1338,7 +1338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8148457395018317363, guid: 242622584e691f44f85a449582c91cff, type: 3}
       propertyPath: m_Name
-      value: AbilityItem (1)
+      value: AthleteItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8541,7 +8541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8148457395018317363, guid: 242622584e691f44f85a449582c91cff, type: 3}
       propertyPath: m_Name
-      value: AbilityItem
+      value: BuilderItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

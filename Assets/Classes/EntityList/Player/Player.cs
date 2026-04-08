@@ -28,7 +28,8 @@ public class Player : Entity
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
-    [SerializeField] private JobManager.Job currentJob = JobManager.Job.NONE;
+    public JobManager.Job CurrentJob { get;  private set;} = JobManager.Job.NONE;
+    public JobManager.Job StoredJob { get;  private set;} = JobManager.Job.NONE;
     [SerializeField] private BlockManager blockManager;
 
     // Athlete
@@ -90,32 +91,31 @@ public class Player : Entity
 
         DetectItem();
 
-        if (currentJob == JobManager.Job.ATHLETE && !abilityActive)
+        if (CurrentJob == JobManager.Job.ATHLETE && !abilityActive)
         {
             AthleteDetectPoleVaultSpot();
-            DebugBoxCast.SimpleDrawBoxCast(
-                transform.position + boxCastOffset, 
-                halfExtents * 0.5f,
-                cam.transform.rotation,
-                cam.transform.forward,
-                poleMaxDistance,
-                Color.red);
-
+            // DebugBoxCast.SimpleDrawBoxCast(
+            //     transform.position + boxCastOffset, 
+            //     halfExtents * 0.5f,
+            //     cam.transform.rotation,
+            //     cam.transform.forward,
+            //     poleMaxDistance,
+            //     Color.red);
         }
 
         // Input Check For Job Abilities
-        if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive && itemPresent == null)
+        if (IsAbilityPressed() && CurrentJob > JobManager.Job.NONE && !abilityActive && itemPresent == null)
         {
-            if (currentJob != JobManager.Job.ATHLETE)
+            if (CurrentJob != JobManager.Job.ATHLETE)
             {
                 abilityActive = true;
-                jobManager.ChangeState(JobManager.JobEnumToString(currentJob));
+                jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
             }
             else if (IsGrounded() && AthleteCheckCollisionsForSpot()) // athlete checks
             {
                 abilityActive = true;
                 jobManager.ChangeState(
-                    JobManager.JobEnumToString(currentJob),
+                    JobManager.JobEnumToString(CurrentJob),
                     new Dictionary<string, object>()
                     {
                         { "poleDistance", vaultDistance},
@@ -124,7 +124,7 @@ public class Player : Entity
             }
         }
 
-        if (abilityActive && currentJob > JobManager.Job.NONE)
+        if (abilityActive && CurrentJob > JobManager.Job.NONE)
             jobManager.CurrentStateUpdate();
     }
 
@@ -145,7 +145,7 @@ public class Player : Entity
             hasJumped = false;
         }
 
-        if (abilityActive && currentJob > JobManager.Job.NONE)
+        if (abilityActive && CurrentJob > JobManager.Job.NONE)
             jobManager.CurrentStateFixedUpdate();
 
         // Decrease poleVaultBoost overtime
@@ -204,7 +204,7 @@ public class Player : Entity
         jobManager.AddState("Builder", new Builder(this));
         jobManager.AddState("Athlete", new Athlete(this));
 
-        SetPlayerJobAbility(JobManager.Job.NONE);
+        SetCurrentJob(JobManager.Job.NONE);
         jobManager.SetStartingState("None");
     }
 
@@ -256,9 +256,14 @@ public class Player : Entity
         return inputActions[InputKey.ABILITY].WasPressedThisFrame();
     }
 
-    public void SetPlayerJobAbility(JobManager.Job newJob)
+    public void SetCurrentJob(JobManager.Job newJob)
     {
-        currentJob = newJob;
+        CurrentJob = newJob;
+    }
+
+    public void SetStoredJob(JobManager.Job newJob)
+    {
+        StoredJob = newJob;
     }
 
     public void ExitJobState()
@@ -302,7 +307,7 @@ public class Player : Entity
 
     void OnCollisionEnter(Collision collision) {
         if (collision.collider.gameObject.TryGetComponent(out PoleVaultSpot testSpot) && 
-            abilityActive && currentJob == JobManager.Job.ATHLETE &&
+            abilityActive && CurrentJob == JobManager.Job.ATHLETE &&
             testSpot == spot
         ) {
             initiatePullJump = true;
