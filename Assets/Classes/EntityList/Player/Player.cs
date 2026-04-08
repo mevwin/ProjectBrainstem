@@ -30,8 +30,17 @@ public class Player : Entity
     [SerializeField] private JobManager jobManager;
     [SerializeField] private JobManager.Job currentJob = JobManager.Job.NONE;
     [SerializeField] private BlockManager blockManager;
+
+    // Athlete
+    private RaycastHit[] hits;
+    [NonSerialized] public PoleVaultSpot spot;
+    [NonSerialized] public bool initiatePullJump = false;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
-    [NonSerialized] public float poleVaultBoostDecayRate = 10f;
+    [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
+    private float vaultDistance = 0f;
+    private const float poleMaxDistance = 18f;
+    private readonly Vector3 halfExtents = new(1f, 10, 1f);
+    private readonly Vector3 boxCastOffset = new(0, 1f, 0);
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -70,7 +79,8 @@ public class Player : Entity
         base.Update();
         if (Time.timeScale == 0f) return;
 
-        if (HasJumped()) {
+        if (HasJumped()) 
+        {
             // PlayAudioSource("Footsteps");
             hasJumped = true;
         }
@@ -80,11 +90,38 @@ public class Player : Entity
 
         DetectItem();
 
+        if (currentJob == JobManager.Job.ATHLETE && !abilityActive)
+        {
+            AthleteDetectPoleVaultSpot();
+            DebugBoxCast.SimpleDrawBoxCast(
+                transform.position + boxCastOffset, 
+                halfExtents * 0.5f,
+                cam.transform.rotation,
+                cam.transform.forward,
+                poleMaxDistance,
+                Color.red);
+
+        }
+
         // Input Check For Job Abilities
         if (IsAbilityPressed() && currentJob > JobManager.Job.NONE && !abilityActive && itemPresent == null)
         {
-            abilityActive = true;
-            jobManager.ChangeState(JobManager.JobEnumToString(currentJob));
+            if (currentJob != JobManager.Job.ATHLETE)
+            {
+                abilityActive = true;
+                jobManager.ChangeState(JobManager.JobEnumToString(currentJob));
+            }
+            else if (IsGrounded() && AthleteCheckCollisionsForSpot()) // athlete checks
+            {
+                abilityActive = true;
+                jobManager.ChangeState(
+                    JobManager.JobEnumToString(currentJob),
+                    new Dictionary<string, object>()
+                    {
+                        { "poleDistance", vaultDistance},
+                    }
+                );
+            }
         }
 
         if (abilityActive && currentJob > JobManager.Job.NONE)
@@ -100,7 +137,8 @@ public class Player : Entity
         
         rigidBody.angularVelocity = Vector3.zero;
 
-        if (hasJumped && !abilityActive) {
+        if (hasJumped && !abilityActive) 
+        {
             Vector3 vector = rigidBody.linearVelocity;
             vector.y = jumpSpeed;
             rigidBody.linearVelocity = vector;
@@ -108,9 +146,7 @@ public class Player : Entity
         }
 
         if (abilityActive && currentJob > JobManager.Job.NONE)
-        {
             jobManager.CurrentStateFixedUpdate();
-        }
 
         // Decrease poleVaultBoost overtime
         if (poleVaultBoost.magnitude > 0)
@@ -241,6 +277,38 @@ public class Player : Entity
         blockManager.UpdateBlocks();
     }
 
+    public void AthleteDetectPoleVaultSpot()
+    {
+        hits = Physics.BoxCastAll(
+            transform.position + boxCastOffset, 
+            halfExtents * 0.5f,
+            cam.transform.forward,
+            cam.transform.rotation,
+            poleMaxDistance);
+    }
+
+    public bool AthleteCheckCollisionsForSpot()
+    {
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.gameObject.TryGetComponent(out spot))
+            {   
+                vaultDistance = hit.distance;
+                return true;    
+            }
+        }
+        return false;
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        if (collision.collider.gameObject.TryGetComponent(out PoleVaultSpot testSpot) && 
+            abilityActive && currentJob == JobManager.Job.ATHLETE &&
+            testSpot == spot
+        ) {
+            initiatePullJump = true;
+        }
+    }
+
     // Interact
     public bool HasGrabbed()
     {
@@ -249,7 +317,7 @@ public class Player : Entity
 
     public void DetectItem()
     {
-        if (Physics.Raycast(this.transform.position, cam.transform.forward, out RaycastHit hit))
+        if (Physics.Raycast(transform.position, cam.transform.forward, out RaycastHit hit))
         {
             if (hit.transform.gameObject.GetComponent<Item>() && hit.distance <= 3f)
             {
