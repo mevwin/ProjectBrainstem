@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 2123839367}
+    - target: {fileID: -1439084216661243978, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: blueSplotchPrefab
+      value: 
+      objectReference: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
     - target: {fileID: 6023534201621546915, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
       propertyPath: m_Name
       value: Player

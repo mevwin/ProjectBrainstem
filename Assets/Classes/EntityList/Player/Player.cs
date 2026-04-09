@@ -31,10 +31,10 @@ public class Player : Entity
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
-    public JobManager.Job CurrentJob { get;  private set;} = JobManager.Job.NONE;
-    public JobManager.Job StoredJob { get;  private set;} = JobManager.Job.NONE;
     [SerializeField] private BlockManager blockManager;
-
+    public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
+    public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
+    
     // Athlete
     private RaycastHit[] hits;
     [NonSerialized] public PoleVaultSpot spot;
@@ -46,8 +46,10 @@ public class Player : Entity
     private readonly Vector3 halfExtents = new(1f, 10, 1f);
     private readonly Vector3 boxCastOffset = new(0, 1f, 0);
 
-    // Painter
-    private Painter.Splotch currentSplotch = Painter.Splotch.NONE;
+    // Artist
+    public Artist.Splotch CurrentSplotch { get; private set; }= Artist.Splotch.NONE;
+    [SerializeField] private GameObject blueSplotchPrefab;
+    private BlueSplotch blueSplotch;
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -101,22 +103,37 @@ public class Player : Entity
         // Detection
         DetectItem();
 
-        if (CurrentJob == JobManager.Job.ATHLETE && !abilityActive)
-        {
-            AthleteDetectPoleVaultSpot();
-            // DebugBoxCast.SimpleDrawBoxCast(
-            //     cam.transform.position + boxCastOffset, 
-            //     halfExtents * 0.5f,
-            //     cam.transform.rotation,
-            //     cam.transform.forward,
-            //     poleMaxDistance,
-            //     Color.red);
-        }
-
         // Zoom-In Effect
         if (IsZoomHeld() && !abilityActive)
         {
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, zoomOffset.localPosition, Time.deltaTime * 25f);
+
+            if (!abilityActive)
+            {
+                switch (CurrentJob)
+                {
+                    case JobManager.Job.ATHLETE:
+                        ZoomDetection();
+
+                        // DebugBoxCast.SimpleDrawBoxCast(
+                        //     cam.transform.position + boxCastOffset, 
+                        //     halfExtents * 0.5f,
+                        //     cam.transform.rotation,
+                        //     cam.transform.forward,
+                        //     poleMaxDistance,
+                        //     Color.red);
+                        break;
+
+                    case JobManager.Job.ARTIST:
+                        Debug.DrawRay(
+                            cam.transform.position + boxCastOffset,
+                            cam.transform.forward,
+                            Color.red
+                        );
+
+                        break;
+                }
+            }
         }
         else
         {
@@ -127,22 +144,38 @@ public class Player : Entity
         if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE 
             && !abilityActive && itemPresent == null)
         {
-            if (CurrentJob != JobManager.Job.ATHLETE)
+            switch (CurrentJob)
             {
-                abilityActive = true;
-                jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
-            }
-            else if (IsGrounded() && AthleteCheckCollisionsForSpot()) // athlete checks
-            {
-                abilityActive = true;
-                jobManager.ChangeState(
-                    JobManager.JobEnumToString(CurrentJob),
-                    new Dictionary<string, object>()
+                case JobManager.Job.BUILDER:
+                    abilityActive = true;
+                    jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
+
+                    break;
+
+                case JobManager.Job.ATHLETE:
+                    if (IsGrounded() && AthleteCheckCollisionsForSpot())
                     {
-                        { "poleDistance", vaultDistance },
-                        { "polePosition", spot.transform.position }
+                        abilityActive = true;
+                        jobManager.ChangeState(
+                            JobManager.JobEnumToString(CurrentJob),
+                            new Dictionary<string, object>()
+                            {
+                                { "poleDistance", vaultDistance },
+                                { "polePosition", spot.transform.position }
+                            }
+                        );
                     }
-                );
+
+                    break;
+
+                case JobManager.Job.ARTIST:
+                    if (ArtistCheckForBlueSplotchSpawn())
+                    {
+                        Debug.Log("blue splotch spawned");
+                    }
+
+                    break;
+
             }
         }
 
@@ -310,7 +343,7 @@ public class Player : Entity
         blockManager.UpdateBlocks();
     }
 
-    public void AthleteDetectPoleVaultSpot()
+    public void ZoomDetection()
     {
         hits = Physics.BoxCastAll(
             cam.transform.position + boxCastOffset, 
@@ -324,13 +357,47 @@ public class Player : Entity
     {
         foreach (RaycastHit hit in hits)
         {
-            if (hit.collider.gameObject.TryGetComponent(out spot))
-            {   
+            if (hit.collider.gameObject.TryGetComponent(out spot) && 
+                transform.position.y > spot.transform.position.y - 2f &&
+                transform.position.y < spot.transform.position.y + 2f
+            ) {   
                 vaultDistance = hit.distance;
                 return true;    
             }
         }
         return false;
+    }
+
+    public bool ArtistCheckForBlueSplotchSpawn()
+    {
+        if (Physics.Raycast(
+            cam.transform.position + boxCastOffset, 
+            cam.transform.forward, 
+            out RaycastHit hit, 
+            30f)
+        ) {   
+            float dot = Vector3.Dot(hit.normal, Vector3.up);
+            
+            if (dot > 0.99f) { // Closest to 1.0 means flatter
+                return true;    // Surface is very flat
+            }
+        }
+        return false;
+    }
+
+    public void ArtistSpawnBlueSplotch()
+    {
+        // blueSplotch = Instantiate(blueSplotchPrefab, ),
+    }
+
+    public void ArtistRepositionBlueSplotch()
+    {
+        
+    }
+
+    public void ArtistDespawnBlueSplotch()
+    {
+        
     }
 
     void OnCollisionEnter(Collision collision) {
