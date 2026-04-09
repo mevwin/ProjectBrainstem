@@ -15,6 +15,7 @@ public class Athlete : JobState
     private float vaultCircularSpeed = 0f;
     private float currentAngle = 0f;
     private float targetDistance = 0f;
+    private Vector3 targetPosition = Vector3.zero;
     private Quaternion targetRotation = Quaternion.identity;
 
     private Vector3 output = Vector3.zero;
@@ -26,12 +27,18 @@ public class Athlete : JobState
         //Debug.Log("Activated Athlete Ability");
         currentAngle = 0f;
 
-        targetRotation = player.transform.rotation;
         defaultSpeed = player.movementSpeed;
         vaultActive = false;
 
-        if (args != null && args.ContainsKey("poleDistance"))
-            targetDistance = (float) args["poleDistance"];
+        if (args != null)
+        {
+            if (args.ContainsKey("poleDistance"))
+                targetDistance = (float) args["poleDistance"];
+            if (args.ContainsKey("polePosition"))
+                targetPosition = (Vector3) args["polePosition"];
+        }
+
+        targetRotation = Quaternion.LookRotation(targetPosition - player.transform.position);
 
         player.ChangeState("NoState");
     }
@@ -65,7 +72,7 @@ public class Athlete : JobState
             Vector3 circularMotion = new(0, 
                                         Mathf.Sin(currentAngle) * targetDistance * 2f,
                                         Mathf.Cos(currentAngle) * targetDistance);
-            output = player.gameObject.transform.rotation * circularMotion;
+            output = player.transform.rotation * circularMotion;
             player.UpdateMovementVector(output, true);
         }
         else

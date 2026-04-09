@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1439084216661243978, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 2123839367}
     - target: {fileID: 6023534201621546915, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -738,6 +742,11 @@ Transform:
 --- !u!1 &1870481896 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6023534201621546915, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+  m_PrefabInstance: {fileID: 130324895}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2123839367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6780200429520697166, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
   m_PrefabInstance: {fileID: 130324895}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6990836719521461927

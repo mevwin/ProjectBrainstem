@@ -169,6 +169,37 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &7938461223433615257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6629727507589140395}
+  m_Layer: 0
+  m_Name: CamZoom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6629727507589140395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7938461223433615257}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.6, y: -0.3, z: 1.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8737386657339942497}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4059780051713867055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -343,6 +374,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6571695529832023508}
+    - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6629727507589140395}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: 2
@@ -403,9 +437,9 @@ MonoBehaviour:
   HeadAnimator: {fileID: 139615125956693569}
   BodyAnimator: {fileID: 8754417302027545585}
   jobManager: {fileID: 7641687114105757430}
-  currentJob: 0
   blockManager: {fileID: 7458270818328167382}
   cam: {fileID: 6780200429520697166}
+  zoomOffset: {fileID: 6629727507589140395}
 --- !u!114 &7641687114105757430
 MonoBehaviour:
   m_ObjectHideFlags: 0

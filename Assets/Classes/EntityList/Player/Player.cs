@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +14,7 @@ public class Player : Entity
         JUMP,
         INTERACT,
         ABILITY,
+        ZOOM,
     }
 
     public static GameObject Instance { get; private set; }
@@ -43,6 +46,9 @@ public class Player : Entity
     private readonly Vector3 halfExtents = new(1f, 10, 1f);
     private readonly Vector3 boxCastOffset = new(0, 1f, 0);
 
+    // Painter
+    private Painter.Splotch currentSplotch = Painter.Splotch.NONE;
+
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
 
@@ -52,6 +58,8 @@ public class Player : Entity
 
     // Item Detection
     public GameObject cam;
+    [SerializeField] private Transform zoomOffset;
+    private Vector3 camOriginalOffset;
     Item itemPresent;
 
     public override void Awake()
@@ -89,13 +97,15 @@ public class Player : Entity
         if (HasGrabbed())
             itemPresent.Pickup(this);
 
+
+        // Detection
         DetectItem();
 
         if (CurrentJob == JobManager.Job.ATHLETE && !abilityActive)
         {
             AthleteDetectPoleVaultSpot();
             // DebugBoxCast.SimpleDrawBoxCast(
-            //     transform.position + boxCastOffset, 
+            //     cam.transform.position + boxCastOffset, 
             //     halfExtents * 0.5f,
             //     cam.transform.rotation,
             //     cam.transform.forward,
@@ -103,8 +113,19 @@ public class Player : Entity
             //     Color.red);
         }
 
+        // Zoom-In Effect
+        if (IsZoomHeld() && !abilityActive)
+        {
+            cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, zoomOffset.localPosition, Time.deltaTime * 25f);
+        }
+        else
+        {
+            cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
+        }
+
         // Input Check For Job Abilities
-        if (IsAbilityPressed() && CurrentJob > JobManager.Job.NONE && !abilityActive && itemPresent == null)
+        if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE 
+            && !abilityActive && itemPresent == null)
         {
             if (CurrentJob != JobManager.Job.ATHLETE)
             {
@@ -118,7 +139,8 @@ public class Player : Entity
                     JobManager.JobEnumToString(CurrentJob),
                     new Dictionary<string, object>()
                     {
-                        { "poleDistance", vaultDistance},
+                        { "poleDistance", vaultDistance },
+                        { "polePosition", spot.transform.position }
                     }
                 );
             }
@@ -195,6 +217,7 @@ public class Player : Entity
             inputActions.Add(InputKey.JUMP, InputSystem.actions.FindAction("Player/Jump"));
             inputActions.Add(InputKey.INTERACT, InputSystem.actions.FindAction("Player/Interact"));
             inputActions.Add(InputKey.ABILITY, InputSystem.actions.FindAction("Player/Attack"));
+            inputActions.Add(InputKey.ZOOM, InputSystem.actions.FindAction("Player/Zoom"));
         }
     }
 
@@ -251,6 +274,11 @@ public class Player : Entity
     }
 
     // Job Mgmt
+    public bool IsZoomHeld()
+    {
+        return inputActions[InputKey.ZOOM].IsPressed();
+    }
+
     public bool IsAbilityPressed()
     {
         return inputActions[InputKey.ABILITY].WasPressedThisFrame();
@@ -285,7 +313,7 @@ public class Player : Entity
     public void AthleteDetectPoleVaultSpot()
     {
         hits = Physics.BoxCastAll(
-            transform.position + boxCastOffset, 
+            cam.transform.position + boxCastOffset, 
             halfExtents * 0.5f,
             cam.transform.forward,
             cam.transform.rotation,
