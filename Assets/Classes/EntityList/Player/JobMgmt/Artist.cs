@@ -11,11 +11,35 @@ public class Artist : JobState
         YELL0W
     }
 
+    public enum SplotchState
+    {
+        NONE,
+        SPAWN,
+        REPOSITION,
+        DESPAWN
+    }
+
     public Artist(Player player): base(player) { }
+
+    private float hitDistance = 0f;
+    private Vector3 hitPosition = Vector3.zero;
+    private SplotchState splotchState = SplotchState.NONE;
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
         // Debug.Log("Activated Artist Ability");
+
+        if (args != null)
+        {
+            if (args.ContainsKey("hitDistance"))
+                hitDistance = (float) args["hitDistance"];
+            
+            if (args.ContainsKey("hitPosition"))
+                hitPosition = (Vector3) args["hitPosition"];
+
+            if (args.ContainsKey("splotchState"))
+                splotchState = (SplotchState) args["splotchState"];
+        }
         
         switch (player.CurrentSplotch)
         {
@@ -32,7 +56,25 @@ public class Artist : JobState
                 if blue splotch has been activated and player is looking at it, despawn splotch
                 */
 
-                
+
+                switch (splotchState)
+                {
+                    case SplotchState.SPAWN:
+                        player.ArtistSpawnBlueSplotch(hitPosition);
+
+                        break;
+                    
+                    case SplotchState.REPOSITION:
+                        if (hitPosition != Vector3.zero)
+                            player.ArtistRepositionBlueSplotch(hitPosition);
+
+                        break;
+
+                    case SplotchState.DESPAWN:
+                        player.ArtistDespawnBlueSplotch();
+                        
+                        break;
+                }
 
                 break;
             
@@ -49,6 +91,8 @@ public class Artist : JobState
     public override void UpdateState()
     {
         // Debug.Log("Updating Artist Ability State");
+        player.ExitJobState();
+
         switch (player.CurrentSplotch)
         {
             case Splotch.RED:
@@ -93,7 +137,8 @@ public class Artist : JobState
 
     public override void ExitState(Dictionary<string, object> args = null)
     {
-        Debug.Log("Exitted Artist Ability");
+        // Debug.Log("Exitted Artist Ability");
+        player.abilityActive = false;
     }
 
     // Stop vertical movement for interactables

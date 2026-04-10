@@ -7,12 +7,12 @@ public class BlueSplotch : Interactable
         
     }
 
-    public override void OnTriggerEnter(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
             Vector3 elevatedMovement = player.GetRigidbodyVelocity();
-            elevatedMovement.y = 15f;
+            elevatedMovement.y = 10f;
 
             player.UpdateMovementVector(elevatedMovement, true);
         }
