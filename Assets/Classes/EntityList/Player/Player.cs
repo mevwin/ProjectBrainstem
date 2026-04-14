@@ -33,7 +33,11 @@ public class Player : Entity
     public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
     private float castHitDistance = 0f;
-    
+
+    // Builder
+    [SerializeField] public GameObject BlockProjection;
+    [SerializeField] public GameObject BlockBuilt;
+
     // Athlete
     private RaycastHit[] hits;
     [NonSerialized] public PoleVaultSpot spot;
@@ -136,6 +140,10 @@ public class Player : Entity
                         //     30f))
                         //     Debug.Log("Hitting" + hit.collider.name);
 
+                        break;
+
+                    case JobManager.Job.BUILDER:
+                        jobManager.PrepAbility(CurrentJob);
                         break;
                 }
             }

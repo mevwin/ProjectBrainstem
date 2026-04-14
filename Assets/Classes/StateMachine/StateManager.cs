@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
-    private readonly Dictionary<string, State> stateMap = new();
+    protected readonly Dictionary<string, State> stateMap = new();
     private State currentState;
 
     /// <summary>
@@ -57,5 +57,10 @@ public class StateManager : MonoBehaviour
     public void SetStartingState(string name)
     {
         currentState = stateMap[name];
+    }
+
+    public State GetState()
+    {
+        return currentState;
     }
 }

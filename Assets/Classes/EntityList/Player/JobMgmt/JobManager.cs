@@ -24,6 +24,17 @@ public class JobManager : StateManager
         return title;
     }
 
+    public void PrepAbility(Job job)
+    {
+        switch (job)
+        {
+            case Job.BUILDER:
+                stateMap.TryGetValue(JobEnumToString(job), out var state);
+                (state as Builder).ProjectBlock();
+                break;
+        }
+    }
+
     public void ExitJobState()
     {
         ChangeState("None");
