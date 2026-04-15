@@ -26,6 +26,12 @@ public class Player : Entity
     private float modelIdleTimer = 0f;
     [SerializeField] private Animator HeadAnimator;
     [SerializeField] private Animator BodyAnimator;
+    public GameObject[] artistPrefabs;
+    public GameObject[] athletePrefabs;
+    public GameObject[] builderPrefabs;
+    public GameObject[] musicianPrefabs;
+
+    public GameObject ParticleParent;
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
@@ -290,7 +296,6 @@ public class Player : Entity
 
         if (modelIdleTimer > 700f)
         {
-            HeadAnimator.SetBool("goIdle", true);
             BodyAnimator.SetBool("goIdle", true);
 
             modelIdleTimer = 0f;
@@ -370,7 +375,6 @@ public class Player : Entity
     IEnumerator ResetModelState()
     {
         yield return new WaitForSeconds(4.1f);
-        HeadAnimator.SetBool("goIdle", false);
         BodyAnimator.SetBool("goIdle", false);
     }
 
@@ -388,6 +392,66 @@ public class Player : Entity
     public void SetCurrentJob(JobManager.Job newJob)
     {
         CurrentJob = newJob;
+        KitReset();
+
+        // Activate Switching VFX
+        foreach (Transform child in ParticleParent.transform) {
+            child.gameObject.SetActive(false);
+            child.gameObject.SetActive(true);
+            child.GetComponent<ParticleSystem>().Play();
+        }
+        KitEnable(newJob);
+    }
+
+    void KitReset()
+    {
+        // foreach (GameObject go in artistPrefabs)
+        // {
+        //     go.SetActive(false);
+        // }
+        foreach (GameObject go in athletePrefabs)
+        {
+            go.SetActive(false);
+        }
+        // foreach (GameObject go in Builder)
+        // {
+        //     go.SetActive(false);
+        // }
+        // foreach (GameObject go in Musician)
+        // {
+        //     go.SetActive(false);
+        // }
+    }
+
+    public void KitEnable(JobManager.Job newJob)
+    {
+        switch (newJob)
+        {
+            // case "Artist":
+            //     foreach (GameObject go in Artist)
+            //     {
+            //         go.SetActive(true);
+            //     }
+            //     break;
+            case JobManager.Job.ATHLETE:
+                foreach (GameObject go in athletePrefabs)
+                {
+                    go.SetActive(true);
+                }
+                break;
+            // case "Builder":
+            //     foreach (GameObject go in Builder)
+            //     {
+            //         go.SetActive(true);
+            //     }
+            //     break;
+            // case "Musician":
+            //     foreach (GameObject go in Musician)
+            //     {
+            //         go.SetActive(true);
+            //     }
+            //     break;
+        }
     }
 
     public void SetStoredJob(JobManager.Job newJob)
