@@ -439,12 +439,13 @@ public class Player : Entity
                     go.SetActive(true);
                 }
                 break;
-            // case "Builder":
-            //     foreach (GameObject go in Builder)
-            //     {
-            //         go.SetActive(true);
-            //     }
-            //     break;
+
+            case JobManager.Job.BUILDER:
+                 foreach (GameObject go in builderPrefabs)
+                 {
+                    go.SetActive(true);
+                 }
+                 break;
             // case "Musician":
             //     foreach (GameObject go in Musician)
             //     {

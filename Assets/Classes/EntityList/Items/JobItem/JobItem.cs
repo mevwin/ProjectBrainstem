@@ -7,7 +7,7 @@ public class JobItem : Item
     public override void Pickup(Player player)
     {
         base.Pickup(player);
-        // Debug.Log("Job Pickup: " + JobManager.JobEnumToString(job));
+        Debug.Log("Job Pickup: " + JobManager.JobEnumToString(job));
         if (player.CurrentJob == job || player.StoredJob == job)
             return;
 
