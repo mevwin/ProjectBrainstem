@@ -155,7 +155,7 @@ public class Player : Entity
 
         // Input Check For Job Abilities
         if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE 
-            && !abilityActive && itemPresent == null)
+            && !abilityActive)
         {
             switch (CurrentJob)
             {

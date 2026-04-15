@@ -11,4 +11,9 @@ public class BuilderBlock : Item
     {
         
     }
+
+    public void Despawn()
+    {
+        Destroy(gameObject);
+    }
 }
