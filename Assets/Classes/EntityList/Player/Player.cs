@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,18 +19,7 @@ public class Player : Entity
     [Header("==Player Fields==")]
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
-
-    [Header("==Model Fields==")]
-    private Vector3 lastPos;
-    private float modelIdleTimer = 0f;
-    [SerializeField] private Animator HeadAnimator;
-    [SerializeField] private Animator BodyAnimator;
-    public GameObject[] artistPrefabs;
-    public GameObject[] athletePrefabs;
-    public GameObject[] builderPrefabs;
-    public GameObject[] musicianPrefabs;
-
-    public GameObject ParticleParent;
+    [SerializeField] private PlayerModel model;
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
@@ -260,8 +248,6 @@ public class Player : Entity
     {
         base.FixedUpdate();
         if (Time.timeScale == 0f) return;
-
-        lastPos = transform.position;
         
         rigidBody.angularVelocity = Vector3.zero;
 
@@ -283,25 +269,6 @@ public class Player : Entity
         }
 
         //Debug.Log(rigidBody.linearVelocity);
-    }
-
-    void LateUpdate()
-    {
-        Vector3 delta = transform.position - lastPos;
-
-        if (delta.magnitude < 1)
-            modelIdleTimer += 1f;
-        else
-            modelIdleTimer++;
-
-        if (modelIdleTimer > 700f)
-        {
-            BodyAnimator.SetBool("goIdle", true);
-
-            modelIdleTimer = 0f;
-
-            StartCoroutine(ResetModelState());
-        }
     }
 
     // Initialization
@@ -371,13 +338,6 @@ public class Player : Entity
         return inputActions[InputKey.JUMP].WasPressedThisFrame() && IsGrounded();
     }
 
-    // Player Model
-    IEnumerator ResetModelState()
-    {
-        yield return new WaitForSeconds(4.1f);
-        BodyAnimator.SetBool("goIdle", false);
-    }
-
     // Job Mgmt
     public bool IsZoomHeld()
     {
@@ -391,68 +351,11 @@ public class Player : Entity
 
     public void SetCurrentJob(JobManager.Job newJob)
     {
+        model.JobKitToggle(CurrentJob, false);
         CurrentJob = newJob;
-        KitReset();
 
-        // Activate Switching VFX
-        foreach (Transform child in ParticleParent.transform) {
-            child.gameObject.SetActive(false);
-            child.gameObject.SetActive(true);
-            child.GetComponent<ParticleSystem>().Play();
-        }
-        KitEnable(newJob);
-    }
-
-    void KitReset()
-    {
-        // foreach (GameObject go in artistPrefabs)
-        // {
-        //     go.SetActive(false);
-        // }
-        foreach (GameObject go in athletePrefabs)
-        {
-            go.SetActive(false);
-        }
-        // foreach (GameObject go in Builder)
-        // {
-        //     go.SetActive(false);
-        // }
-        // foreach (GameObject go in Musician)
-        // {
-        //     go.SetActive(false);
-        // }
-    }
-
-    public void KitEnable(JobManager.Job newJob)
-    {
-        switch (newJob)
-        {
-            // case "Artist":
-            //     foreach (GameObject go in Artist)
-            //     {
-            //         go.SetActive(true);
-            //     }
-            //     break;
-            case JobManager.Job.ATHLETE:
-                foreach (GameObject go in athletePrefabs)
-                {
-                    go.SetActive(true);
-                }
-                break;
-
-            case JobManager.Job.BUILDER:
-                 foreach (GameObject go in builderPrefabs)
-                 {
-                    go.SetActive(true);
-                 }
-                 break;
-            // case "Musician":
-            //     foreach (GameObject go in Musician)
-            //     {
-            //         go.SetActive(true);
-            //     }
-            //     break;
-        }
+        model.JobKitSwitch();
+        model.JobKitToggle(newJob, true);
     }
 
     public void SetStoredJob(JobManager.Job newJob)
