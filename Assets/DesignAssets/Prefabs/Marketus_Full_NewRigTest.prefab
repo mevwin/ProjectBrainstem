@@ -7188,7 +7188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e9a0953b396c74eb19c7c3d7535793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6865867705952173469}
+  model: {fileID: 6865867705952173469}
+  ParticleParent: {fileID: 5616458017189225242}
   BodyAnimator: {fileID: 8565879674659227053}
   artistPrefabs:
   - {fileID: 6689493712077578072}
@@ -7207,7 +7208,7 @@ MonoBehaviour:
   - {fileID: 6822041710881013374}
   - {fileID: 4926676067260210857}
   - {fileID: 2019562267416245865}
-  ParticleParent: {fileID: 5616458017189225242}
+  turnSpeed: 15
   idleTimer: 0
   spin_idle_switch: 1
   lastPos: {x: 0, y: 0, z: 0}

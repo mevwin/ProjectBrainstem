@@ -10,11 +10,12 @@ public class CameraControl : MonoBehaviour
     InputAction look;
     Vector2 lookAmt;
 
-    float vertRotation;
+    float vertRotation = 0;
+    float horizRotation = 0;
 
     void Start()
     {
-        if (InputSystem.actions) // Get InputAction references from Project-wide input actions.
+        if (InputSystem.actions)
             look = InputSystem.actions.FindAction("Player/Look");
     }
 
@@ -32,15 +33,16 @@ public class CameraControl : MonoBehaviour
         if (lookAmt.x != 0f)
         {
             lookAmt.x *= sensitivity;
-            gameObject.transform.Rotate(0, lookAmt.x, 0);
+            horizRotation += lookAmt.x;
         }
 
         if (lookAmt.y != 0f)
         {
             lookAmt.y *= sensitivity;
             vertRotation = Mathf.Clamp(vertRotation - lookAmt.y, lowerBound, upperBound);
-            CameraOffsetY.transform.localRotation = Quaternion.Euler(vertRotation, 0, 0);
         }
+
+        CameraOffsetY.transform.localRotation = Quaternion.Euler(vertRotation, horizRotation, 0);
     }
 
     private void Positioning()

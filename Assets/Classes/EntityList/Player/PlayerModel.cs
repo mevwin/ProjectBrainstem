@@ -3,62 +3,73 @@ using UnityEngine;
 
 public class PlayerModel : MonoBehaviour
 {
-    public GameObject player;
-    public Animator BodyAnimator;
+    [SerializeField] private Player playerScript;
+    [SerializeField] private GameObject model;
+    [SerializeField] private GameObject ParticleParent;
+    [SerializeField] private Animator BodyAnimator;
     
-    public GameObject[] artistPrefabs;
-    public GameObject[] athletePrefabs;
-    public GameObject[] builderPrefabs;
-    public GameObject[] musicianPrefabs;
+    [Header("==Job Prefabs==")]
+    [SerializeField] private GameObject[] artistPrefabs;
+    [SerializeField] private GameObject[] athletePrefabs;
+    [SerializeField] private GameObject[] builderPrefabs;
+    [SerializeField] private GameObject[] musicianPrefabs;
 
-    public GameObject ParticleParent;
-
-    public float idleTimer;
-    public bool spin_idle_switch = true;
-
-    public Vector3 lastPos;
-    public Vector3 delta;
+    [Header("==Inspect Fields==")]
+    [SerializeField] private float turnSpeed = 10f;
+    [SerializeField] private float idleTimer;
+    [SerializeField] private bool spin_idle_switch = true;
+    [SerializeField] private Vector3 lastPos;
+    [SerializeField] private Vector3 delta;
+    [SerializeField] private Vector3 zoomHeldForward = Vector3.zero;
 
 
     private void FixedUpdate()
     {
-        lastPos = player.transform.position;
+        lastPos = model.transform.position;
     }
 
     // Update is called once per frame
     void LateUpdate()
     { 
-        delta = player.transform.position - lastPos;
+        if (Time.deltaTime == 0f) return;
+
+        delta = model.transform.position - lastPos;
 
         // follow position
-        transform.position = player.transform.position;
+        transform.position = model.transform.position;
 
-        // Debug.DrawRay(player.transform.position, delta.normalized * 1f, Color.green, 2f);
-
-        Vector3 direction = transform.forward + Vector3.RotateTowards(transform.forward, delta.normalized, 10 * Time.deltaTime, 0f);
-
-        direction = Vector3.ProjectOnPlane(direction, Vector3.up);
-        transform.forward = direction;
-
-        if (delta.magnitude < .1f)
+        if (playerScript.IsZoomHeld())
         {
-            idleTimer++;
+            zoomHeldForward = Vector3.ProjectOnPlane(playerScript.cam.transform.forward, Vector3.up);
+            transform.forward = zoomHeldForward;
         }
         else
         {
-            idleTimer = 0f;
-        }
+            Vector3 direction = transform.forward + Vector3.RotateTowards(transform.forward, delta.normalized, turnSpeed * Time.deltaTime, 0f);
 
-        if (idleTimer > 700f)
-        {
-            if (spin_idle_switch)
-                BodyAnimator.SetBool("goIdle", true);
+            direction = Vector3.ProjectOnPlane(direction, Vector3.up);
+            transform.forward = direction;
+
+            if (delta.magnitude < .1f)
+            {
+                idleTimer++;
+            }
             else
-                BodyAnimator.SetBool("goSpin", true);
+            {
+                idleTimer = 0f;
+            }
 
-            spin_idle_switch = !spin_idle_switch;
-            idleTimer = 0f;
-            StartCoroutine(ResetState());
+            if (idleTimer > 700f)
+            {
+                if (spin_idle_switch)
+                    BodyAnimator.SetBool("goIdle", true);
+                else
+                    BodyAnimator.SetBool("goSpin", true);
+
+                spin_idle_switch = !spin_idle_switch;
+                idleTimer = 0f;
+                StartCoroutine(ResetState());
+            }
         }
     }
 

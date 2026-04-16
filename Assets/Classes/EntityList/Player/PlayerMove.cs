@@ -20,7 +20,7 @@ public class PlayerMove : PlayerState
     {
         if (player.IsMoving())
         {
-            Vector3 rotatedVector = player.gameObject.transform.rotation * player.GetMovementVector();
+            Vector3 rotatedVector = player.cam.transform.rotation * player.GetMovementVector();
             Vector3 output = player.movementSpeed * rotatedVector.normalized + player.poleVaultBoost;
 
             player.UpdateMovementVector(output);
