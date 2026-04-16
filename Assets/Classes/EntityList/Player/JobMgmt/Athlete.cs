@@ -10,33 +10,43 @@ public class Athlete : JobState
     private const float speedIncRate = 50f;
 
     private bool vaultActive = false;
+    private bool canVault = false;
 
+    // Runtime Variables
     private float defaultSpeed = 0f;
     private float vaultCircularSpeed = 0f;
     private float currentAngle = 0f;
     private float targetDistance = 0f;
-    private Vector3 targetPosition = Vector3.zero;
     private Quaternion targetRotation = Quaternion.identity;
-
+    private Vector3 targetPosition = Vector3.zero;
     private Vector3 output = Vector3.zero;
+    private RaycastHit[] surfaces;
+    private PoleVaultSpot targetedVaultSpot = null;
 
 
-    // TODO: implement me
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        //Debug.Log("Activated Athlete Ability");
+        if (args != null)
+        {
+            if (args.ContainsKey("surfaces"))
+                surfaces = (RaycastHit[]) args["surfaces"];
+        }
+
+        canVault = player.IsGrounded() && AthleteCheckCollisionsForVaultSpot();
+
+        if (!canVault)
+        {
+            player.ExitJobState();
+            Debug.Log("no jump");
+            return;
+        }
+
+        Debug.Log("yes jump");
+
         currentAngle = 0f;
 
         defaultSpeed = player.movementSpeed;
         vaultActive = false;
-
-        if (args != null)
-        {
-            if (args.ContainsKey("poleDistance"))
-                targetDistance = (float) args["poleDistance"];
-            if (args.ContainsKey("polePosition"))
-                targetPosition = (Vector3) args["polePosition"];
-        }
 
         targetRotation = Quaternion.LookRotation(targetPosition - player.transform.position);
 
@@ -45,7 +55,7 @@ public class Athlete : JobState
 
     public override void UpdateState()
     {
-        //Debug.Log("Updating Athlete Ability State");
+        if (!canVault) return;
 
         if (!vaultActive && player.initiatePullJump)
         {
@@ -64,7 +74,7 @@ public class Athlete : JobState
     */
     public override void FixedUpdateState()
     {
-        //Debug.Log("Fixed Updating Athlete Ability State");
+        if (!canVault) return;
 
         if (vaultActive)
         {
@@ -90,6 +100,8 @@ public class Athlete : JobState
 
     public override void ExitState(Dictionary<string, object> args = null)
     {
+        if (!canVault) return;
+
         //Debug.Log("Exitted Athlete Ability");
         player.poleVaultBoost = player.movementSpeed * output.normalized;
         player.movementSpeed = defaultSpeed;
@@ -97,5 +109,22 @@ public class Athlete : JobState
         player.spot = null;
         player.initiatePullJump = false;
         player.ChangeState("Move");
+    }
+
+    public bool AthleteCheckCollisionsForVaultSpot()
+    {
+        foreach (RaycastHit surface in surfaces)
+        {
+            if (surface.collider.gameObject.TryGetComponent(out targetedVaultSpot) && 
+                player.transform.position.y > targetedVaultSpot.transform.position.y - 2f &&
+                player.transform.position.y < targetedVaultSpot.transform.position.y + 2f
+            ) {   
+                targetDistance = surface.distance;
+                targetPosition = targetedVaultSpot.transform.position;
+                player.spot = targetedVaultSpot;
+                return true;    
+            }
+        }
+        return false;
     }
 }

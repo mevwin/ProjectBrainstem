@@ -26,27 +26,21 @@ public class Player : Entity
     [SerializeField] private BlockManager blockManager;
     public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
-    private float castHitDistance = 0f;
 
     // Builder
-    [SerializeField] public GameObject BlockProjection;
-    [SerializeField] public GameObject BlockBuilt;
+    public GameObject BlockProjection;
+    public GameObject BlockBuilt;
 
     // Athlete
-    private RaycastHit[] hits;
     [NonSerialized] public PoleVaultSpot spot;
     [NonSerialized] public bool initiatePullJump = false;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
     private const float poleMaxDistance = 18f;
-    private readonly Vector3 halfExtents = new(1f, 10, 1f);
-    private readonly Vector3 boxCastOffset = new(0, 1f, 0);
 
     // Artist
     public Artist.Splotch CurrentSplotch { get; private set; }= Artist.Splotch.BLUE;
-    private GameObject targetSurface;
-    [SerializeField] private GameObject blueSplotchPrefab;
-    private GameObject blueSplotch;
+    public GameObject blueSplotchPrefab;
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -54,6 +48,10 @@ public class Player : Entity
     // Player Flags
     bool hasJumped = false;
     [NonSerialized] public bool abilityActive = false;
+
+    // Box Cast Fields
+    private readonly Vector3 halfExtents = new(1f, 10, 1f);
+    public readonly Vector3 boxCastOffset = new(0, 1f, 0);
 
     // Item Detection
     public GameObject cam;
@@ -95,7 +93,6 @@ public class Player : Entity
         if (HasGrabbed())
             itemPresent.Pickup(this);
 
-
         // Detection
         DetectItem();
 
@@ -109,8 +106,6 @@ public class Player : Entity
                 switch (CurrentJob)
                 {
                     case JobManager.Job.ATHLETE:
-                        ZoomDetection(poleMaxDistance);
-
                         // DebugBoxCast.SimpleDrawBoxCast(
                         //     cam.transform.position + boxCastOffset, 
                         //     halfExtents * 0.5f,
@@ -160,83 +155,22 @@ public class Player : Entity
                     break;
 
                 case JobManager.Job.ATHLETE:
-                    if (IsGrounded() && AthleteCheckCollisionsForSpot())
-                    {
-                        abilityActive = true;
-                        jobManager.ChangeState(
-                            JobManager.JobEnumToString(CurrentJob),
-                            new Dictionary<string, object>()
-                            {
-                                { "poleDistance", castHitDistance },
-                                { "polePosition", spot.transform.position }
-                            }
-                        );
-                    }
+                    abilityActive = true;
+                    jobManager.ChangeState(
+                        JobManager.JobEnumToString(CurrentJob),
+                        new Dictionary<string, object>()
+                        {
+                            { "surfaces", ZoomDetection(poleMaxDistance) },
+                        }
+                    );
 
                     break;
 
                 case JobManager.Job.ARTIST:
-                    Artist.SplotchState state = Artist.SplotchState.NONE;
-                    Vector3 targetPosition = Vector3.zero;
-
-                    switch (CurrentSplotch)
-                    {          
-                        case Artist.Splotch.RED:
-
-                            break;
-
-                        case Artist.Splotch.BLUE:
-                            /*
-                            if blue splotch is not been activated, spawn a new splotch. blue splotch must be spawned on top of a flat surface that's horizontally or vertically flat
-
-                            if blue splotch has been activated but player is not looking at it, reposition current splotch to new position
-
-                            if blue splotch has been activated and player is looking at it, despawn splotch
-                            */               
-                            if (blueSplotch == null && ArtistCheckForBlueSplotchSpawn())
-                            {
-                                state = Artist.SplotchState.SPAWN;
-                                abilityActive = true;
-                                targetPosition = targetSurface.transform.position;
-                            }
-                            else
-                            {
-                                abilityActive = true;
-                                if (ArtistCheckForActiveBlueSplotch())
-                                    state = Artist.SplotchState.DESPAWN;
-                                else if (Physics.Raycast(
-                                        cam.transform.position + boxCastOffset, 
-                                        cam.transform.forward, 
-                                        out RaycastHit hit, 
-                                        30f)
-                                ) {  
-                                    state = Artist.SplotchState.REPOSITION; 
-                                    targetPosition = hit.collider.transform.position;
-                                }
-                            }
-
-                            break;
-                        
-                        case Artist.Splotch.YELL0W:
-                            
-                            break;
-                    }
-
-                    if (abilityActive)
-                    {
-                        jobManager.ChangeState(
-                            JobManager.JobEnumToString(CurrentJob),
-                            new Dictionary<string, object>()
-                            {
-                                { "hitDistance", castHitDistance },
-                                { "hitPosition", targetPosition },
-                                { "splotchState", state }
-                            }
-                        );
-                    }
-
+                    abilityActive = true;
+                    jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
+                
                     break;
-
             }
         }
 
@@ -379,78 +313,14 @@ public class Player : Entity
         blockManager.UpdateBlocks();
     }
 
-    public void ZoomDetection(float distance)
+    public RaycastHit[] ZoomDetection(float distance)
     {
-        hits = Physics.BoxCastAll(
+        return Physics.BoxCastAll(
             cam.transform.position + boxCastOffset, 
             halfExtents * 0.5f,
             cam.transform.forward,
             cam.transform.rotation,
             distance);
-    }
-
-    public bool AthleteCheckCollisionsForSpot()
-    {
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.collider.gameObject.TryGetComponent(out spot) && 
-                transform.position.y > spot.transform.position.y - 2f &&
-                transform.position.y < spot.transform.position.y + 2f
-            ) {   
-                castHitDistance = hit.distance;
-                return true;    
-            }
-        }
-        return false;
-    }
-
-    public bool ArtistCheckForBlueSplotchSpawn()
-    {
-        if (Physics.Raycast(
-            cam.transform.position + boxCastOffset, 
-            cam.transform.forward, 
-            out RaycastHit hit, 
-            30f)
-        ) {   
-            float dot = Vector3.Dot(hit.normal, Vector3.up);
-            if (dot > 0.99f) // Closest to 1.0 means flatter
-            {
-                targetSurface = hit.collider.gameObject;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool ArtistCheckForActiveBlueSplotch()
-    {
-        const float blueSplotchDistanceCheck = 30f;
-        ZoomDetection(blueSplotchDistanceCheck);
-
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.collider.gameObject.TryGetComponent<BlueSplotch>(out _)
-            )
-                return true;
-        }
-        return false;
-    }
-
-    public void ArtistSpawnBlueSplotch(Vector3 position)
-    {
-        blueSplotch = Instantiate(blueSplotchPrefab, position, Quaternion.identity);
-    }
-
-    public void ArtistRepositionBlueSplotch(Vector3 newPosition)
-    {
-        blueSplotch.transform.position = newPosition;
-    }
-
-    public void ArtistDespawnBlueSplotch()
-    {
-        Destroy(blueSplotch);
-        blueSplotch = null;
-        Debug.Log("Destroyed Blue Splotch");
     }
 
     void OnCollisionEnter(Collision collision) {

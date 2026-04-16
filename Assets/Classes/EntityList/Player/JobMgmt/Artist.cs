@@ -11,128 +11,66 @@ public class Artist : JobState
         YELL0W
     }
 
-    public enum SplotchState
-    {
-        NONE,
-        SPAWN,
-        REPOSITION,
-        DESPAWN
-    }
-
     public Artist(Player player): base(player) { }
 
-    private float hitDistance = 0f;
-    private Vector3 hitPosition = Vector3.zero;
-    private SplotchState splotchState = SplotchState.NONE;
+    const float blueSplotchDistanceCheck = 30f;
 
+    private RaycastHit[] surfaces;
+    private GameObject targetSurface;
+    private GameObject blueSplotch = null;
     public override void EnterState(Dictionary<string, object> args = null)
     {
         // Debug.Log("Activated Artist Ability");
 
         if (args != null)
         {
-            if (args.ContainsKey("hitDistance"))
-                hitDistance = (float) args["hitDistance"];
+            // if (args.ContainsKey("hitDistance"))
+            //     hitDistance = (float) args["hitDistance"];
             
-            if (args.ContainsKey("hitPosition"))
-                hitPosition = (Vector3) args["hitPosition"];
-
-            if (args.ContainsKey("splotchState"))
-                splotchState = (SplotchState) args["splotchState"];
-        }
-        
-        switch (player.CurrentSplotch)
-        {
-            case Splotch.RED:
-
-                break;
-
-            case Splotch.BLUE:
-                /*
-                if blue splotch is not been activated, spawn a new splotch. blue splotch must be spawned on top of a flat surface that's horizontally or vertically flat
-
-                if blue splotch has been activated but player is not looking at it, reposition current splotch to new position
-
-                if blue splotch has been activated and player is looking at it, despawn splotch
-                */
-
-
-                switch (splotchState)
-                {
-                    case SplotchState.SPAWN:
-                        player.ArtistSpawnBlueSplotch(hitPosition);
-
-                        break;
-                    
-                    case SplotchState.REPOSITION:
-                        if (hitPosition != Vector3.zero)
-                            player.ArtistRepositionBlueSplotch(hitPosition);
-
-                        break;
-
-                    case SplotchState.DESPAWN:
-                        player.ArtistDespawnBlueSplotch();
-                        
-                        break;
-                }
-
-                break;
-            
-            case Splotch.YELL0W:
-                
-                break;
-
-            default:
-                player.ExitJobState();
-                return;
+            // if (args.ContainsKey("hitPosition"))
+            //     hitPosition = (Vector3) args["hitPosition"];
         }
     }
 
     public override void UpdateState()
     {
         // Debug.Log("Updating Artist Ability State");
-        player.ExitJobState();
+        
 
         switch (player.CurrentSplotch)
         {
             case Splotch.RED:
-                RedPaintEffectUpdate();
+                
                 break;
 
             case Splotch.BLUE:
-                BluePaintEffectUpdate();
+                if (blueSplotch == null && ArtistCheckForBlueSplotchSpawn())
+                {
+                    ArtistSpawnBlueSplotch(targetSurface.transform.position);
+                }
+                else
+                {
+                    if (ArtistCheckForActiveBlueSplotch())
+                        ArtistDespawnBlueSplotch();
+                    else if (ArtistCheckForBlueSplotchSpawn())
+                    {
+                        ArtistRepositionBlueSplotch(targetSurface.transform.position);
+                    }
+                }
+            
                 break;
             
             case Splotch.YELL0W:
-                YellowPaintEffectUpdate();
+            
                 break;
-
-            default:
-                return;
         }
+
+        player.ExitJobState();
     }
 
     public override void FixedUpdateState()
     {
         // Debug.Log("Fixed Updating Artist Ability State");
-
-        switch (player.CurrentSplotch)
-        {
-            case Splotch.RED:
-                RedPaintEffectFixedUpdate();
-                break;
-
-            case Splotch.BLUE:
-                BluePaintEffectFixedUpdate();
-                break;
-            
-            case Splotch.YELL0W:
-                YellowPaintEffectFixedUpdate();
-                break;
-
-            default:
-                return;
-        }
     }
 
     public override void ExitState(Dictionary<string, object> args = null)
@@ -141,36 +79,60 @@ public class Artist : JobState
         player.abilityActive = false;
     }
 
-    // Stop vertical movement for interactables
-    private void RedPaintEffectUpdate()
+    /*
+    if blue splotch is not been activated, spawn a new splotch. blue splotch must be spawned on top of a flat surface that's horizontally or vertically flat
+
+    if blue splotch has been activated but player is not looking at it, reposition current splotch to new position
+
+    if blue splotch has been activated and player is looking at it, despawn splotch
+    */
+
+    public void ArtistSpawnBlueSplotch(Vector3 position)
     {
-        
+        blueSplotch = GameObject.Instantiate(player.blueSplotchPrefab, position, Quaternion.identity);
     }
 
-    private void RedPaintEffectFixedUpdate()
+    public void ArtistRepositionBlueSplotch(Vector3 newPosition)
     {
-        
+        blueSplotch.transform.position = newPosition;
     }
 
-    // Make directional elevator that slowly levitates an object in it in the normal direction
-    private void BluePaintEffectUpdate()
+    public void ArtistDespawnBlueSplotch()
     {
-        
+        Object.Destroy(blueSplotch);
+        blueSplotch = null;
+        Debug.Log("Destroyed Blue Splotch");
     }
 
-    private void BluePaintEffectFixedUpdate()
+    public bool ArtistCheckForBlueSplotchSpawn()
     {
-        
-    }
-    
-    // Make specific surfaces and interactables bouncy
-    private void YellowPaintEffectUpdate()
-    {
-        
+        if (Physics.Raycast(
+            player.cam.transform.position + player.boxCastOffset, 
+            player.cam.transform.forward, 
+            out RaycastHit hit, 
+            30f)
+        ) {   
+            float dot = Vector3.Dot(hit.normal, Vector3.up);
+            if (dot > 0.99f) // Closest to 1.0 means flatter
+            {
+                targetSurface = hit.collider.gameObject;
+                return true;
+            }
+        }
+        return false;
     }
 
-    private void YellowPaintEffectFixedUpdate()
+    public bool ArtistCheckForActiveBlueSplotch()
     {
         
+        surfaces = player.ZoomDetection(blueSplotchDistanceCheck);
+
+        foreach (RaycastHit surface in surfaces)
+        {
+            if (surface.collider.gameObject.TryGetComponent<BlueSplotch>(out _)
+            )
+                return true;
+        }
+        return false;
     }
 }
