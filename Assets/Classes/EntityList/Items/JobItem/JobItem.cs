@@ -7,14 +7,16 @@ public class JobItem : Item
     public override void Pickup(Player player)
     {
         base.Pickup(player);
-        Debug.Log("Job Pickup: " + JobManager.JobEnumToString(job));
-        if (player.CurrentJob == job || player.StoredJob == job)
-            return;
+        // Debug.Log("Job Pickup: " + JobManager.JobEnumToString(job));
+        // if (player.CurrentJob == job || player.StoredJob == job)
+        //     return;
 
-        if (player.CurrentJob == JobManager.Job.NONE)
-            player.SetCurrentJob(job);
-        else
-            player.SetStoredJob(job);
+        // if (player.CurrentJob == JobManager.Job.NONE)
+        //     player.SetCurrentJob(job);
+        // else
+        //     player.SetStoredJob(job);
+
+        player.SetCurrentJob(job);
 
         Destroy(gameObject);
     }

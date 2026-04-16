@@ -285,6 +285,8 @@ public class Player : Entity
 
     public void SetCurrentJob(JobManager.Job newJob)
     {
+        if (newJob == JobManager.Job.NONE) return;
+
         model.JobKitToggle(CurrentJob, false);
         CurrentJob = newJob;
 

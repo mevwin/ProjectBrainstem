@@ -18,6 +18,7 @@ public class Artist : JobState
     private RaycastHit[] surfaces;
     private GameObject targetSurface;
     private GameObject blueSplotch = null;
+
     public override void EnterState(Dictionary<string, object> args = null)
     {
         // Debug.Log("Activated Artist Ability");

@@ -208,6 +208,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8737386657339942497}
     m_Modifications:
+    - target: {fileID: 87822524410212523, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5616458017189225242, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6053865812143023911, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -253,9 +261,17 @@ PrefabInstance:
       value: Marketus_Full_NewRigTest
       objectReference: {fileID: 0}
     - target: {fileID: 8656473396096426253, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+      propertyPath: turnSpeed
+      value: 17.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656473396096426253, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
       propertyPath: playerScript
       value: 
       objectReference: {fileID: -1439084216661243978}
+    - target: {fileID: 9190675878484047554, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -510,8 +526,8 @@ MonoBehaviour:
   CameraOffsetY: {fileID: 6571695529832023508}
   mainCamera: {fileID: 6780200429520697166}
   sensitivity: 0.5
-  lowerBound: -90
-  upperBound: 90
+  lowerBound: -85
+  upperBound: 85
 --- !u!114 &6074706642034747607 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}

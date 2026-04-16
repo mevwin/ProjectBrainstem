@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class Athlete : JobState
@@ -57,14 +56,18 @@ public class Athlete : JobState
     {
         if (!canVault) return;
 
-        if (!vaultActive && player.initiatePullJump)
+        if (!vaultActive)
         {
-            vaultActive = true;
-            vaultCircularSpeed = player.movementSpeed * 0.125f;
+            if (player.initiatePullJump)
+            {
+                vaultActive = true;
+                vaultCircularSpeed = player.movementSpeed * 0.125f;
+            }
+            else if (player.HasJumped() && player.movementSpeed > 1.1f * defaultSpeed)
+            {
+                player.ExitJobState();
+            }
         }
-
-        if (vaultActive && player.HasJumped() && player.movementSpeed > 1.1f * defaultSpeed)
-            player.ExitJobState();
     }
 
     /*
@@ -82,7 +85,7 @@ public class Athlete : JobState
             Vector3 circularMotion = new(0, 
                                         Mathf.Sin(currentAngle) * targetDistance * 2f,
                                         Mathf.Cos(currentAngle) * targetDistance);
-            output = player.transform.rotation * circularMotion;
+            output = targetRotation * circularMotion;
             player.UpdateMovementVector(output, true);
         }
         else
