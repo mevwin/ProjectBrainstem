@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: blueSplotchPrefab
       value: 
       objectReference: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
+    - target: {fileID: 2097073910950981167, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6023534201621546915, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
       propertyPath: m_Name
       value: Player

@@ -7,6 +7,7 @@ public class Athlete : JobState
     public Athlete(Player player): base(player) { }
 
     private const float speedIncRate = 50f;
+    private const float poleMaxDistance = 18f;
 
     private bool vaultActive = false;
     private bool canVault = false;
@@ -25,22 +26,15 @@ public class Athlete : JobState
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        if (args != null)
-        {
-            if (args.ContainsKey("surfaces"))
-                surfaces = (RaycastHit[]) args["surfaces"];
-        }
+        surfaces = player.ZoomDetection(poleMaxDistance);
 
         canVault = player.IsGrounded() && AthleteCheckCollisionsForVaultSpot();
 
         if (!canVault)
         {
             player.ExitJobState();
-            Debug.Log("no jump");
             return;
         }
-
-        Debug.Log("yes jump");
 
         currentAngle = 0f;
 
@@ -114,14 +108,19 @@ public class Athlete : JobState
         player.ChangeState("Move");
     }
 
+    public bool IsSurfacePoleVaultSpot(RaycastHit hit)
+    {
+        return hit.collider.gameObject.TryGetComponent(out targetedVaultSpot) && 
+                player.transform.position.y > targetedVaultSpot.transform.position.y - 2f &&
+                player.transform.position.y < targetedVaultSpot.transform.position.y + 2f;
+    }
+
     public bool AthleteCheckCollisionsForVaultSpot()
     {
         foreach (RaycastHit surface in surfaces)
         {
-            if (surface.collider.gameObject.TryGetComponent(out targetedVaultSpot) && 
-                player.transform.position.y > targetedVaultSpot.transform.position.y - 2f &&
-                player.transform.position.y < targetedVaultSpot.transform.position.y + 2f
-            ) {   
+            if (IsSurfacePoleVaultSpot(surface))
+            {   
                 targetDistance = surface.distance;
                 targetPosition = targetedVaultSpot.transform.position;
                 player.spot = targetedVaultSpot;
@@ -129,5 +128,21 @@ public class Athlete : JobState
             }
         }
         return false;
+    }
+
+    public void ProjectVaultStrength()
+    {
+        surfaces = player.ZoomDetection(poleMaxDistance);
+
+        foreach (RaycastHit surface in surfaces)
+        {
+            if (IsSurfacePoleVaultSpot(surface))
+            {
+                player.athleteLineRenderer.gameObject.SetActive(true);
+                player.athleteLineRenderer.UpdateLine(surface.collider.gameObject.transform.position);
+                break;
+            }
+            else player.athleteLineRenderer.gameObject.SetActive(false);
+        }
     }
 }

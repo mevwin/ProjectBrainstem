@@ -25,11 +25,15 @@ public class JobManager : StateManager
 
     public void PrepAbility(Job job)
     {
+        stateMap.TryGetValue(JobEnumToString(job), out var state);
         switch (job)
         {
             case Job.BUILDER:
-                stateMap.TryGetValue(JobEnumToString(job), out var state);
                 (state as Builder).ProjectBlock();
+                break;
+            
+            case Job.ATHLETE:
+                (state as Athlete).ProjectVaultStrength();
                 break;
         }
     }

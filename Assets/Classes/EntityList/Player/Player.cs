@@ -20,6 +20,7 @@ public class Player : Entity
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
     [SerializeField] private PlayerModel model;
+    public AthleteLineRenderer athleteLineRenderer;
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
@@ -36,7 +37,6 @@ public class Player : Entity
     [NonSerialized] public bool initiatePullJump = false;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
-    private const float poleMaxDistance = 18f;
 
     // Artist
     public Artist.Splotch CurrentSplotch { get; private set; }= Artist.Splotch.BLUE;
@@ -103,6 +103,9 @@ public class Player : Entity
 
             if (!abilityActive)
             {
+                jobManager.PrepAbility(CurrentJob);
+
+                // Debugging Section
                 switch (CurrentJob)
                 {
                     case JobManager.Job.ATHLETE:
@@ -113,6 +116,7 @@ public class Player : Entity
                         //     cam.transform.forward,
                         //     poleMaxDistance,
                         //     Color.red);
+
                         break;
 
                     case JobManager.Job.ARTIST:
@@ -130,15 +134,12 @@ public class Player : Entity
                         //     Debug.Log("Hitting" + hit.collider.name);
 
                         break;
-
-                    case JobManager.Job.BUILDER:
-                        jobManager.PrepAbility(CurrentJob);
-                        break;
                 }
             }
         }
         else
         {
+            athleteLineRenderer.gameObject.SetActive(false);
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
         }
 
@@ -146,32 +147,9 @@ public class Player : Entity
         if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE 
             && !abilityActive)
         {
-            switch (CurrentJob)
-            {
-                case JobManager.Job.BUILDER:
-                    abilityActive = true;
-                    jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
 
-                    break;
-
-                case JobManager.Job.ATHLETE:
-                    abilityActive = true;
-                    jobManager.ChangeState(
-                        JobManager.JobEnumToString(CurrentJob),
-                        new Dictionary<string, object>()
-                        {
-                            { "surfaces", ZoomDetection(poleMaxDistance) },
-                        }
-                    );
-
-                    break;
-
-                case JobManager.Job.ARTIST:
-                    abilityActive = true;
-                    jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
-                
-                    break;
-            }
+            abilityActive = true;
+            jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
         }
 
         if (abilityActive && CurrentJob > JobManager.Job.NONE)
