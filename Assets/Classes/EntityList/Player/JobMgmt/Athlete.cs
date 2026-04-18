@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Athlete : JobState
@@ -7,6 +8,7 @@ public class Athlete : JobState
     public Athlete(Player player): base(player) { }
 
     private const float speedIncRate = 50f;
+    private const float poleMaxDistance = 20f;
 
     private bool vaultActive = false;
     private bool canVault = false;
@@ -25,22 +27,15 @@ public class Athlete : JobState
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        if (args != null)
-        {
-            if (args.ContainsKey("surfaces"))
-                surfaces = (RaycastHit[]) args["surfaces"];
-        }
+        surfaces = player.ZoomDetection(poleMaxDistance);
 
         canVault = player.IsGrounded() && AthleteCheckCollisionsForVaultSpot();
 
         if (!canVault)
         {
             player.ExitJobState();
-            Debug.Log("no jump");
             return;
         }
-
-        Debug.Log("yes jump");
 
         currentAngle = 0f;
 
@@ -114,20 +109,61 @@ public class Athlete : JobState
         player.ChangeState("Move");
     }
 
+    public bool IsSurfacePoleVaultSpot(RaycastHit hit)
+    {
+        if (hit.collider.gameObject.TryGetComponent(out targetedVaultSpot) &&
+            player.transform.position.y > targetedVaultSpot.transform.position.y - 2f &&
+            player.transform.position.y < targetedVaultSpot.transform.position.y + 2f)
+        {
+            targetDistance = hit.distance;
+            targetPosition = targetedVaultSpot.transform.position;
+            player.spot = targetedVaultSpot;
+            return true;
+        }
+        return false;
+    }
+
     public bool AthleteCheckCollisionsForVaultSpot()
     {
         foreach (RaycastHit surface in surfaces)
         {
-            if (surface.collider.gameObject.TryGetComponent(out targetedVaultSpot) && 
-                player.transform.position.y > targetedVaultSpot.transform.position.y - 2f &&
-                player.transform.position.y < targetedVaultSpot.transform.position.y + 2f
-            ) {   
-                targetDistance = surface.distance;
-                targetPosition = targetedVaultSpot.transform.position;
-                player.spot = targetedVaultSpot;
+            if (IsSurfacePoleVaultSpot(surface))
                 return true;    
-            }
         }
         return false;
+    }
+
+    public void ProjectVaultStrength()
+    {
+        surfaces = player.ZoomDetection(poleMaxDistance);
+
+        foreach (RaycastHit surface in surfaces)
+        {
+            if (IsSurfacePoleVaultSpot(surface))
+            {
+                player.athleteLineRenderer.gameObject.SetActive(true);
+
+                Color lineColor = GetVaultStrengthColor();
+
+                player.athleteLineRenderer.UpdateLine(surface.collider.gameObject.transform.position, lineColor);
+                break;
+            }
+            else player.athleteLineRenderer.gameObject.SetActive(false);
+        }
+    }
+
+    Color GetVaultStrengthColor()
+    {
+        float percentage = Vector3.Distance(player.transform.position, targetPosition - new Vector3(0, 0.5f, 0f)) / poleMaxDistance;
+
+        Color output;
+        if (percentage > 0.70f)
+            output = Color.red;
+        else if (percentage > 0.35f)
+            output = Color.yellow;
+        else
+            output = Color.green;
+
+        return output;
     }
 }

@@ -2,18 +2,17 @@ using UnityEngine;
 
 public class BuilderBlock : Item
 {
-    public override void Pickup(Player player)
-    {
-        
-    }
+    [SerializeField] private GameObject model;
+    [SerializeField] private GameObject destroyAnim;
 
-    public override void Drop()
-    {
-        
-    }
+    public override void Pickup(Player player) { }
+
+    public override void Drop() { }
 
     public void Despawn()
     {
-        Destroy(gameObject);
+        model.SetActive(false);
+        destroyAnim.SetActive(true);
+        Destroy(gameObject, 1.23f);
     }
 }

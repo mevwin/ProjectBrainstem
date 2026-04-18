@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class JobManager : StateManager
@@ -23,13 +24,17 @@ public class JobManager : StateManager
         return title;
     }
 
-    public void PrepAbility(Job job)
+    public void PrepAbility(Job job, Dictionary<string, object> args = null)
     {
+        stateMap.TryGetValue(JobEnumToString(job), out var state);
         switch (job)
         {
             case Job.BUILDER:
-                stateMap.TryGetValue(JobEnumToString(job), out var state);
                 (state as Builder).ProjectBlock();
+                break;
+            
+            case Job.ATHLETE:
+                (state as Athlete).ProjectVaultStrength();
                 break;
         }
     }

@@ -16,7 +16,8 @@ public class Artist : JobState
     const float blueSplotchDistanceCheck = 30f;
 
     private RaycastHit[] surfaces;
-    private GameObject targetSurface;
+    private Vector3 targetPosition;
+    private Quaternion targetRotation;
     private GameObject blueSplotch = null;
 
     public override void EnterState(Dictionary<string, object> args = null)
@@ -47,16 +48,14 @@ public class Artist : JobState
             case Splotch.BLUE:
                 if (blueSplotch == null && ArtistCheckForBlueSplotchSpawn())
                 {
-                    ArtistSpawnBlueSplotch(targetSurface.transform.position);
+                    ArtistSpawnBlueSplotch(targetPosition);
                 }
                 else
                 {
                     if (ArtistCheckForActiveBlueSplotch())
                         ArtistDespawnBlueSplotch();
                     else if (ArtistCheckForBlueSplotchSpawn())
-                    {
-                        ArtistRepositionBlueSplotch(targetSurface.transform.position);
-                    }
+                        ArtistRepositionBlueSplotch(targetPosition);
                 }
             
                 break;
@@ -87,36 +86,38 @@ public class Artist : JobState
 
     if blue splotch has been activated and player is looking at it, despawn splotch
     */
-
     public void ArtistSpawnBlueSplotch(Vector3 position)
     {
-        blueSplotch = GameObject.Instantiate(player.blueSplotchPrefab, position, Quaternion.identity);
+        blueSplotch = Object.Instantiate(player.blueSplotchPrefab, position, targetRotation);
     }
 
     public void ArtistRepositionBlueSplotch(Vector3 newPosition)
     {
-        blueSplotch.transform.position = newPosition;
+        blueSplotch.transform.SetPositionAndRotation(newPosition, targetRotation);
     }
 
     public void ArtistDespawnBlueSplotch()
     {
+        player.ignoreGravity = false;
+        player.blueSplotchHorizMovement = Vector3.zero;
         Object.Destroy(blueSplotch);
         blueSplotch = null;
-        Debug.Log("Destroyed Blue Splotch");
     }
 
     public bool ArtistCheckForBlueSplotchSpawn()
     {
         if (Physics.Raycast(
-            player.cam.transform.position + player.boxCastOffset, 
+            player.transform.position + player.boxCastOffset, 
             player.cam.transform.forward, 
             out RaycastHit hit, 
             30f)
         ) {   
             float dot = Vector3.Dot(hit.normal, Vector3.up);
-            if (dot > 0.99f) // Closest to 1.0 means flatter
+
+            if (dot > 0.99f || (dot > -0.05f && dot < 0.05f)) 
             {
-                targetSurface = hit.collider.gameObject;
+                targetPosition = hit.point;
+                targetRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
                 return true;
             }
         }
@@ -130,8 +131,7 @@ public class Artist : JobState
 
         foreach (RaycastHit surface in surfaces)
         {
-            if (surface.collider.gameObject.TryGetComponent<BlueSplotch>(out _)
-            )
+            if (surface.collider.gameObject.TryGetComponent<BlueSplotch>(out _))
                 return true;
         }
         return false;

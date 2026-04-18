@@ -6,6 +6,6 @@ public class ProjectBlock : MonoBehaviour
     // Blocks are spawned and deleted every frame
     void Update()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

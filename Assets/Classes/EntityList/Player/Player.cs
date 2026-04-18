@@ -20,11 +20,13 @@ public class Player : Entity
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
     [SerializeField] private PlayerModel model;
+    public AthleteLineRenderer athleteLineRenderer;
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
     public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
+    [NonSerialized] public bool ignoreGravity = false;
 
     // Builder
     public GameObject BlockProjection;
@@ -35,7 +37,6 @@ public class Player : Entity
     [NonSerialized] public bool initiatePullJump = false;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
-    private const float poleMaxDistance = 18f;
 
     // Artist
     public Artist.Splotch CurrentSplotch { get; private set; }= Artist.Splotch.BLUE;
@@ -43,6 +44,7 @@ public class Player : Entity
 
     // Musician
     public GameObject MusicNote;
+    [NonSerialized] public Vector3 blueSplotchHorizMovement;
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -52,8 +54,8 @@ public class Player : Entity
     [NonSerialized] public bool abilityActive = false;
 
     // Box Cast Fields
-    private readonly Vector3 halfExtents = new(1f, 10, 1f);
-    public readonly Vector3 boxCastOffset = new(0, 1f, 0);
+    private readonly Vector3 halfExtents = new(3f, 10, 1f);
+    public readonly Vector3 boxCastOffset = new(0, 0.65f, 0);
 
     // Item Detection
     public GameObject cam;
@@ -105,80 +107,43 @@ public class Player : Entity
 
             if (!abilityActive)
             {
+                jobManager.PrepAbility(CurrentJob);
+
+                // Debugging Section
                 switch (CurrentJob)
                 {
-                    case JobManager.Job.ATHLETE:
-                        // DebugBoxCast.SimpleDrawBoxCast(
-                        //     cam.transform.position + boxCastOffset, 
-                        //     halfExtents * 0.5f,
-                        //     cam.transform.rotation,
-                        //     cam.transform.forward,
-                        //     poleMaxDistance,
-                        //     Color.red);
-                        break;
+                    // case JobManager.Job.ATHLETE:
+                    //     DebugBoxCast.SimpleDrawBoxCast(
+                    //         cam.transform.position + boxCastOffset, 
+                    //         halfExtents * 0.5f,
+                    //         cam.transform.rotation,
+                    //         cam.transform.forward,
+                    //         20f,
+                    //         Color.red);
+
+                    //     break;
 
                     case JobManager.Job.ARTIST:
                         Debug.DrawRay(
-                            cam.transform.position + boxCastOffset,
+                            transform.position + boxCastOffset,
                             cam.transform.forward * 30f,
                             Color.red
                         );
-
-                        // if (Physics.Raycast(
-                        //     cam.transform.position + boxCastOffset, 
-                        //     cam.transform.forward, 
-                        //     out RaycastHit hit, 
-                        //     30f))
-                        //     Debug.Log("Hitting" + hit.collider.name);
-
-                        break;
-
-                    case JobManager.Job.BUILDER:
-                        jobManager.PrepAbility(CurrentJob);
                         break;
                 }
             }
         }
         else
         {
+            athleteLineRenderer.gameObject.SetActive(false);
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
         }
 
         // Input Check For Job Abilities
-        if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE 
-            && !abilityActive)
+        if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE && !abilityActive)
         {
-            switch (CurrentJob)
-            {
-                case JobManager.Job.BUILDER:
-                    abilityActive = true;
-                    jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
-
-                    break;
-
-                case JobManager.Job.ATHLETE:
-                    abilityActive = true;
-                    jobManager.ChangeState(
-                        JobManager.JobEnumToString(CurrentJob),
-                        new Dictionary<string, object>()
-                        {
-                            { "surfaces", ZoomDetection(poleMaxDistance) },
-                        }
-                    );
-
-                    break;
-
-                case JobManager.Job.ARTIST:
-                    abilityActive = true;
-                    jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
-                
-                    break;
-                case JobManager.Job.MUSICIAN:
-                    abilityActive = true;
-                    jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
-
-                    break;
-            }
+            abilityActive = true;
+            jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
         }
 
         if (abilityActive && CurrentJob > JobManager.Job.NONE)
