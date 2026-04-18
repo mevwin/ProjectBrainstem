@@ -646,6 +646,7 @@ MonoBehaviour:
   BlockProjection: {fileID: 9089790918068906717, guid: d69e0dfe45b25e5439feb06923770308, type: 3}
   BlockBuilt: {fileID: 9089790918068906717, guid: 5dc7545c9e8b33543b98d7ce462a646f, type: 3}
   blueSplotchPrefab: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
+  MusicNote: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
   cam: {fileID: 6780200429520697166}
   zoomOffset: {fileID: 6629727507589140395}
 --- !u!114 &7641687114105757430
