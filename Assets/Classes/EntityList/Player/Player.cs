@@ -24,7 +24,6 @@ public class Player : Entity
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
-    [SerializeField] private BlockManager blockManager;
     public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
     [NonSerialized] public bool ignoreGravity = false;
@@ -283,16 +282,6 @@ public class Player : Entity
     {
         abilityActive = false;
         jobManager.ExitJobState();
-    }
-
-    public void BuilderCreateBlock()
-    {
-        blockManager.CreateBlock();
-    }
-
-    public void BuilderUpdateBlocks()
-    {
-        blockManager.UpdateBlocks();
     }
 
     public RaycastHit[] ZoomDetection(float distance)
