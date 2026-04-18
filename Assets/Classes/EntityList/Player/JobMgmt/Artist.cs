@@ -55,9 +55,7 @@ public class Artist : JobState
                     if (ArtistCheckForActiveBlueSplotch())
                         ArtistDespawnBlueSplotch();
                     else if (ArtistCheckForBlueSplotchSpawn())
-                    {
                         ArtistRepositionBlueSplotch(targetPosition);
-                    }
                 }
             
                 break;
@@ -95,8 +93,7 @@ public class Artist : JobState
 
     public void ArtistRepositionBlueSplotch(Vector3 newPosition)
     {
-        blueSplotch.transform.position = newPosition;
-        blueSplotch.transform.rotation = targetRotation;
+        blueSplotch.transform.SetPositionAndRotation(newPosition, targetRotation);
     }
 
     public void ArtistDespawnBlueSplotch()
@@ -105,7 +102,6 @@ public class Artist : JobState
         player.blueSplotchHorizMovement = Vector3.zero;
         Object.Destroy(blueSplotch);
         blueSplotch = null;
-        Debug.Log("Destroyed Blue Splotch");
     }
 
     public bool ArtistCheckForBlueSplotchSpawn()
@@ -117,8 +113,6 @@ public class Artist : JobState
             30f)
         ) {   
             float dot = Vector3.Dot(hit.normal, Vector3.up);
-
-            Debug.Log($"dot: {dot}");
 
             if (dot > 0.99f || (dot > -0.05f && dot < 0.05f)) 
             {
@@ -137,8 +131,7 @@ public class Artist : JobState
 
         foreach (RaycastHit surface in surfaces)
         {
-            if (surface.collider.gameObject.TryGetComponent<BlueSplotch>(out _)
-            )
+            if (surface.collider.gameObject.TryGetComponent<BlueSplotch>(out _))
                 return true;
         }
         return false;

@@ -109,16 +109,16 @@ public class Player : Entity
                 // Debugging Section
                 switch (CurrentJob)
                 {
-                    case JobManager.Job.ATHLETE:
-                        // DebugBoxCast.SimpleDrawBoxCast(
-                        //     cam.transform.position + boxCastOffset, 
-                        //     halfExtents * 0.5f,
-                        //     cam.transform.rotation,
-                        //     cam.transform.forward,
-                        //     20f,
-                        //     Color.red);
+                    // case JobManager.Job.ATHLETE:
+                    //     DebugBoxCast.SimpleDrawBoxCast(
+                    //         cam.transform.position + boxCastOffset, 
+                    //         halfExtents * 0.5f,
+                    //         cam.transform.rotation,
+                    //         cam.transform.forward,
+                    //         20f,
+                    //         Color.red);
 
-                        break;
+                    //     break;
 
                     case JobManager.Job.ARTIST:
                         Debug.DrawRay(
@@ -126,14 +126,6 @@ public class Player : Entity
                             cam.transform.forward * 30f,
                             Color.red
                         );
-
-                        // if (Physics.Raycast(
-                        //     cam.transform.position + boxCastOffset, 
-                        //     cam.transform.forward, 
-                        //     out RaycastHit hit, 
-                        //     30f))
-                        //     Debug.Log("Hitting" + hit.collider.name);
-
                         break;
                 }
             }
@@ -145,10 +137,8 @@ public class Player : Entity
         }
 
         // Input Check For Job Abilities
-        if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE 
-            && !abilityActive)
+        if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE && !abilityActive)
         {
-
             abilityActive = true;
             jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
         }

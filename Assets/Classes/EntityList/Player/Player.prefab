@@ -595,9 +595,6 @@ PrefabInstance:
       addedObject: {fileID: 7641687114105757430}
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7458270818328167382}
-    - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1160910475077599160}
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
@@ -646,7 +643,6 @@ MonoBehaviour:
   model: {fileID: 4711174100783819944}
   athleteLineRenderer: {fileID: 7450535755680756154}
   jobManager: {fileID: 7641687114105757430}
-  blockManager: {fileID: 7458270818328167382}
   BlockProjection: {fileID: 9089790918068906717, guid: d69e0dfe45b25e5439feb06923770308, type: 3}
   BlockBuilt: {fileID: 9089790918068906717, guid: 5dc7545c9e8b33543b98d7ce462a646f, type: 3}
   blueSplotchPrefab: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
@@ -664,21 +660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694f0b9dfb2e0e74dbef2298686690f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7458270818328167382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6023534201621546915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fff6af4636ee25439c3fe84f1a4bffe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: -1439084216661243978}
-  BlockParent: {fileID: 0}
-  blockPrefab: {fileID: 9089790918068906717, guid: 5dc7545c9e8b33543b98d7ce462a646f, type: 3}
 --- !u!136 &1160910475077599160
 CapsuleCollider:
   m_ObjectHideFlags: 0
