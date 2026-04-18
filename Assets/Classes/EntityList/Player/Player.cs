@@ -31,6 +31,7 @@ public class Player : Entity
     // Builder
     public GameObject BlockProjection;
     public GameObject BlockBuilt;
+    public GameObject CurrentProjectedBlock;
 
     // Athlete
     [NonSerialized] public PoleVaultSpot spot;
@@ -135,6 +136,9 @@ public class Player : Entity
         }
         else
         {
+            if (CurrentProjectedBlock)
+                Destroy(CurrentProjectedBlock);
+                
             athleteLineRenderer.gameObject.SetActive(false);
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
         }

@@ -12,7 +12,6 @@ public class Builder : JobState
     private readonly Vector3 spawnOffset = new(0f, 0.65f, 0f);
 
     private Queue<GameObject> blocks = new();
-    private GameObject projectBlock = null;
     Vector3 spawnPos;
 
     // TODO: implement me
@@ -65,18 +64,14 @@ public class Builder : JobState
             MAX_DISTANCE
         );
         if (hit.collider == null)
-        {
-            if (projectBlock)
-                Object.Destroy(projectBlock);
             return;
-        }
         
         spawnPos = hit.point + forwardOffset * player.BlockProjection.transform.localScale.y * hit.normal;
 
-        if (projectBlock)
-            projectBlock.transform.position = spawnPos;
+        if (player.CurrentProjectedBlock)
+            player.CurrentProjectedBlock.transform.position = spawnPos;
         else
-            projectBlock = Object.Instantiate(player.BlockProjection, spawnPos, Quaternion.identity);
+            player.CurrentProjectedBlock = Object.Instantiate(player.BlockProjection, spawnPos, Quaternion.identity);
     }
 
     void DestroyOldestBlock()
