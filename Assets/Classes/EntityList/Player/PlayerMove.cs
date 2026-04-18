@@ -21,6 +21,9 @@ public class PlayerMove : PlayerState
             Vector3 rotatedVector = rotation * player.GetMovementVector();
             Vector3 output = player.movementSpeed * rotatedVector.normalized + player.poleVaultBoost + player.blueSplotchHorizMovement;
 
+            if (player.ignoreGravity)
+                output.y = 1f;
+
             player.UpdateMovementVector(output, player.ignoreGravity);
         }
         else player.ChangeState("Idle");

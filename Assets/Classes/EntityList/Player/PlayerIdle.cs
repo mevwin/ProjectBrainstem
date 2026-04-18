@@ -27,7 +27,7 @@ public class PlayerIdle : PlayerState
         output += player.blueSplotchHorizMovement;
 
         if (player.ignoreGravity)
-            output.y = 0f;
+            output.y = 1f;
 
         player.UpdateMovementVector(output, player.ignoreGravity);
         if (player.IsMoving()){
