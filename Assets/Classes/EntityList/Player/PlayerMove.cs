@@ -11,10 +11,7 @@ public class PlayerMove : PlayerState
         player.SetColliderFrictionCombine(PhysicsMaterialCombine.Minimum);
     }
 
-    public override void UpdateState()
-    {
-        
-    }
+    public override void UpdateState() { }
 
     public override void FixedUpdateState()
     {
@@ -22,9 +19,9 @@ public class PlayerMove : PlayerState
         {
             Quaternion rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(player.cam.transform.forward, Vector3.up));
             Vector3 rotatedVector = rotation * player.GetMovementVector();
-            Vector3 output = player.movementSpeed * rotatedVector.normalized + player.poleVaultBoost;
+            Vector3 output = player.movementSpeed * rotatedVector.normalized + player.poleVaultBoost + player.blueSplotchHorizMovement;
 
-            player.UpdateMovementVector(output);
+            player.UpdateMovementVector(output, player.ignoreGravity);
         }
         else player.ChangeState("Idle");
     }

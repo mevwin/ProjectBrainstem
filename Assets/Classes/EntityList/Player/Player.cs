@@ -27,6 +27,7 @@ public class Player : Entity
     [SerializeField] private BlockManager blockManager;
     public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
+    [NonSerialized] public bool ignoreGravity = false;
 
     // Builder
     public GameObject BlockProjection;
@@ -41,6 +42,7 @@ public class Player : Entity
     // Artist
     public Artist.Splotch CurrentSplotch { get; private set; }= Artist.Splotch.BLUE;
     public GameObject blueSplotchPrefab;
+    [NonSerialized] public Vector3 blueSplotchHorizMovement;
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -109,19 +111,19 @@ public class Player : Entity
                 switch (CurrentJob)
                 {
                     case JobManager.Job.ATHLETE:
-                        DebugBoxCast.SimpleDrawBoxCast(
-                            cam.transform.position + boxCastOffset, 
-                            halfExtents * 0.5f,
-                            cam.transform.rotation,
-                            cam.transform.forward,
-                            20f,
-                            Color.red);
+                        // DebugBoxCast.SimpleDrawBoxCast(
+                        //     cam.transform.position + boxCastOffset, 
+                        //     halfExtents * 0.5f,
+                        //     cam.transform.rotation,
+                        //     cam.transform.forward,
+                        //     20f,
+                        //     Color.red);
 
                         break;
 
                     case JobManager.Job.ARTIST:
                         Debug.DrawRay(
-                            cam.transform.position + boxCastOffset,
+                            transform.position + boxCastOffset,
                             cam.transform.forward * 30f,
                             Color.red
                         );

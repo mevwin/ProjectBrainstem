@@ -23,7 +23,13 @@ public class PlayerIdle : PlayerState
         output = new(player.poleVaultBoost.x, 
                      player.GetRigidbodyVelocity().y + player.poleVaultBoost.y, 
                      player.poleVaultBoost.z);
-        player.UpdateMovementVector(output);
+
+        output += player.blueSplotchHorizMovement;
+
+        if (player.ignoreGravity)
+            output.y = 0f;
+
+        player.UpdateMovementVector(output, player.ignoreGravity);
         if (player.IsMoving()){
             player.ChangeState("Move");
         }
