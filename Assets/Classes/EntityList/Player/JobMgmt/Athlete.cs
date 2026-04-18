@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Athlete : JobState
@@ -7,7 +8,7 @@ public class Athlete : JobState
     public Athlete(Player player): base(player) { }
 
     private const float speedIncRate = 50f;
-    private const float poleMaxDistance = 18f;
+    private const float poleMaxDistance = 20f;
 
     private bool vaultActive = false;
     private bool canVault = false;
@@ -110,9 +111,16 @@ public class Athlete : JobState
 
     public bool IsSurfacePoleVaultSpot(RaycastHit hit)
     {
-        return hit.collider.gameObject.TryGetComponent(out targetedVaultSpot) && 
-                player.transform.position.y > targetedVaultSpot.transform.position.y - 2f &&
-                player.transform.position.y < targetedVaultSpot.transform.position.y + 2f;
+        if (hit.collider.gameObject.TryGetComponent(out targetedVaultSpot) &&
+            player.transform.position.y > targetedVaultSpot.transform.position.y - 2f &&
+            player.transform.position.y < targetedVaultSpot.transform.position.y + 2f)
+        {
+            targetDistance = hit.distance;
+            targetPosition = targetedVaultSpot.transform.position;
+            player.spot = targetedVaultSpot;
+            return true;
+        }
+        return false;
     }
 
     public bool AthleteCheckCollisionsForVaultSpot()
@@ -120,12 +128,7 @@ public class Athlete : JobState
         foreach (RaycastHit surface in surfaces)
         {
             if (IsSurfacePoleVaultSpot(surface))
-            {   
-                targetDistance = surface.distance;
-                targetPosition = targetedVaultSpot.transform.position;
-                player.spot = targetedVaultSpot;
                 return true;    
-            }
         }
         return false;
     }
@@ -139,10 +142,28 @@ public class Athlete : JobState
             if (IsSurfacePoleVaultSpot(surface))
             {
                 player.athleteLineRenderer.gameObject.SetActive(true);
-                player.athleteLineRenderer.UpdateLine(surface.collider.gameObject.transform.position);
+
+                Color lineColor = GetVaultStrengthColor();
+
+                player.athleteLineRenderer.UpdateLine(surface.collider.gameObject.transform.position, lineColor);
                 break;
             }
             else player.athleteLineRenderer.gameObject.SetActive(false);
         }
+    }
+
+    Color GetVaultStrengthColor()
+    {
+        float percentage = Vector3.Distance(player.transform.position, targetPosition - new Vector3(0, 0.5f, 0f)) / poleMaxDistance;
+
+        Color output;
+        if (percentage > 0.70f)
+            output = Color.red;
+        else if (percentage > 0.35f)
+            output = Color.yellow;
+        else
+            output = Color.green;
+
+        return output;
     }
 }

@@ -50,8 +50,8 @@ public class Player : Entity
     [NonSerialized] public bool abilityActive = false;
 
     // Box Cast Fields
-    private readonly Vector3 halfExtents = new(1f, 10, 1f);
-    public readonly Vector3 boxCastOffset = new(0, 1f, 0);
+    private readonly Vector3 halfExtents = new(3f, 10, 1f);
+    public readonly Vector3 boxCastOffset = new(0, 0.65f, 0);
 
     // Item Detection
     public GameObject cam;
@@ -109,13 +109,13 @@ public class Player : Entity
                 switch (CurrentJob)
                 {
                     case JobManager.Job.ATHLETE:
-                        // DebugBoxCast.SimpleDrawBoxCast(
-                        //     cam.transform.position + boxCastOffset, 
-                        //     halfExtents * 0.5f,
-                        //     cam.transform.rotation,
-                        //     cam.transform.forward,
-                        //     poleMaxDistance,
-                        //     Color.red);
+                        DebugBoxCast.SimpleDrawBoxCast(
+                            cam.transform.position + boxCastOffset, 
+                            halfExtents * 0.5f,
+                            cam.transform.rotation,
+                            cam.transform.forward,
+                            20f,
+                            Color.red);
 
                         break;
 
