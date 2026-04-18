@@ -212,6 +212,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -1439084216661243978, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: Bridge
+      value: 
+      objectReference: {fileID: 6708847589025509218, guid: fde884b73ad6bfb429cd25ccb1d9d877, type: 3}
+    - target: {fileID: -1439084216661243978, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: MusicNote
+      value: 
+      objectReference: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
+    - target: {fileID: -1439084216661243978, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
       propertyPath: BlockBuilt
       value: 
       objectReference: {fileID: 9089790918068906717, guid: 5dc7545c9e8b33543b98d7ce462a646f, type: 3}
@@ -17263,7 +17271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6082892414158692160, guid: 33dea156a4f38954ca1f72e2f064ae08, type: 3}
       propertyPath: job
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

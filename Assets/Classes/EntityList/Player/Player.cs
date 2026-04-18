@@ -41,6 +41,9 @@ public class Player : Entity
     public Artist.Splotch CurrentSplotch { get; private set; }= Artist.Splotch.BLUE;
     public GameObject blueSplotchPrefab;
 
+    // Musician
+    public GameObject MusicNote;
+
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
 
@@ -170,6 +173,11 @@ public class Player : Entity
                     jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
                 
                     break;
+                case JobManager.Job.MUSICIAN:
+                    abilityActive = true;
+                    jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
+
+                    break;
             }
         }
 
@@ -232,6 +240,7 @@ public class Player : Entity
         jobManager.AddState("Builder", new Builder(this));
         jobManager.AddState("Athlete", new Athlete(this));
         jobManager.AddState("Artist", new Artist(this));
+        jobManager.AddState("Musician", new Musician(this));
 
         SetCurrentJob(JobManager.Job.NONE);
         jobManager.SetStartingState("None");
