@@ -55,11 +55,7 @@ public class JobManager : StateManager
                 if (nextModePressed)
                     artistState.CycleNextColor();
 
-                
-
-                bool hittingSurface = artistState.IsReticleHittingSurface();
-
-                Color color = artistState.SplotchTypeToColor(hittingSurface);
+                Color color = artistState.SplotchTypeToColor();
                 reticle.Toggle(true);
                 reticle.ChangeColor(color);
 

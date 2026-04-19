@@ -97,7 +97,8 @@ public class Artist : JobState
             player.cam.transform.position, 
             player.cam.transform.forward, 
             out RaycastHit hit, 
-            blueSplotchDistanceCheck)
+            blueSplotchDistanceCheck) &&
+            hit.collider.gameObject.layer != 3
         ) {   
             float dot = Vector3.Dot(hit.normal, Vector3.up);
 
@@ -137,11 +138,11 @@ public class Artist : JobState
         currentSplotch = (Splotch) (((int) currentSplotch + 1) % 3);
     }
 
-    public Color SplotchTypeToColor(bool hittingSurface)
+    public Color SplotchTypeToColor()
     {
         Color color = Color.gray;
 
-        if (hittingSurface)
+        if (IsReticleHittingSurface())
         {
             color = currentSplotch switch
             {
