@@ -11,6 +11,7 @@ public class Player : Entity
         JUMP,
         INTERACT,
         ABILITY,
+        NEXT_ABILITY_MODE,
         ZOOM,
     }
 
@@ -20,6 +21,7 @@ public class Player : Entity
     [SerializeField] private float jumpSpeed = 25f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
     [SerializeField] private PlayerModel model;
+    public Reticle reticle;
     public AthleteLineRenderer athleteLineRenderer;
 
     [Header("==Job Fields==")]
@@ -31,7 +33,7 @@ public class Player : Entity
     // Builder
     public GameObject BlockProjection;
     public GameObject BlockBuilt;
-    public GameObject CurrentProjectedBlock;
+    [NonSerialized] public GameObject CurrentProjectedBlock;
 
     // Athlete
     [NonSerialized] public PoleVaultSpot spot;
@@ -40,7 +42,6 @@ public class Player : Entity
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
 
     // Artist
-    public Artist.Splotch CurrentSplotch { get; private set; }= Artist.Splotch.BLUE;
     public GameObject blueSplotchPrefab;
 
     // Musician
@@ -108,9 +109,16 @@ public class Player : Entity
 
             if (!abilityActive)
             {
-                jobManager.PrepAbility(CurrentJob);
+                jobManager.PrepAbility(
+                    CurrentJob,
+                    new Dictionary<string, object>()
+                    {
+                        { "NextAbilityMode", NextAbilityModeWasPressed() },
+                        { "Reticle", reticle }
+                    }
+                );
 
-                // Debugging Section
+                // Debugging Raycast Section
                 switch (CurrentJob)
                 {
                     // case JobManager.Job.ATHLETE:
@@ -125,22 +133,25 @@ public class Player : Entity
                     //     break;
 
                     case JobManager.Job.ARTIST:
-                        Debug.DrawRay(
-                            transform.position + boxCastOffset,
-                            cam.transform.forward * 30f,
-                            Color.red
-                        );
+                        // Debug.DrawRay(
+                        //     cam.transform.position,
+                        //     cam.transform.forward * 30f,
+                        //     Color.red
+                        // );
+
                         break;
                 }
             }
         }
         else
         {
+            cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
+
             if (CurrentProjectedBlock)
                 Destroy(CurrentProjectedBlock);
-                
+            
+            reticle.Toggle(false);
             athleteLineRenderer.gameObject.SetActive(false);
-            cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
         }
 
         // Input Check For Job Abilities
@@ -200,6 +211,7 @@ public class Player : Entity
             inputActions.Add(InputKey.INTERACT, InputSystem.actions.FindAction("Player/Interact"));
             inputActions.Add(InputKey.ABILITY, InputSystem.actions.FindAction("Player/Attack"));
             inputActions.Add(InputKey.ZOOM, InputSystem.actions.FindAction("Player/Zoom"));
+            inputActions.Add(InputKey.NEXT_ABILITY_MODE, InputSystem.actions.FindAction("Player/Next"));
         }
     }
 
@@ -241,7 +253,7 @@ public class Player : Entity
         float maxDistance = radius + groundDistanceCheck;
         Vector3 bottom = gameObject.transform.position;
 
-        return Physics.SphereCast(bottom, radius, Vector3.down, out RaycastHit hit, maxDistance);
+        return Physics.SphereCast(bottom, radius, Vector3.down, out _, maxDistance);
     }
 
     public bool HasJumped()
@@ -255,9 +267,19 @@ public class Player : Entity
         return inputActions[InputKey.ZOOM].IsPressed();
     }
 
+    public bool ZoomWasReleased()
+    {
+        return inputActions[InputKey.ZOOM].WasReleasedThisFrame();
+    }
+
     public bool IsAbilityPressed()
     {
         return inputActions[InputKey.ABILITY].WasPressedThisFrame();
+    }
+
+    public bool NextAbilityModeWasPressed()
+    {
+        return inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
     }
 
     public void SetCurrentJob(JobManager.Job newJob)

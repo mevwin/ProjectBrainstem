@@ -78,4 +78,9 @@ public class Builder : JobState
     {
         blocks.Dequeue().GetComponent<BuilderBlock>().Despawn();
     }
+
+    public void ChangeBlockSize()
+    {
+        // TODO: implement me
+    }
 }

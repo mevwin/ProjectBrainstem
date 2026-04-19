@@ -27,14 +27,41 @@ public class JobManager : StateManager
     public void PrepAbility(Job job, Dictionary<string, object> args = null)
     {
         stateMap.TryGetValue(JobEnumToString(job), out var state);
+        Reticle reticle = null;
+        bool nextModePressed = false;
+        if (args != null)
+        {
+            if (args.ContainsKey("Reticle"))
+                reticle = (Reticle) args["Reticle"];
+            if (args.ContainsKey("NextAbilityMode"))
+                nextModePressed = (bool) args["NextAbilityMode"];
+        }
+        
         switch (job)
         {
             case Job.BUILDER:
+                if (nextModePressed)
+                    (state as Builder).ChangeBlockSize();
+
                 (state as Builder).ProjectBlock();
                 break;
             
             case Job.ATHLETE:
                 (state as Athlete).ProjectVaultStrength();
+                break;
+            
+            case Job.ARTIST:
+                if (nextModePressed)
+                    (state as Artist).CycleNextColor();
+
+                Color color = (state as Artist).SplotchTypeToColor();
+                reticle.Toggle(true);
+                reticle.ChangeColor(color);
+
+                break;
+            case Job.MUSICIAN:
+                reticle.Toggle(true);
+
                 break;
         }
     }

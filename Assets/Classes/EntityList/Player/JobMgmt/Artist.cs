@@ -5,7 +5,6 @@ public class Artist : JobState
 {
     public enum Splotch
     {
-        NONE,
         RED,
         BLUE,
         YELL0W
@@ -15,9 +14,12 @@ public class Artist : JobState
 
     const float blueSplotchDistanceCheck = 30f;
 
+    // Raycasting Vars
     private RaycastHit[] surfaces;
     private Vector3 targetPosition;
     private Quaternion targetRotation;
+
+    private Splotch currentSplotch = Splotch.BLUE;
     private GameObject blueSplotch = null;
 
     public override void EnterState(Dictionary<string, object> args = null)
@@ -39,24 +41,19 @@ public class Artist : JobState
         // Debug.Log("Updating Artist Ability State");
         
 
-        switch (player.CurrentSplotch)
+        switch (currentSplotch)
         {
             case Splotch.RED:
                 
                 break;
 
             case Splotch.BLUE:
-                if (blueSplotch == null && ArtistCheckForBlueSplotchSpawn())
-                {
-                    ArtistSpawnBlueSplotch(targetPosition);
-                }
-                else
-                {
-                    if (ArtistCheckForActiveBlueSplotch())
-                        ArtistDespawnBlueSplotch();
-                    else if (ArtistCheckForBlueSplotchSpawn())
-                        ArtistRepositionBlueSplotch(targetPosition);
-                }
+                if (blueSplotch == null && CheckForBlueSplotchSpawn())
+                    SpawnBlueSplotch(targetPosition);
+                else if (CheckForActiveBlueSplotch())
+                    DespawnBlueSplotch();
+                else if (CheckForBlueSplotchSpawn())
+                    RepositionBlueSplotch(targetPosition);
             
                 break;
             
@@ -86,17 +83,17 @@ public class Artist : JobState
 
     if blue splotch has been activated and player is looking at it, despawn splotch
     */
-    public void ArtistSpawnBlueSplotch(Vector3 position)
+    void SpawnBlueSplotch(Vector3 position)
     {
         blueSplotch = Object.Instantiate(player.blueSplotchPrefab, position, targetRotation);
     }
 
-    public void ArtistRepositionBlueSplotch(Vector3 newPosition)
+    void RepositionBlueSplotch(Vector3 newPosition)
     {
         blueSplotch.transform.SetPositionAndRotation(newPosition, targetRotation);
     }
 
-    public void ArtistDespawnBlueSplotch()
+    void DespawnBlueSplotch()
     {
         player.ignoreGravity = false;
         player.blueSplotchHorizMovement = Vector3.zero;
@@ -104,13 +101,13 @@ public class Artist : JobState
         blueSplotch = null;
     }
 
-    public bool ArtistCheckForBlueSplotchSpawn()
+    public bool CheckForBlueSplotchSpawn()
     {
         if (Physics.Raycast(
-            player.transform.position + player.boxCastOffset, 
+            player.cam.transform.position, 
             player.cam.transform.forward, 
             out RaycastHit hit, 
-            30f)
+            blueSplotchDistanceCheck)
         ) {   
             float dot = Vector3.Dot(hit.normal, Vector3.up);
 
@@ -124,7 +121,7 @@ public class Artist : JobState
         return false;
     }
 
-    public bool ArtistCheckForActiveBlueSplotch()
+    public bool CheckForActiveBlueSplotch()
     {
         
         surfaces = player.ZoomDetection(blueSplotchDistanceCheck);
@@ -135,5 +132,22 @@ public class Artist : JobState
                 return true;
         }
         return false;
+    }
+
+    public void CycleNextColor()
+    {
+        currentSplotch = (Splotch) (((int) currentSplotch + 1) % 3);
+    }
+
+    public Color SplotchTypeToColor()
+    {
+        Color color = currentSplotch switch
+        {
+            Splotch.RED => Color.red,
+            Splotch.BLUE => Color.blue,
+            Splotch.YELL0W => Color.yellow,
+            _ => Color.white
+        };
+        return color;
     }
 }
