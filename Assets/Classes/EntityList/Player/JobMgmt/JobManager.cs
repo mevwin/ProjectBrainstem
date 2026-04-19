@@ -51,10 +51,15 @@ public class JobManager : StateManager
                 break;
             
             case Job.ARTIST:
+                Artist artistState = state as Artist;
                 if (nextModePressed)
-                    (state as Artist).CycleNextColor();
+                    artistState.CycleNextColor();
 
-                Color color = (state as Artist).SplotchTypeToColor();
+                
+
+                bool hittingSurface = artistState.IsReticleHittingSurface();
+
+                Color color = artistState.SplotchTypeToColor(hittingSurface);
                 reticle.Toggle(true);
                 reticle.ChangeColor(color);
 

@@ -20,20 +20,11 @@ public class Artist : JobState
     private Quaternion targetRotation;
 
     private Splotch currentSplotch = Splotch.BLUE;
-    private GameObject blueSplotch = null;
+    public GameObject blueSplotch = null;
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
         // Debug.Log("Activated Artist Ability");
-
-        if (args != null)
-        {
-            // if (args.ContainsKey("hitDistance"))
-            //     hitDistance = (float) args["hitDistance"];
-            
-            // if (args.ContainsKey("hitPosition"))
-            //     hitPosition = (Vector3) args["hitPosition"];
-        }
     }
 
     public override void UpdateState()
@@ -73,7 +64,6 @@ public class Artist : JobState
     public override void ExitState(Dictionary<string, object> args = null)
     {
         // Debug.Log("Exitted Artist Ability");
-        player.abilityActive = false;
     }
 
     /*
@@ -123,7 +113,6 @@ public class Artist : JobState
 
     public bool CheckForActiveBlueSplotch()
     {
-        
         surfaces = player.ZoomDetection(blueSplotchDistanceCheck);
 
         foreach (RaycastHit surface in surfaces)
@@ -134,20 +123,34 @@ public class Artist : JobState
         return false;
     }
 
+    public override bool IsReticleHittingSurface()
+    {
+        return currentSplotch switch
+        {
+            Splotch.BLUE => CheckForBlueSplotchSpawn(),
+            _ => false,
+        };
+    }
+
     public void CycleNextColor()
     {
         currentSplotch = (Splotch) (((int) currentSplotch + 1) % 3);
     }
 
-    public Color SplotchTypeToColor()
+    public Color SplotchTypeToColor(bool hittingSurface)
     {
-        Color color = currentSplotch switch
+        Color color = Color.gray;
+
+        if (hittingSurface)
         {
-            Splotch.RED => Color.red,
-            Splotch.BLUE => Color.blue,
-            Splotch.YELL0W => Color.yellow,
-            _ => Color.white
-        };
+            color = currentSplotch switch
+            {
+                Splotch.RED => new Color32(0xff, 0x24, 0x00, 0xef),
+                Splotch.BLUE => new Color32(0x00, 0x80, 0xfe, 0xef),
+                Splotch.YELL0W => new Color32(0xf9, 0xe0, 0x76, 0xef),
+                _ => Color.gray
+            };
+        }
         return color;
     }
 }

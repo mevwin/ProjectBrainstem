@@ -8,10 +8,6 @@ public class Reticle : MonoBehaviour
     public void Toggle(bool toggle)
     {
         image.gameObject.SetActive(toggle);
-        if (toggle)
-        {
-            
-        }
     }
 
     public void ChangeColor(Color color)
