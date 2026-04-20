@@ -62,6 +62,7 @@ public class JobManager : StateManager
                 break;
             case Job.MUSICIAN:
                 reticle.Toggle(true);
+                reticle.ChangeColor(Color.white);
 
                 break;
         }

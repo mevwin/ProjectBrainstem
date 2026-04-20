@@ -103,7 +103,6 @@ public class Athlete : JobState
         //Debug.Log("Exitted Athlete Ability");
         player.poleVaultBoost = player.movementSpeed * output.normalized;
         player.movementSpeed = defaultSpeed;
-        player.poleVaultBoostDecayRate = targetDistance;
         player.spot = null;
         player.initiatePullJump = false;
         player.ChangeState("Move");

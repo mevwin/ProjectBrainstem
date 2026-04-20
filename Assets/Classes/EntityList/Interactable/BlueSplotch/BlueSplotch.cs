@@ -19,12 +19,11 @@ public class BlueSplotch : Interactable
                 splotchMovement.y = elevateSpeed;
                 player.UpdateMovementVector(splotchMovement, true);
             }
-            else if (dot > -0.05f && dot < 0.05f)
+            else
             {
                 splotchMovement = transform.up * elevateSpeed;
-                splotchMovement.y = 0f;
-                player.blueSplotchHorizMovement = splotchMovement;
-                
+                // splotchMovement.y = 0f;
+                player.splotchMovement = splotchMovement;
                 player.ignoreGravity = true;
             }            
         }
@@ -35,7 +34,7 @@ public class BlueSplotch : Interactable
         if (other.gameObject.TryGetComponent(out Player player))
         {
             player.ignoreGravity = false;
-            player.blueSplotchHorizMovement = Vector3.zero;
+            player.splotchMovement = Vector3.zero;
         }
     }
 }

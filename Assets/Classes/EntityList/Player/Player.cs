@@ -30,23 +30,25 @@ public class Player : Entity
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
     [NonSerialized] public bool ignoreGravity = false;
 
-    // Builder
+    [Header("Builder")]
     public GameObject BlockProjection;
     public GameObject BlockBuilt;
     [NonSerialized] public GameObject CurrentProjectedBlock;
 
-    // Athlete
+    [Header("Ahlete")]
     [NonSerialized] public PoleVaultSpot spot;
     [NonSerialized] public bool initiatePullJump = false;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
-    [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
+    private const float poleVaultBoostDecayRate = 7.5f;
 
-    // Artist
+    [Header("Artist")]
     public GameObject blueSplotchPrefab;
+    public GameObject redSplotchPrefab;
+    public GameObject yellowSplotchPrefab;
+    [NonSerialized] public Vector3 splotchMovement;
 
-    // Musician
+    [Header("Musician")]
     public GameObject MusicNote;
-    [NonSerialized] public Vector3 blueSplotchHorizMovement;
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();

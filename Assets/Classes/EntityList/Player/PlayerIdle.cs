@@ -24,7 +24,7 @@ public class PlayerIdle : PlayerState
                      player.GetRigidbodyVelocity().y + player.poleVaultBoost.y, 
                      player.poleVaultBoost.z);
 
-        output += player.blueSplotchHorizMovement;
+        output += player.splotchMovement;
 
         if (player.ignoreGravity)
             output.y = 1f;

@@ -19,7 +19,7 @@ public class PlayerMove : PlayerState
         {
             Quaternion rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(player.cam.transform.forward, Vector3.up));
             Vector3 rotatedVector = rotation * player.GetMovementVector();
-            Vector3 output = player.movementSpeed * rotatedVector.normalized + player.poleVaultBoost + player.blueSplotchHorizMovement;
+            Vector3 output = player.movementSpeed * rotatedVector.normalized + player.poleVaultBoost + player.splotchMovement;
 
             if (player.ignoreGravity)
                 output.y = 1f;

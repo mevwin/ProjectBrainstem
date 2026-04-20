@@ -7,12 +7,12 @@ public class Artist : JobState
     {
         RED,
         BLUE,
-        YELL0W
+        YELLOW
     }
 
     public Artist(Player player): base(player) { }
 
-    const float blueSplotchDistanceCheck = 30f;
+    const float splotchDistanceCheck = 30f;
 
     // Raycasting Vars
     private RaycastHit[] surfaces;
@@ -20,7 +20,7 @@ public class Artist : JobState
     private Quaternion targetRotation;
 
     private Splotch currentSplotch = Splotch.BLUE;
-    public GameObject blueSplotch = null;
+    public GameObject splotch = null;
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
@@ -35,20 +35,21 @@ public class Artist : JobState
         switch (currentSplotch)
         {
             case Splotch.RED:
+
                 
                 break;
 
             case Splotch.BLUE:
-                if (blueSplotch == null && CheckForBlueSplotchSpawn())
-                    SpawnBlueSplotch(targetPosition);
-                else if (CheckForActiveBlueSplotch())
-                    DespawnBlueSplotch();
-                else if (CheckForBlueSplotchSpawn())
-                    RepositionBlueSplotch(targetPosition);
+                if (splotch == null && CheckForSplotchSpawn())
+                    SpawnSplotch(targetPosition);
+                else if (CheckForActiveSplotch())
+                    DespawnSplotch();
+                else if (CheckForSplotchSpawn())
+                    RepositionSplotch(targetPosition);
             
                 break;
             
-            case Splotch.YELL0W:
+            case Splotch.YELLOW:
             
                 break;
         }
@@ -73,52 +74,62 @@ public class Artist : JobState
 
     if blue splotch has been activated and player is looking at it, despawn splotch
     */
-    void SpawnBlueSplotch(Vector3 position)
+    void SpawnSplotch(Vector3 position)
     {
-        blueSplotch = Object.Instantiate(player.blueSplotchPrefab, position, targetRotation);
+        GameObject prefab = currentSplotch switch
+        {
+            Splotch.RED => player.redSplotchPrefab,
+            Splotch.BLUE => player.blueSplotchPrefab,
+            _ => player.blueSplotchPrefab,
+        };
+
+        splotch = Object.Instantiate(prefab, position, targetRotation);
     }
 
-    void RepositionBlueSplotch(Vector3 newPosition)
+    void RepositionSplotch(Vector3 newPosition)
     {
-        blueSplotch.transform.SetPositionAndRotation(newPosition, targetRotation);
+        splotch.transform.SetPositionAndRotation(newPosition, targetRotation);
     }
 
-    void DespawnBlueSplotch()
+    void DespawnSplotch()
     {
         player.ignoreGravity = false;
-        player.blueSplotchHorizMovement = Vector3.zero;
-        Object.Destroy(blueSplotch);
-        blueSplotch = null;
+        player.splotchMovement = Vector3.zero;
+        Object.Destroy(splotch);
+        splotch = null;
     }
 
-    public bool CheckForBlueSplotchSpawn()
+    public bool CheckForSplotchSpawn()
     {
         if (Physics.Raycast(
             player.cam.transform.position, 
             player.cam.transform.forward, 
             out RaycastHit hit, 
-            blueSplotchDistanceCheck) &&
+            splotchDistanceCheck) &&
             hit.collider.gameObject.layer != 3
         ) {   
-            float dot = Vector3.Dot(hit.normal, Vector3.up);
+            // float dot = Vector3.Dot(hit.normal, Vector3.up);
 
-            if (dot > 0.99f || (dot > -0.05f && dot < 0.05f)) 
-            {
-                targetPosition = hit.point;
-                targetRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-                return true;
-            }
+            // if (dot > 0.99f || (dot > -0.05f && dot < 0.05f)) 
+            // {
+            targetPosition = hit.point;
+            targetRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+            return true;
+            //}
         }
         return false;
     }
 
-    public bool CheckForActiveBlueSplotch()
+    public bool CheckForActiveSplotch()
     {
-        surfaces = player.ZoomDetection(blueSplotchDistanceCheck);
+        surfaces = player.ZoomDetection(splotchDistanceCheck);
 
         foreach (RaycastHit surface in surfaces)
         {
-            if (surface.collider.gameObject.TryGetComponent<BlueSplotch>(out _))
+            if (
+                (currentSplotch == Splotch.BLUE && surface.collider.gameObject.TryGetComponent<BlueSplotch>(out _)) ||
+                (currentSplotch == Splotch.RED && surface.collider.gameObject.TryGetComponent<RedSplotch>(out _))
+            )
                 return true;
         }
         return false;
@@ -128,7 +139,7 @@ public class Artist : JobState
     {
         return currentSplotch switch
         {
-            Splotch.BLUE => CheckForBlueSplotchSpawn(),
+            Splotch.BLUE => CheckForSplotchSpawn(),
             _ => false,
         };
     }
@@ -148,7 +159,7 @@ public class Artist : JobState
             {
                 Splotch.RED => new Color32(0xff, 0x24, 0x00, 0xef),
                 Splotch.BLUE => new Color32(0x00, 0x80, 0xfe, 0xef),
-                Splotch.YELL0W => new Color32(0xf9, 0xe0, 0x76, 0xef),
+                Splotch.YELLOW => new Color32(0xf9, 0xe0, 0x76, 0xef),
                 _ => Color.gray
             };
         }
