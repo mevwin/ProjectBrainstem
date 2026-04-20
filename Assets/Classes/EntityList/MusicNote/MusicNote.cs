@@ -33,9 +33,10 @@ public class MusicNote : Entity
             float length = (startPosition - transform.position).magnitude;
             GameObject bridgeObject = Object.Instantiate(bridge, midpoint, Quaternion.identity);
             bridgeObject.transform.localScale = new Vector3(bridge.transform.localScale.x, bridge.transform.localScale.y, length);
-            float yRot = Mathf.Atan2(transform.position.x - startPosition.x, transform.position.z - startPosition.z) * Mathf.Rad2Deg;
-            float xRot = Mathf.Atan2(startPosition.y - transform.position.y, startPosition.z - transform.position.z) * Mathf.Rad2Deg;
+            float yRot = Mathf.Asin((transform.position.x - startPosition.x) / Mathf.Sqrt(Mathf.Pow(transform.position.x - startPosition.x, 2) + Mathf.Pow(transform.position.z - startPosition.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(transform.position.z - startPosition.z);
+            float xRot = Mathf.Asin((transform.position.y - startPosition.y) / Mathf.Sqrt(Mathf.Pow(transform.position.y - startPosition.y, 2) + Mathf.Pow(transform.position.z - startPosition.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(transform.position.z - startPosition.z) * -1;
             bridgeObject.transform.eulerAngles = new Vector3(xRot, yRot, 0f);
+
             Destroy(gameObject);
         }
     }

@@ -9,8 +9,10 @@ public class Musician : JobState
     public override void EnterState(Dictionary<string, object> args = null)
     {
         Rigidbody note = Object.Instantiate(player.MusicNote, player.transform.position + player.cam.transform.forward, Quaternion.identity).GetComponent<Rigidbody>();
-        
-        note.linearVelocity = player.cam.transform.forward * 30;
+
+        Vector3 targetPos = player.cam.transform.position + player.cam.transform.forward * 20;
+
+        note.linearVelocity = (targetPos - player.transform.position) * 1.5f;
     }
 
     public override void UpdateState()
