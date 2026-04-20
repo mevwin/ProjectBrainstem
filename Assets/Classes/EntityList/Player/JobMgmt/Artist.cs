@@ -31,28 +31,32 @@ public class Artist : JobState
     {
         // Debug.Log("Updating Artist Ability State");
         
+        if (splotch == null && CheckForSplotchSpawn())
+            SpawnSplotch(targetPosition);
+        else if (CheckForActiveSplotch())
+            DespawnSplotch();
+        else if (CheckForSplotchSpawn())
+            RepositionSplotch(targetPosition);
 
-        switch (currentSplotch)
-        {
-            case Splotch.RED:
+        // switch (currentSplotch)
+        // {
+        //     case Splotch.RED:
+
 
                 
-                break;
+        //         break;
 
-            case Splotch.BLUE:
-                if (splotch == null && CheckForSplotchSpawn())
-                    SpawnSplotch(targetPosition);
-                else if (CheckForActiveSplotch())
-                    DespawnSplotch();
-                else if (CheckForSplotchSpawn())
-                    RepositionSplotch(targetPosition);
+        //     case Splotch.BLUE:
+
+
+
             
-                break;
+        //         break;
             
-            case Splotch.YELLOW:
+        //     case Splotch.YELLOW:
             
-                break;
-        }
+        //         break;
+        // }
 
         player.ExitJobState();
     }
@@ -135,14 +139,14 @@ public class Artist : JobState
         return false;
     }
 
-    public override bool IsReticleHittingSurface()
-    {
-        return currentSplotch switch
-        {
-            Splotch.BLUE => CheckForSplotchSpawn(),
-            _ => false,
-        };
-    }
+    // public override bool IsReticleHittingSurface()
+    // {
+    //     return currentSplotch switch
+    //     {
+    //         Splotch.BLUE => CheckForSplotchSpawn(),
+    //         _ => false,
+    //     };
+    // }
 
     public void CycleNextColor()
     {
@@ -153,7 +157,7 @@ public class Artist : JobState
     {
         Color color = Color.gray;
 
-        if (IsReticleHittingSurface())
+        if (CheckForSplotchSpawn())
         {
             color = currentSplotch switch
             {

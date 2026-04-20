@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public class PlayerIdle : PlayerState
         output += player.splotchMovement;
 
         if (player.ignoreGravity)
-            output.y = 1f;
+            output.y = Mathf.Max(1f, player.splotchMovement.y + player.poleVaultBoost.y);
 
         player.UpdateMovementVector(output, player.ignoreGravity);
         if (player.IsMoving()){

@@ -7,25 +7,26 @@ public class RedSplotch : Interactable
 
     protected override void InitializeStates() { }
 
-    public override void OnTriggerEnter(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player) && !player.IsGrounded())
         {
-            float newSpeed = Mathf.Clamp(
-                player.GetRigidbodyVelocity().magnitude * SPEED_MULTIPLIER,
-                0f,
-                MAX_SPEED
-            );
+            Vector3 splotchMovement = player.GetRigidbodyVelocity();
 
-            Vector3 output = newSpeed * transform.up;
-            player.splotchMovement = output;
+            float dot = Vector3.Dot(transform.up, Vector3.up);
+            
+            splotchMovement = transform.up * MAX_SPEED;
+            // splotchMovement.y = 0f;
+            player.splotchMovement = splotchMovement;
+            player.ignoreGravity = true;
         }
     }
 
     public override void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Player player) && !player.IsGrounded())
+        if (other.gameObject.TryGetComponent(out Player player))
         {
+            player.ignoreGravity = false;
             player.splotchMovement = Vector3.zero;
         }
     }

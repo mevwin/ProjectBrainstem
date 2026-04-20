@@ -14,18 +14,12 @@ public class BlueSplotch : Interactable
 
             float dot = Vector3.Dot(transform.up, Vector3.up);
             
-            if (dot > 0.99f)
-            {
-                splotchMovement.y = elevateSpeed;
-                player.UpdateMovementVector(splotchMovement, true);
-            }
-            else
-            {
+            
+                // Debug.DrawRay(transform.position, transform.up);
                 splotchMovement = transform.up * elevateSpeed;
-                // splotchMovement.y = 0f;
                 player.splotchMovement = splotchMovement;
                 player.ignoreGravity = true;
-            }            
+                      
         }
     }
 
