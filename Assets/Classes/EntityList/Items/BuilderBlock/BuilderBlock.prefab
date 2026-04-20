@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 997063681973529141, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4022077656946001722, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
       propertyPath: m_Name
       value: CreateParticles
@@ -130,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuilderBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 6021565819086291434, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 8763401056587022358, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: m_Name
       value: Model
@@ -163,6 +171,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6121489207710714655}
     m_Modifications:
+    - target: {fileID: 828694682045649280, guid: 3f7bf33653fa9cb448358098d70c8ffb, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1122768346978029904, guid: 3f7bf33653fa9cb448358098d70c8ffb, type: 3}
       propertyPath: m_Name
       value: BlockDestruct
