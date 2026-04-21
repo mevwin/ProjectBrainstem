@@ -35,7 +35,7 @@ public class Player : Entity
     public GameObject BlockBuilt;
     [NonSerialized] public GameObject CurrentProjectedBlock;
 
-    [Header("Ahlete")]
+    [Header("Athlete")]
     [NonSerialized] public PoleVaultSpot spot;
     [NonSerialized] public bool initiatePullJump = false;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
@@ -46,6 +46,7 @@ public class Player : Entity
     public GameObject redSplotchPrefab;
     public GameObject yellowSplotchPrefab;
     [NonSerialized] public Vector3 splotchMovement;
+    [NonSerialized] public float splotchMovementDecayRate = 15f;
 
     [Header("Musician")]
     public GameObject MusicNote;
@@ -189,6 +190,11 @@ public class Player : Entity
         if (poleVaultBoost.magnitude > 0)
         {
             poleVaultBoost = Vector3.MoveTowards(poleVaultBoost, Vector3.zero, poleVaultBoostDecayRate * Time.fixedDeltaTime);
+        }
+
+        if (splotchMovement.magnitude > 0)
+        {
+            splotchMovement = Vector3.MoveTowards(splotchMovement, Vector3.zero, splotchMovementDecayRate * Time.fixedDeltaTime);
         }
 
         //Debug.Log(rigidBody.linearVelocity);

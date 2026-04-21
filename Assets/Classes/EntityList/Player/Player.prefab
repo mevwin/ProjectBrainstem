@@ -5771,6 +5771,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2265025855558891447, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5616458017189225242, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -5815,6 +5819,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6689493712077578072, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6865867705952173469, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
       propertyPath: m_Name
       value: Marketus_Full_NewRigTest
@@ -5836,6 +5844,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+--- !u!96 &3960521368857065432 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 1132112565524937341, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+  m_PrefabInstance: {fileID: 4125450446562069925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4711174100783819944 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8656473396096426253, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
@@ -6040,6 +6053,7 @@ MonoBehaviour:
   blueSplotchPrefab: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
   redSplotchPrefab: {fileID: 8099610974155309151, guid: 026142c9e4ba44e4ba9a54cd2f055be3, type: 3}
   yellowSplotchPrefab: {fileID: 0}
+  brushTr: {fileID: 3960521368857065432}
   MusicNote: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
   cam: {fileID: 6780200429520697166}
   zoomOffset: {fileID: 6629727507589140395}

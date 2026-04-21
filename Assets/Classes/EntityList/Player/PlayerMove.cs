@@ -22,7 +22,7 @@ public class PlayerMove : PlayerState
             Vector3 output = player.movementSpeed * rotatedVector.normalized + player.poleVaultBoost + player.splotchMovement;
 
             if (player.ignoreGravity)
-                output.y = 1f;
+                output.y = Mathf.Max(1f, player.splotchMovement.y + player.poleVaultBoost.y);
 
             player.UpdateMovementVector(output, player.ignoreGravity);
         }

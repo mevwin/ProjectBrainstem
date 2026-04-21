@@ -10,16 +10,9 @@ public class BlueSplotch : Interactable
     {
         if (other.gameObject.TryGetComponent(out Player player) && !player.IsGrounded())
         {
-            Vector3 splotchMovement = player.GetRigidbodyVelocity();
-
-            float dot = Vector3.Dot(transform.up, Vector3.up);
-            
-            
-                // Debug.DrawRay(transform.position, transform.up);
-                splotchMovement = transform.up * elevateSpeed;
-                player.splotchMovement = splotchMovement;
-                player.ignoreGravity = true;
-                      
+            Vector3 splotchMovement = transform.up * elevateSpeed;
+            player.splotchMovement = splotchMovement;
+            player.ignoreGravity = true;
         }
     }
 
@@ -28,7 +21,6 @@ public class BlueSplotch : Interactable
         if (other.gameObject.TryGetComponent(out Player player))
         {
             player.ignoreGravity = false;
-            player.splotchMovement = Vector3.zero;
         }
     }
 }

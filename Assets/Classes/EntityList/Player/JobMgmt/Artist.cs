@@ -15,7 +15,6 @@ public class Artist : JobState
     const float splotchDistanceCheck = 30f;
 
     // Raycasting Vars
-    private RaycastHit[] surfaces;
     private Vector3 targetPosition;
     private Quaternion targetRotation;
 
@@ -30,34 +29,19 @@ public class Artist : JobState
     public override void UpdateState()
     {
         // Debug.Log("Updating Artist Ability State");
-        
-        if (splotch == null && CheckForSplotchSpawn())
-            SpawnSplotch(targetPosition);
-        else if (CheckForActiveSplotch())
-            DespawnSplotch();
-        else if (CheckForSplotchSpawn())
-            RepositionSplotch(targetPosition);
+        if (currentSplotch == Splotch.YELLOW)
+        {
 
-        // switch (currentSplotch)
-        // {
-        //     case Splotch.RED:
-
-
-                
-        //         break;
-
-        //     case Splotch.BLUE:
-
-
-
-            
-        //         break;
-            
-        //     case Splotch.YELLOW:
-            
-        //         break;
-        // }
-
+        }
+        else
+        {
+            if (splotch == null && CheckForDrawPosition())
+                SpawnSplotch(targetPosition);
+            else if (CheckForActiveSplotch())
+                DespawnSplotch();
+            else if (CheckForDrawPosition())
+                RepositionSplotch(targetPosition);
+        }
         player.ExitJobState();
     }
 
@@ -72,11 +56,11 @@ public class Artist : JobState
     }
 
     /*
-    if blue splotch is not been activated, spawn a new splotch. blue splotch must be spawned on top of a flat surface that's horizontally or vertically flat
+    if splotch is not been activated, spawn a new splotch. blue splotch must be spawned on top of a flat surface that's horizontally or vertically flat
 
-    if blue splotch has been activated but player is not looking at it, reposition current splotch to new position
+    if splotch has been activated but player is not looking at it, reposition current splotch to new position
 
-    if blue splotch has been activated and player is looking at it, despawn splotch
+    if splotch has been activated and player is looking at it, despawn splotch
     */
     void SpawnSplotch(Vector3 position)
     {
@@ -92,6 +76,14 @@ public class Artist : JobState
 
     void RepositionSplotch(Vector3 newPosition)
     {
+        Splotch activeSplotchType = GetSplotchType(splotch);
+
+        if (activeSplotchType != currentSplotch)
+        {
+            DespawnSplotch();
+            SpawnSplotch(newPosition);
+        }
+
         splotch.transform.SetPositionAndRotation(newPosition, targetRotation);
     }
 
@@ -103,50 +95,31 @@ public class Artist : JobState
         splotch = null;
     }
 
-    public bool CheckForSplotchSpawn()
+    public bool CheckForDrawPosition()
     {
         if (Physics.Raycast(
             player.cam.transform.position, 
             player.cam.transform.forward, 
             out RaycastHit hit, 
             splotchDistanceCheck) &&
-            hit.collider.gameObject.layer != 3
+            hit.collider.gameObject.layer == 0
         ) {   
-            // float dot = Vector3.Dot(hit.normal, Vector3.up);
-
-            // if (dot > 0.99f || (dot > -0.05f && dot < 0.05f)) 
-            // {
             targetPosition = hit.point;
             targetRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
             return true;
-            //}
         }
         return false;
     }
 
     public bool CheckForActiveSplotch()
     {
-        surfaces = player.ZoomDetection(splotchDistanceCheck);
-
-        foreach (RaycastHit surface in surfaces)
-        {
-            if (
-                (currentSplotch == Splotch.BLUE && surface.collider.gameObject.TryGetComponent<BlueSplotch>(out _)) ||
-                (currentSplotch == Splotch.RED && surface.collider.gameObject.TryGetComponent<RedSplotch>(out _))
-            )
-                return true;
-        }
-        return false;
+        return Physics.Raycast(
+            player.cam.transform.position, 
+            player.cam.transform.forward, 
+            out RaycastHit hit, 
+            splotchDistanceCheck) &&
+            hit.collider.gameObject.layer == 3;
     }
-
-    // public override bool IsReticleHittingSurface()
-    // {
-    //     return currentSplotch switch
-    //     {
-    //         Splotch.BLUE => CheckForSplotchSpawn(),
-    //         _ => false,
-    //     };
-    // }
 
     public void CycleNextColor()
     {
@@ -157,7 +130,7 @@ public class Artist : JobState
     {
         Color color = Color.gray;
 
-        if (CheckForSplotchSpawn())
+        if (CheckForDrawPosition())
         {
             color = currentSplotch switch
             {
@@ -167,6 +140,20 @@ public class Artist : JobState
                 _ => Color.gray
             };
         }
+        else if (CheckForActiveSplotch())
+        {
+            color = Color.magenta;
+        }
         return color;
+    }
+
+    Splotch GetSplotchType(GameObject obj)
+    {
+        if (obj.TryGetComponent<BlueSplotch>(out _))
+            return Splotch.BLUE;
+        else if (obj.TryGetComponent<RedSplotch>(out _))
+            return Splotch.RED;
+        else
+            return Splotch.YELLOW;
     }
 }
