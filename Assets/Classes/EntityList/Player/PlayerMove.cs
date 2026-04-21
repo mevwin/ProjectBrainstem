@@ -17,7 +17,7 @@ public class PlayerMove : PlayerState
     {
         if (player.IsMoving())
         {
-            Quaternion rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(player.cam.transform.forward, Vector3.up));
+            Quaternion rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(player.cam.transform.forward, Vector3.up).normalized);
             Vector3 rotatedVector = rotation * player.GetMovementVector();
             Vector3 output = player.movementSpeed * rotatedVector.normalized + player.poleVaultBoost + player.splotchMovement;
 

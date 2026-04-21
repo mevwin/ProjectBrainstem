@@ -82,21 +82,17 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 3d6def1e1a5e69c409ec643975916ad3, type: 2}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
-      insertIndex: 4
+      insertIndex: 3
       addedObject: {fileID: 1283089804108197533}
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2812900811649580152}
   m_SourcePrefab: {fileID: 100100000, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
---- !u!54 &2205112726053140906 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
-  m_PrefabInstance: {fileID: 8653150019385169864}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7600937257871383329 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1255904180571901161, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
@@ -125,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7239d04620d5f6443bd154237d35db09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 2205112726053140906}
+  rigidBody: {fileID: 0}
   collider: {fileID: 2812900811649580152}
   stateManager: {fileID: 8561192414571057479}
   audioManager: {fileID: 7600937257871383329}
@@ -148,7 +144,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

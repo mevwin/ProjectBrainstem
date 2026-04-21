@@ -40,14 +40,14 @@ public class PlayerModel : MonoBehaviour
 
         if (playerScript.IsZoomHeld())
         {
-            zoomHeldForward = Vector3.ProjectOnPlane(playerScript.cam.transform.forward, Vector3.up);
+            zoomHeldForward = Vector3.ProjectOnPlane(playerScript.cam.transform.forward, Vector3.up).normalized;
             transform.forward = zoomHeldForward;
         }
         else
         {
             Vector3 direction = transform.forward + Vector3.RotateTowards(transform.forward, delta.normalized, turnSpeed * Time.deltaTime, 0f);
 
-            direction = Vector3.ProjectOnPlane(direction, Vector3.up);
+            direction = Vector3.ProjectOnPlane(direction, Vector3.up).normalized;
             transform.forward = direction;
 
             if (delta.magnitude < .1f)

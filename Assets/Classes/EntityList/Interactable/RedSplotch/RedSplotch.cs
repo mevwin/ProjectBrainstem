@@ -25,7 +25,7 @@ public class RedSplotch : Interactable
             
             float speed = Mathf.Min(playerVelocity.magnitude, MAX_SPEED);
 
-            player.splotchMovementDecayRate = speed * 0.6f;
+            player.splotchMovementDecayRate = speed;
 
             Vector3 splotchMovement = speed * transform.up;
             player.splotchMovement = splotchMovement;

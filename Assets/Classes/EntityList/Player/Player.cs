@@ -326,7 +326,7 @@ public class Player : Entity
 
     public void DetectItem()
     {
-        if (Physics.Raycast(transform.position, cam.transform.forward, out RaycastHit hit))
+        if (Physics.Raycast(transform.position, Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized, out RaycastHit hit))
         {
             if (hit.transform.gameObject.GetComponent<Item>() && hit.distance <= 3f)
             {
