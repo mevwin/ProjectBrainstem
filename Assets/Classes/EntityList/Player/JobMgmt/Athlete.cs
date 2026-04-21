@@ -22,7 +22,6 @@ public class Athlete : JobState
     private Vector3 targetPosition = Vector3.zero;
     private Vector3 output = Vector3.zero;
     private RaycastHit[] surfaces;
-    private PoleVaultSpot targetedVaultSpot = null;
 
 
     public override void EnterState(Dictionary<string, object> args = null)
@@ -110,12 +109,18 @@ public class Athlete : JobState
 
     public bool IsSurfacePoleVaultSpot(RaycastHit hit)
     {
-        if (hit.collider.gameObject.TryGetComponent(out targetedVaultSpot) &&
-            player.transform.position.y > targetedVaultSpot.transform.position.y - 2f &&
-            player.transform.position.y < targetedVaultSpot.transform.position.y + 2f)
-        {
+        GameObject targetGO = hit.collider.gameObject;
+
+        if (!targetGO.TryGetComponent<PoleVaultSpot>(out _) && 
+            !(targetGO.transform.parent != null && targetGO.transform.parent.gameObject.TryGetComponent<RedSplotch>(out _)))
+            return false;
+        
+        if (player.transform.position.y > targetGO.transform.position.y - 2f &&
+            player.transform.position.y < targetGO.transform.position.y + 2f
+        ) {
             targetDistance = hit.distance;
-            targetPosition = targetedVaultSpot.transform.position;
+            targetPosition = targetGO.transform.position;
+            player.targetVaultSpot = targetGO;
             return true;
         }
         return false;
@@ -126,7 +131,7 @@ public class Athlete : JobState
         foreach (RaycastHit surface in surfaces)
         {
             if (IsSurfacePoleVaultSpot(surface))
-                return true;    
+                return true;
         }
         return false;
     }
@@ -143,7 +148,7 @@ public class Athlete : JobState
 
                 Color lineColor = GetVaultStrengthColor();
 
-                player.athleteLineRenderer.UpdateLine(surface.collider.gameObject.transform.position, lineColor);
+                player.athleteLineRenderer.UpdateLine(targetPosition, lineColor);
                 break;
             }
             else player.athleteLineRenderer.gameObject.SetActive(false);

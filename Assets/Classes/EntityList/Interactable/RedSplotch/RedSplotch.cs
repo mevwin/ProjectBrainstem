@@ -5,11 +5,22 @@ public class RedSplotch : Interactable
     private const float MAX_SPEED = 65f;
 
     protected override void InitializeStates() { }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out Player player) &&
+            player.abilityActive && player.CurrentJob == JobManager.Job.ATHLETE &&
+            gameObject == player.targetVaultSpot.transform.parent.gameObject
+        ) {
+            player.initiatePullJump = true;
+        }
+    }
     
     public void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Player player) && !player.ignoreGravity)
-        {
+        if (other.gameObject.TryGetComponent(out Player player) &&
+            !player.ignoreGravity
+        ) {
             Vector3 playerVelocity = player.GetRigidbodyVelocity();
             
             float speed = Mathf.Min(playerVelocity.magnitude, MAX_SPEED);

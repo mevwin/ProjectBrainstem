@@ -7,7 +7,8 @@ public class PoleVaultSpot : Interactable
     public override void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player) &&
-            player.abilityActive && player.CurrentJob == JobManager.Job.ATHLETE
+            player.abilityActive && player.CurrentJob == JobManager.Job.ATHLETE &&
+            gameObject == player.targetVaultSpot
         ) {
             player.initiatePullJump = true;
         }

@@ -39,6 +39,7 @@ public class Player : Entity
     [NonSerialized] public bool initiatePullJump = false;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
+    [NonSerialized] public GameObject targetVaultSpot;
 
     [Header("Artist")]
     public GameObject blueSplotchPrefab;
@@ -187,14 +188,10 @@ public class Player : Entity
 
         // Decrease poleVaultBoost overtime
         if (poleVaultBoost.magnitude > 0)
-        {
             poleVaultBoost = Vector3.MoveTowards(poleVaultBoost, Vector3.zero, poleVaultBoostDecayRate * Time.fixedDeltaTime);
-        }
 
         if (splotchMovement.magnitude > 0)
-        {
             splotchMovement = Vector3.MoveTowards(splotchMovement, Vector3.zero, splotchMovementDecayRate * Time.fixedDeltaTime);
-        }
 
         //Debug.Log(rigidBody.linearVelocity);
     }
