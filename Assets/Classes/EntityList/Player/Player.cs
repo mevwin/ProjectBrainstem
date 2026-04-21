@@ -36,10 +36,9 @@ public class Player : Entity
     [NonSerialized] public GameObject CurrentProjectedBlock;
 
     [Header("Athlete")]
-    [NonSerialized] public PoleVaultSpot spot;
     [NonSerialized] public bool initiatePullJump = false;
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
-    private const float poleVaultBoostDecayRate = 7.5f;
+    [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
 
     [Header("Artist")]
     public GameObject blueSplotchPrefab;
@@ -320,15 +319,6 @@ public class Player : Entity
             cam.transform.forward,
             cam.transform.rotation,
             distance);
-    }
-
-    void OnCollisionEnter(Collision collision) {
-        if (collision.collider.gameObject.TryGetComponent(out PoleVaultSpot testSpot) && 
-            abilityActive && CurrentJob == JobManager.Job.ATHLETE &&
-            testSpot == spot
-        ) {
-            initiatePullJump = true;
-        }
     }
 
     // Interact

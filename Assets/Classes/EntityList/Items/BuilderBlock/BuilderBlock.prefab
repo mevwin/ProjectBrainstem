@@ -127,6 +127,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4298493208752352440}
     - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: boxCollider
+      value: 
+      objectReference: {fileID: 1229805253947770246}
+    - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: destroyAnim
       value: 
       objectReference: {fileID: 8050772661485782058}
@@ -153,6 +157,11 @@ PrefabInstance:
       addedObject: {fileID: 2656259372204361690}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+--- !u!65 &1229805253947770246 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 5993076439150012712, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+  m_PrefabInstance: {fileID: 4772278591159004334}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4298493208752352440 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8763401056587022358, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
