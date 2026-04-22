@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     [NonSerialized] public int currentLevelIndex = 0;
 
     //[SerializeField]
-    private DungeonLevelList dungeonList;
+    private ShrineLevelList shrineList;
 
     void Awake()
     {
@@ -23,19 +23,19 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void SetDungeonList(DungeonLevelList list)
+    public void SetShrineList(ShrineLevelList list)
     {
-        dungeonList = list;
+        shrineList = list;
     }
 
     public AsyncOperation LoadNextLevel()
     {
-        return SceneManager.LoadSceneAsync(dungeonList.GetLevelName(currentLevelIndex++));
+        return SceneManager.LoadSceneAsync(shrineList.GetLevelName(currentLevelIndex++));
     }
 
-    public bool IsDungeonComplete()
+    public bool IsShrineComplete()
     {
-        return currentLevelIndex == dungeonList.GetSize();
+        return currentLevelIndex == shrineList.GetSize();
     }
 
     public static LevelManager GetManager()

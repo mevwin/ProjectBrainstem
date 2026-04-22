@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
                 currentGameState = GameState.IN_PUZZLE;
 
                 LevelManager levelManager = LevelManager.GetManager();
-                if (!levelManager.IsDungeonComplete())
+                if (!levelManager.IsShrineComplete())
                     operation = levelManager.LoadNextLevel();
                 else 
                 {

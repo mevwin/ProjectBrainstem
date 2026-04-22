@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExitTrigger : Interactable
 {
-    [SerializeField] private DungeonLevelList dungeonLevelList;
+    [SerializeField] private ShrineLevelList shrineLevelList;
 
     protected override void InitializeStates() { }
 
@@ -12,13 +12,13 @@ public class ExitTrigger : Interactable
     {
         LevelManager levelManager = LevelManager.GetManager();
 
-        if (dungeonLevelList)
-            levelManager.SetDungeonList(dungeonLevelList);
+        if (shrineLevelList)
+            levelManager.SetShrineList(shrineLevelList);
     }
 
     public override void OnTriggerEnter(Collider collider)
     {
-        if (isActive && collider.gameObject.TryGetComponent(out Player player))
+        if (isActive && collider.gameObject.TryGetComponent<Player>(out _))
         {
             GameManager gameManager = GameManager.GetManager();
             gameManager.LoadGameState(GameManager.GameState.IN_PUZZLE);

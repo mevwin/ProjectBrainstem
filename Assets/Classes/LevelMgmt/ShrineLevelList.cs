@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DungeonLevelList", menuName = "Scriptable Objects/DungeonLevelList")]
-public class DungeonLevelList : ScriptableObject
+[CreateAssetMenu(fileName = "ShrineLevelList", menuName = "Scriptable Objects/ShrineLevelList")]
+public class ShrineLevelList : ScriptableObject
 {
     [SerializeField] private List<string> list = new();
     

@@ -198,6 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 1720182988}
   exitTrigger: {fileID: 0}
+  depthToRespawn: -65
 --- !u!1001 &777552944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -267,9 +268,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: nextGameState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
+      propertyPath: shrineLevelList
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a3e191838e149f4b88e531518ed540a, type: 2}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: dungeonLevelList
       value: 
@@ -348,9 +357,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: nextGameState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
+      propertyPath: shrineLevelList
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a3e191838e149f4b88e531518ed540a, type: 2}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: dungeonLevelList
       value: 
@@ -522,9 +539,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: nextGameState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
+      propertyPath: shrineLevelList
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a3e191838e149f4b88e531518ed540a, type: 2}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: dungeonLevelList
       value: 
@@ -603,9 +628,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: nextGameState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
+      propertyPath: shrineLevelList
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a3e191838e149f4b88e531518ed540a, type: 2}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: dungeonLevelList
       value: 
