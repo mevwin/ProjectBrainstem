@@ -28,7 +28,6 @@ public class Player : Entity
     [SerializeField] private JobManager jobManager;
     public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
-    [NonSerialized] public bool ignoreGravity = false;
 
     [Header("Builder")]
     public GameObject BlockProjection;
@@ -262,7 +261,16 @@ public class Player : Entity
 
     public bool HasJumped()
     {
-        return inputActions[InputKey.JUMP].WasPressedThisFrame() && IsGrounded();
+        if (inputActions[InputKey.JUMP].WasPressedThisFrame())
+        {
+            if (CurrentJob == JobManager.Job.ATHLETE && poleVaultBoost.magnitude > 0)
+            {
+                poleVaultBoost = Vector3.zero;
+                return true;
+            }
+            else return IsGrounded();
+        }
+        return false;
     }
 
     // Job Mgmt

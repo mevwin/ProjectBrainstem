@@ -14,13 +14,16 @@ public class BlueSplotch : Interactable
             player.splotchMovement = splotchMovement;
             player.ignoreGravity = true;
         }
+        else if (other.gameObject.TryGetComponent(out Interactable interactable))
+        {
+            Vector3 splotchMovement = transform.up * elevateSpeed;
+            interactable.UpdateSplotchMovement(splotchMovement);
+        }
     }
 
     public override void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player))
-        {
             player.ignoreGravity = false;
-        }
     }
 }

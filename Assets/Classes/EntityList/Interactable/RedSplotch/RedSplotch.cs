@@ -22,6 +22,8 @@ public class RedSplotch : Interactable
             !player.ignoreGravity
         ) {
             Vector3 playerVelocity = player.GetRigidbodyVelocity();
+
+            if (playerVelocity.y > -1f) return;
             
             float speed = Mathf.Min(playerVelocity.magnitude, MAX_SPEED);
 
@@ -36,8 +38,8 @@ public class RedSplotch : Interactable
     public override void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player))
-        {
             player.ignoreGravity = false;
-        }
+        else if (other.gameObject.TryGetComponent(out Interactable interactable))
+            interactable.ignoreGravity = false;
     }
 }

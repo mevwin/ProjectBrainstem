@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public abstract class Entity : MonoBehaviour
     [Header("==Physics Stats==")]
     //[SerializedField] protected float rotationSpeed;
     public float movementSpeed;
+    [NonSerialized] public bool ignoreGravity = false;
 
     // [Header("==Game Stats==")]
     // public float currentHealth;
