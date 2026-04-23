@@ -22,7 +22,8 @@ public class Player : Entity
     [SerializeField] private float groundDistanceCheck = 0.05f;
     [SerializeField] private PlayerModel model;
     public Reticle reticle;
-    public AthleteLineRenderer athleteLineRenderer;
+    public GameObject cam;
+    [SerializeField] private Transform zoomOffset;
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
@@ -39,6 +40,7 @@ public class Player : Entity
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
     [NonSerialized] public GameObject targetVaultSpot;
+    public AthleteLineRenderer athleteLineRenderer;
 
     [Header("Artist")]
     public GameObject blueSplotchPrefab;
@@ -62,8 +64,6 @@ public class Player : Entity
     public readonly Vector3 boxCastOffset = new(0, 0.65f, 0);
 
     // Item Detection
-    public GameObject cam;
-    [SerializeField] private Transform zoomOffset;
     Item itemPresent;
 
     public override void Awake()
@@ -157,6 +157,13 @@ public class Player : Entity
         }
 
         // Input Check For Job Abilities
+        if (SwitchJobWasPressed())
+        {
+            JobManager.Job storedJob = StoredJob;
+            StoredJob = CurrentJob;
+            SetCurrentJob(storedJob);
+        }
+
         if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE && !abilityActive)
         {
             abilityActive = true;
@@ -289,9 +296,17 @@ public class Player : Entity
         return inputActions[InputKey.ABILITY].WasPressedThisFrame();
     }
 
+    public bool SwitchJobWasPressed()
+    {
+        return  !IsZoomHeld() &&
+                !abilityActive &&
+                StoredJob > JobManager.Job.NONE &&
+                inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
+    }
+
     public bool NextAbilityModeWasPressed()
     {
-        return inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
+        return IsZoomHeld() && inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
     }
 
     public void SetCurrentJob(JobManager.Job newJob)

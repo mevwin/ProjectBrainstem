@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6023534201621546915, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7458270818328167382, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
       propertyPath: BlockParent
       value: 
