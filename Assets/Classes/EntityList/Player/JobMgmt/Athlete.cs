@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Athlete : JobState
 {
     public Athlete(Player player): base(player) { }
 
-    private const float speedIncRate = 50f;
-    private const float poleMaxDistance = 20f;
+    private const float SPEED_INC_RATE = 50f;
+    private const float POLE_MAX_DISTANCE = 20f;
+    private const float UNGROUNDED_TIME_MAX = 0.35f;
 
     private bool vaultActive = false;
     private bool canVault = false;
@@ -23,10 +23,11 @@ public class Athlete : JobState
     private Vector3 output = Vector3.zero;
     private RaycastHit[] surfaces;
 
+    private float ungroundedTimer = 0f;
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        surfaces = player.ZoomDetection(poleMaxDistance);
+        surfaces = player.ZoomDetection(POLE_MAX_DISTANCE);
 
         canVault = player.IsGrounded() && AthleteCheckCollisionsForVaultSpot();
 
@@ -37,6 +38,7 @@ public class Athlete : JobState
         }
 
         currentAngle = 0f;
+        ungroundedTimer = 0f;
 
         defaultSpeed = player.movementSpeed;
         vaultActive = false;
@@ -73,6 +75,18 @@ public class Athlete : JobState
     {
         if (!canVault) return;
 
+        if (!player.IsGrounded() && !vaultActive)
+            ungroundedTimer += Time.fixedDeltaTime;
+
+        if (player.IsGrounded() && ungroundedTimer > 0f)
+            ungroundedTimer = 0f;
+
+        if (ungroundedTimer > UNGROUNDED_TIME_MAX)
+        {
+            player.ExitJobState();
+            return;
+        }
+
         if (vaultActive)
         {
             currentAngle += vaultCircularSpeed * Time.fixedDeltaTime;
@@ -84,7 +98,7 @@ public class Athlete : JobState
         }
         else
         {
-            player.movementSpeed = Mathf.MoveTowards(player.movementSpeed, defaultSpeed * 3f, Time.fixedDeltaTime * speedIncRate);
+            player.movementSpeed = Mathf.MoveTowards(player.movementSpeed, defaultSpeed * 3f, Time.fixedDeltaTime * SPEED_INC_RATE);
             player.UpdateMovementVector(player.movementSpeed * (targetRotation * Vector3.forward));
         }
 
@@ -138,7 +152,7 @@ public class Athlete : JobState
 
     public void ProjectVaultStrength()
     {
-        surfaces = player.ZoomDetection(poleMaxDistance);
+        surfaces = player.ZoomDetection(POLE_MAX_DISTANCE);
 
         foreach (RaycastHit surface in surfaces)
         {
@@ -157,7 +171,7 @@ public class Athlete : JobState
 
     Color GetVaultStrengthColor()
     {
-        float percentage = Vector3.Distance(player.transform.position, targetPosition - new Vector3(0, 0.5f, 0f)) / poleMaxDistance;
+        float percentage = Vector3.Distance(player.transform.position, targetPosition - new Vector3(0, 0.5f, 0f)) / POLE_MAX_DISTANCE;
 
         Color output;
         if (percentage > 0.70f)
