@@ -21,6 +21,7 @@ public class Level : MonoBehaviour
             player = gameManager.player.GetComponent<Player>();
             player.SetCurrentJob(JobManager.Job.NONE);
             player.SetStoredJob(JobManager.Job.NONE);
+            player.UpdateMovementVector(Vector3.zero, true);
             player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
         }
     }

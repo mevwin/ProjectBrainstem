@@ -79,13 +79,6 @@ public class Artist : JobState
     void RepositionSplotch(Vector3 newPosition)
     {
         Splotch activeSplotchType = GetSplotchType(splotches[currentSplotch]);
-
-        if (activeSplotchType != currentSplotch)
-        {
-            DespawnSplotch();
-            SpawnSplotch(newPosition);
-        }
-
         splotches[currentSplotch].transform.SetPositionAndRotation(newPosition, targetRotation);
     }
 
@@ -94,7 +87,6 @@ public class Artist : JobState
         player.ignoreGravity = false;
         player.splotchMovement = Vector3.zero;
         GameObject obj = selectedActiveSplotchHit.collider.gameObject.transform.parent.gameObject;
-        Debug.Log(obj.name);
         Object.Destroy(obj);
     }
 

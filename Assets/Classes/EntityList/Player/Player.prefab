@@ -10430,16 +10430,16 @@ MonoBehaviour:
   groundDistanceCheck: 0.05
   model: {fileID: 4711174100783819944}
   reticle: {fileID: 3061168651233682707}
-  athleteLineRenderer: {fileID: 7450535755680756154}
+  cam: {fileID: 6780200429520697166}
+  zoomOffset: {fileID: 6629727507589140395}
   jobManager: {fileID: 7641687114105757430}
   BlockProjection: {fileID: 9089790918068906717, guid: d69e0dfe45b25e5439feb06923770308, type: 3}
   BlockBuilt: {fileID: 9089790918068906717, guid: 5dc7545c9e8b33543b98d7ce462a646f, type: 3}
+  athleteLineRenderer: {fileID: 7450535755680756154}
+  athleteSpeedBoost: 1.3
   blueSplotchPrefab: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
   redSplotchPrefab: {fileID: 8099610974155309151, guid: 026142c9e4ba44e4ba9a54cd2f055be3, type: 3}
-  yellowSplotchPrefab: {fileID: 0}
   MusicNote: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
-  cam: {fileID: 6780200429520697166}
-  zoomOffset: {fileID: 6629727507589140395}
 --- !u!114 &7641687114105757430
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class Player : Entity
     public static GameObject Instance { get; private set; }
 
     [Header("==Player Fields==")]
-    [SerializeField] private float jumpSpeed = 25f;
+    [SerializeField] private float jumpSpeed = 30f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
     [SerializeField] private PlayerModel model;
     public Reticle reticle;
@@ -41,11 +41,11 @@ public class Player : Entity
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
     [NonSerialized] public GameObject targetVaultSpot;
     public AthleteLineRenderer athleteLineRenderer;
+    public float athleteSpeedBoost = 1.35f;
 
     [Header("Artist")]
     public GameObject blueSplotchPrefab;
     public GameObject redSplotchPrefab;
-    public GameObject yellowSplotchPrefab;
     [NonSerialized] public Vector3 splotchMovement;
     [NonSerialized] public float splotchMovementDecayRate = 15f;
 
@@ -311,12 +311,13 @@ public class Player : Entity
 
     public void SetCurrentJob(JobManager.Job newJob)
     {
-        if (newJob == JobManager.Job.NONE) return;
-
         model.JobKitToggle(CurrentJob, false);
+        model.JobKitSwitch(); 
         CurrentJob = newJob;
+        
+        if (newJob == JobManager.Job.NONE)
+            return;
 
-        model.JobKitSwitch();
         model.JobKitToggle(newJob, true);
     }
 
