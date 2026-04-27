@@ -49,4 +49,11 @@ public abstract class Interactable : Entity
     {
         Notify(TriggerEventType.Deactivated);
     }
+
+    public virtual void UpdateSplotchMovement(Vector3 movement)
+    {
+        if (collider.isTrigger) return;
+
+        UpdateMovementVector(movement, true);
+    }
 }

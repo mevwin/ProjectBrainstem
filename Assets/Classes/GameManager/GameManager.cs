@@ -191,6 +191,7 @@ public class GameManager : MonoBehaviour
         pauseMenuCanvas.SetActive(false);
         player.SetActive(false);
         Time.timeScale = 1f;
+        LevelManager.GetManager().currentLevelIndex = 0;
         LoadGameState(GameState.IN_HUB);
     }
 }
