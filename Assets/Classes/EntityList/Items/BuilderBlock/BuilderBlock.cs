@@ -6,7 +6,10 @@ public class BuilderBlock : Item
     [SerializeField] private GameObject model;
     [SerializeField] private GameObject destroyAnim;
 
-    public override void Pickup(Player player) { }
+    public override void Pickup(Player player)
+    {
+        Despawn();
+    }
 
     public override void Drop() { }
 

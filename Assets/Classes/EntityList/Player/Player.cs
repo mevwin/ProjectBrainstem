@@ -49,7 +49,8 @@ public class Player : Entity
     [NonSerialized] public float splotchMovementDecayRate = 15f;
 
     [Header("Musician")]
-    public GameObject MusicNote;
+    public GameObject BridgeNote;
+    public GameObject ProjectileNote;
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();

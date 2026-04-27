@@ -216,6 +216,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6708847589025509218, guid: fde884b73ad6bfb429cd25ccb1d9d877, type: 3}
     - target: {fileID: -1439084216661243978, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: BridgeNote
+      value: 
+      objectReference: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
+    - target: {fileID: -1439084216661243978, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
+      propertyPath: ProjectileNote
+      value: 
+      objectReference: {fileID: 5341284671956597707, guid: 7c49b2b0bf3cf3a4083e5ca6551ed105, type: 3}
+    - target: {fileID: -1439084216661243978, guid: 61c8b20da90fe1744a8bc5dbc776b97c, type: 3}
       propertyPath: athletePrefabs.Array.size
       value: 4
       objectReference: {fileID: 0}
