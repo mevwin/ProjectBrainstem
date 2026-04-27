@@ -19,4 +19,5 @@ public class Item : Interactable
         if (!rigidBody) return;
         rigidBody.linearVelocity = Vector3.zero;
     }
+
 }
