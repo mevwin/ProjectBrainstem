@@ -3,12 +3,16 @@ using UnityEngine;
 
 public class Musician : JobState
 {
-    public Musician(Player player) : base(player) { }
+    GameObject CurrentNote;
 
-    // TODO: implement me
+    public Musician(Player player) : base(player)
+    {
+        CurrentNote = player.ProjectileNote;
+    }
+
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        Rigidbody note = Object.Instantiate(player.MusicNote, player.transform.position + player.cam.transform.forward, Quaternion.identity).GetComponent<Rigidbody>();
+        Rigidbody note = Object.Instantiate(CurrentNote, player.transform.position + player.cam.transform.forward, Quaternion.identity).GetComponent<Rigidbody>();
 
         Vector3 targetPos = player.cam.transform.position + player.cam.transform.forward * 20;
 
@@ -28,5 +32,17 @@ public class Musician : JobState
     public override void ExitState(Dictionary<string, object> args = null)
     {
 
+    }
+
+    public void ChangeInstrument()
+    {
+        if (CurrentNote == player.BridgeNote)
+        {
+            CurrentNote = player.ProjectileNote;
+        }
+        else
+        {
+            CurrentNote = player.BridgeNote;
+        }
     }
 }

@@ -5,13 +5,15 @@ public class Builder : JobState
 {
     public Builder(Player player): base(player) { }
 
-    private const int MAX_BLOCKS = 3;
+    private const int MAX_BLOCKS = 5;
     private const float MAX_DISTANCE = 10f;
     private const float forwardOffset = 0.5f;
     private readonly Vector3 spawnOffset = new(0f, 0.65f, 0f);
 
     private Queue<GameObject> blocks = new();
     Vector3 spawnPos;
+
+    private float blockScale = 1.2f;
 
     // TODO: implement me
     public override void EnterState(Dictionary<string, object> args = null)
@@ -44,6 +46,7 @@ public class Builder : JobState
             Vector3 startPosition = player.transform.position + Vector3.up;
 
             GameObject block = Object.Instantiate(player.BlockBuilt, startPosition, Quaternion.identity);
+            block.transform.localScale = Vector3.one * blockScale;
 
             Rigidbody rb = block.GetComponent<Rigidbody>();
 
@@ -125,21 +128,32 @@ public class Builder : JobState
         if (hit.collider == null)
             return;
         
-        spawnPos = hit.point + forwardOffset * player.BlockProjection.transform.localScale.y * hit.normal;
+        spawnPos = hit.point + forwardOffset * blockScale * hit.normal;
 
         if (player.CurrentProjectedBlock)
             player.CurrentProjectedBlock.transform.position = spawnPos;
         else
             player.CurrentProjectedBlock = Object.Instantiate(player.BlockProjection, spawnPos, Quaternion.identity);
+            player.CurrentProjectedBlock.transform.localScale = Vector3.one * blockScale;
     }
 
     void DestroyOldestBlock()
     {
-        blocks.Dequeue().GetComponent<BuilderBlock>().Despawn();
+        GameObject oldBlock = blocks.Dequeue();
+        if (oldBlock == null) return;
+        oldBlock.GetComponent<BuilderBlock>().Despawn();
     }
 
     public void ChangeBlockSize()
     {
-        // TODO: implement me
+        switch (blockScale)
+        {
+            case 1.2f:
+                blockScale = 2.4f;
+                break;
+            case 2.4f:
+                blockScale = 1.2f;
+                break;
+        }
     }
 }

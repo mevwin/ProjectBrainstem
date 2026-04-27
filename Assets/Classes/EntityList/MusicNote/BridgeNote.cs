@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MusicNote : Entity
+public class BridgeNote : Entity
 {
     Vector3 startPosition;
     public GameObject bridge;

@@ -61,6 +61,9 @@ public class JobManager : StateManager
 
                 break;
             case Job.MUSICIAN:
+                if (nextModePressed)
+                    (state as Musician).ChangeInstrument();
+
                 reticle.Toggle(true);
                 reticle.ChangeColor(Color.white);
 
