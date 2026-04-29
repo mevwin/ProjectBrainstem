@@ -41,6 +41,9 @@ public class Player : Entity
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
     [NonSerialized] public GameObject targetVaultSpot;
     public AthleteLineRenderer athleteLineRenderer;
+    public GameObject vaultSpotPrefab;
+    public GameObject vaultSpotProjection;
+    [NonSerialized] public GameObject CurrentProjectedSpot;
     public float athleteSpeedBoost = 1.35f;
 
     [Header("Artist")]
@@ -86,6 +89,9 @@ public class Player : Entity
 
         InitializeInputActionDict();
         InitializeJobStates();
+
+        reticle.Toggle(false);
+        athleteLineRenderer.gameObject.SetActive(false);
     }
 
     public override void Update()
@@ -150,11 +156,17 @@ public class Player : Entity
         {
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
 
-            if (CurrentProjectedBlock)
-                Destroy(CurrentProjectedBlock);
+            if (ZoomWasReleased())
+            {
+                if (CurrentProjectedBlock)
+                    Destroy(CurrentProjectedBlock);
+
+                if (CurrentProjectedSpot)
+                    Destroy(CurrentProjectedSpot);
             
-            reticle.Toggle(false);
-            athleteLineRenderer.gameObject.SetActive(false);
+                reticle.Toggle(false);
+                athleteLineRenderer.gameObject.SetActive(false);
+            }
         }
 
         // Input Check For Job Abilities

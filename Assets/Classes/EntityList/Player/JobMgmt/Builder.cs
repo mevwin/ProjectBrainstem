@@ -12,10 +12,9 @@ public class Builder : JobState
 
     private Queue<GameObject> blocks = new();
     Vector3 spawnPos;
-
     private float blockScale = 1.2f;
 
-    // TODO: implement me
+    
     public override void EnterState(Dictionary<string, object> args = null)
     {
         Physics.Raycast(
@@ -52,12 +51,12 @@ public class Builder : JobState
 
             // set the direction for horizontal velocity (minus 1/2 height of block)
             Vector3 towards = spawnPos -new Vector3 (0, .6f, 0) - startPosition;
-            Debug.Log(towards);
+            // Debug.Log(towards);
 
             Vector3 horizontalDisplacement = new Vector3(towards.x, 0, towards.z);
-            Debug.Log(horizontalDisplacement);
+            // Debug.Log(horizontalDisplacement);
 
-            Debug.DrawRay(startPosition, horizontalDisplacement, Color.red, 2f);
+            // Debug.DrawRay(startPosition, horizontalDisplacement, Color.red, 2f);
 
             // Split Y trajectory into 2 parts:
             // 1. going up and returning to startPosition height
@@ -65,7 +64,7 @@ public class Builder : JobState
 
             // y displacement
             float vertDisplacement = Mathf.Abs(towards.y);
-            Debug.Log(vertDisplacement);
+            // Debug.Log(vertDisplacement);
 
             float G = 50;
             float initVUp = 10f;
@@ -84,16 +83,13 @@ public class Builder : JobState
             float v1 = initVUp - (G*t1);
 
             // Part 2, original delta Y to ground, with starting velocity V1
-
-   
-
             // dY = v0t + .5 g t^2
             float t2 = (-v1 - Mathf.Sqrt((v1 * v1) - (4 * -G * .5f * vertDisplacement)) / -G);
-            Debug.Log(t2);
+            // Debug.Log(t2);
 
             // horzontal disp = v0 * t | (vx constant through both parts of Y, so X's t value is t1 + t2)
             float initialVelocityX = horizontalDisplacement.magnitude / (t1 + t2);
-            Debug.Log(initialVelocityX);
+            // Debug.Log(initialVelocityX);
             
             // send flying
             rb.AddForce(horizontalDisplacement.normalized * initialVelocityX + Vector3.up * initVUp, ForceMode.VelocityChange);
@@ -126,15 +122,20 @@ public class Builder : JobState
             MAX_DISTANCE
         );
         if (hit.collider == null)
+        {
+            Object.Destroy(player.CurrentProjectedBlock);
             return;
+        }
         
         spawnPos = hit.point + forwardOffset * blockScale * hit.normal;
 
         if (player.CurrentProjectedBlock)
             player.CurrentProjectedBlock.transform.position = spawnPos;
         else
+        {
             player.CurrentProjectedBlock = Object.Instantiate(player.BlockProjection, spawnPos, Quaternion.identity);
             player.CurrentProjectedBlock.transform.localScale = Vector3.one * blockScale;
+        }
     }
 
     void DestroyOldestBlock()

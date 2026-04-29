@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Athlete : JobState
@@ -9,43 +9,71 @@ public class Athlete : JobState
     private const float SPEED_INC_RATE = 50f;
     private const float POLE_MAX_DISTANCE = 20f;
     private const float UNGROUNDED_TIME_MAX = 0.35f;
+    private const float SPOT_SPAWN_MAX_DISTANCE = 10f;
 
     private bool vaultActive = false;
     private bool canVault = false;
+    public bool isSpawningSpot = true;
 
     // Runtime Variables
+    private Quaternion targetRotation = Quaternion.identity;
+    private Vector3 targetPosition = Vector3.zero;
+
     private float defaultSpeed = 0f;
     private float vaultCircularSpeed = 0f;
     private float currentAngle = 0f;
     private float targetDistance = 0f;
-    private Quaternion targetRotation = Quaternion.identity;
-    private Vector3 targetPosition = Vector3.zero;
+    private float ungroundedTimer = 0f;
     private Vector3 output = Vector3.zero;
     private RaycastHit[] surfaces;
-
-    private float ungroundedTimer = 0f;
+    
+    private GameObject currentSpot;
+    private RaycastHit hit;
+    
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        surfaces = player.ZoomDetection(POLE_MAX_DISTANCE);
-
-        canVault = player.IsGrounded() && AthleteCheckCollisionsForVaultSpot();
-
-        if (!canVault)
+        if (isSpawningSpot)
         {
+            canVault = false;
+
+            
+            if (hit.collider != null)
+            {
+                if (CheckForSpotPosition(hit))
+                {
+                    if (currentSpot == null)
+                        SpawnVaultSpot();
+                    else
+                        RepositionSpot();
+                }
+                else if (hit.collider.gameObject == currentSpot)
+                    DespawnSpot();
+            }
             player.ExitJobState();
-            return;
         }
+        else
+        {
+            surfaces = player.ZoomDetection(POLE_MAX_DISTANCE);
 
-        currentAngle = 0f;
-        ungroundedTimer = 0f;
+            canVault = player.IsGrounded() && CheckCollisionsForVaultSpot();
 
-        defaultSpeed = player.movementSpeed;
-        vaultActive = false;
+            if (!canVault)
+            {
+                player.ExitJobState();
+                return;
+            }
 
-        targetRotation = Quaternion.LookRotation(targetPosition - player.transform.position);
+            currentAngle = 0f;
+            ungroundedTimer = 0f;
 
-        player.ChangeState("NoState");
+            defaultSpeed = player.movementSpeed;
+            vaultActive = false;
+
+            targetRotation = Quaternion.LookRotation(targetPosition - player.transform.position);
+
+            player.ChangeState("NoState");
+        }
     }
 
     public override void UpdateState()
@@ -102,7 +130,7 @@ public class Athlete : JobState
             player.UpdateMovementVector(player.movementSpeed * (targetRotation * Vector3.forward));
         }
 
-        if (currentAngle > Math.PI * 0.5f)
+        if (currentAngle > math.PI * 0.5f)
         {
             // Debug.Log($"height: {player.gameObject.transform.position.y}, speed: {player.movementSpeed / defaultSpeed * 100f}%, distance: {targetDistance}");
             player.ExitJobState();
@@ -140,7 +168,7 @@ public class Athlete : JobState
         return false;
     }
 
-    public bool AthleteCheckCollisionsForVaultSpot()
+    bool CheckCollisionsForVaultSpot()
     {
         foreach (RaycastHit surface in surfaces)
         {
@@ -150,7 +178,69 @@ public class Athlete : JobState
         return false;
     }
 
-    public void ProjectVaultStrength()
+    bool CheckForSpotPosition(RaycastHit hit)
+    {
+        GameObject obj = hit.collider.gameObject;
+
+        float dot = Vector3.Dot(hit.normal, Vector3.up);
+        Debug.Log($"dot: {dot}");
+
+        return obj.layer == 0 && dot > 0.99f;
+    }
+
+    void SpawnVaultSpot()
+    {
+        currentSpot = Object.Instantiate(player.vaultSpotPrefab, targetPosition, Quaternion.identity);
+    }
+
+    void DespawnSpot()
+    {
+        Object.Destroy(currentSpot);
+    }
+
+    void RepositionSpot()
+    {
+        currentSpot.transform.position = targetPosition;
+    }
+
+    public void ChangeMode()
+    {
+        isSpawningSpot = !isSpawningSpot;
+
+        if (!isSpawningSpot)
+            Object.Destroy(player.CurrentProjectedSpot);
+    }
+
+    public void PrepAbility()
+    {
+        if (isSpawningSpot)
+            ProjectVaultSpot();
+        else
+            ProjectVaultStrength();
+    }
+
+    void ProjectVaultSpot()
+    {
+        Physics.Raycast(
+            player.transform.position, 
+            player.cam.transform.forward, 
+            out hit,
+            SPOT_SPAWN_MAX_DISTANCE
+        );
+
+        if (hit.collider != null && CheckForSpotPosition(hit))
+        {   
+            targetPosition = hit.point;
+
+            if (player.CurrentProjectedSpot)
+                player.CurrentProjectedSpot.transform.position = targetPosition;
+            else
+                player.CurrentProjectedSpot = Object.Instantiate(player.vaultSpotProjection, targetPosition, Quaternion.identity);
+        }
+        else Object.Destroy(player.CurrentProjectedSpot);
+    }
+
+    void ProjectVaultStrength()
     {
         surfaces = player.ZoomDetection(POLE_MAX_DISTANCE);
 

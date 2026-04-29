@@ -78,7 +78,6 @@ public class Artist : JobState
 
     void RepositionSplotch(Vector3 newPosition)
     {
-        Splotch activeSplotchType = GetSplotchType(splotches[currentSplotch]);
         splotches[currentSplotch].transform.SetPositionAndRotation(newPosition, targetRotation);
     }
 
