@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Shrine1_LevelList
   m_EditorClassIdentifier: 
   list:
-  - Artist-Athlete
+  - TutorialLevel

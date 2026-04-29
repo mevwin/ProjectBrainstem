@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlatePressed : InteractableState
+public class LeverUnflipped : InteractableState
 {
-    public PressurePlatePressed(PressurePlate plate) : base(plate) { }
+    public LeverUnflipped(Lever lever) : base(lever) { }
+
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
@@ -17,15 +18,16 @@ public class PressurePlatePressed : InteractableState
 
     public override void FixedUpdateState()
     {
-        
+
     }
 
     public override void OnTriggerExitState(Collider other)
     {
         base.OnTriggerExitState(other);
+
         interactable.isActive = false;
         interactable.DetectActivation();
-        interactable.ChangeState("Unpressed");
+        interactable.ChangeState("Flip");
     }
 
     public override void ExitState(Dictionary<string, object> args = null)

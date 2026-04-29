@@ -230,6 +230,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 997063681973529141, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4022077656946001722, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
       propertyPath: m_Name
       value: CreateParticles
