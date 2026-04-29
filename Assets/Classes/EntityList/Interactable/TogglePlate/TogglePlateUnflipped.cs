@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlatePressed : InteractableState
+public class TogglePlateUnflipped : InteractableState
 {
-    public PressurePlatePressed(PressurePlate plate) : base(plate) { }
+    public TogglePlateUnflipped(TogglePlate plate) : base(plate) { }
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
@@ -12,20 +12,21 @@ public class PressurePlatePressed : InteractableState
 
     public override void UpdateState()
     {
-
+        
     }
 
     public override void FixedUpdateState()
     {
-        
+
     }
 
-    public override void OnTriggerExitState(Collider other)
+    public override void OnTriggerEnterState(Collider other)
     {
-        base.OnTriggerExitState(other);
-        interactable.isActive = false;
+        base.OnTriggerEnterState(other);
+
+        interactable.isActive = true;
         interactable.DetectActivation();
-        interactable.ChangeState("Unpressed");
+        interactable.ChangeState("Flipped");
     }
 
     public override void ExitState(Dictionary<string, object> args = null)
