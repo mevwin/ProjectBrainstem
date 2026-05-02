@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -40,6 +39,11 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager GetManager()
     {
+        if (Instance == null)
+        {
+            Instance = new GameObject("LevelManager");
+            Instance.AddComponent<LevelManager>();
+        }
         return Instance.GetComponent<LevelManager>();
     }
 }

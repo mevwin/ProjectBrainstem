@@ -18,17 +18,17 @@ public class Player : Entity
     public static GameObject Instance { get; private set; }
 
     [Header("==Player Fields==")]
-    [SerializeField] private float jumpSpeed = 25f;
+    [SerializeField] private float jumpSpeed = 30f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
     [SerializeField] private PlayerModel model;
     public Reticle reticle;
-    public AthleteLineRenderer athleteLineRenderer;
+    public GameObject cam;
+    [SerializeField] private Transform zoomOffset;
 
     [Header("==Job Fields==")]
     [SerializeField] private JobManager jobManager;
     public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
-    [NonSerialized] public bool ignoreGravity = false;
 
     [Header("Builder")]
     public GameObject BlockProjection;
@@ -40,11 +40,12 @@ public class Player : Entity
     [NonSerialized] public Vector3 poleVaultBoost = Vector3.zero;
     [NonSerialized] public float poleVaultBoostDecayRate = 7.5f;
     [NonSerialized] public GameObject targetVaultSpot;
+    public AthleteLineRenderer athleteLineRenderer;
+    public float athleteSpeedBoost = 1.35f;
 
     [Header("Artist")]
     public GameObject blueSplotchPrefab;
     public GameObject redSplotchPrefab;
-    public GameObject yellowSplotchPrefab;
     [NonSerialized] public Vector3 splotchMovement;
     [NonSerialized] public float splotchMovementDecayRate = 15f;
 
@@ -64,8 +65,6 @@ public class Player : Entity
     public readonly Vector3 boxCastOffset = new(0, 0.65f, 0);
 
     // Item Detection
-    public GameObject cam;
-    [SerializeField] private Transform zoomOffset;
     Item itemPresent;
 
     public override void Awake()
@@ -171,6 +170,13 @@ public class Player : Entity
         }
 
         // Input Check For Job Abilities
+        if (SwitchJobWasPressed())
+        {
+            JobManager.Job storedJob = StoredJob;
+            StoredJob = CurrentJob;
+            SetCurrentJob(storedJob);
+        }
+
         if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE && !abilityActive)
         {
             abilityActive = true;
@@ -275,7 +281,16 @@ public class Player : Entity
 
     public bool HasJumped()
     {
-        return inputActions[InputKey.JUMP].WasPressedThisFrame() && IsGrounded();
+        if (inputActions[InputKey.JUMP].WasPressedThisFrame())
+        {
+            if (CurrentJob == JobManager.Job.ATHLETE && poleVaultBoost.magnitude > 0)
+            {
+                poleVaultBoost = Vector3.zero;
+                return true;
+            }
+            else return IsGrounded();
+        }
+        return false;
     }
 
     // Job Mgmt
@@ -294,19 +309,28 @@ public class Player : Entity
         return inputActions[InputKey.ABILITY].WasPressedThisFrame();
     }
 
+    public bool SwitchJobWasPressed()
+    {
+        return  !IsZoomHeld() &&
+                !abilityActive &&
+                StoredJob > JobManager.Job.NONE &&
+                inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
+    }
+
     public bool NextAbilityModeWasPressed()
     {
-        return inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
+        return IsZoomHeld() && inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
     }
 
     public void SetCurrentJob(JobManager.Job newJob)
     {
-        if (newJob == JobManager.Job.NONE) return;
-
         model.JobKitToggle(CurrentJob, false);
+        model.JobKitSwitch(); 
         CurrentJob = newJob;
+        
+        if (newJob == JobManager.Job.NONE)
+            return;
 
-        model.JobKitSwitch();
         model.JobKitToggle(newJob, true);
     }
 

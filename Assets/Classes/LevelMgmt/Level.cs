@@ -5,6 +5,7 @@ public class Level : MonoBehaviour
     [SerializeField] protected Transform playerSpawnPoint;
     [SerializeField] private ExitTrigger exitTrigger;
     [SerializeField] private float depthToRespawn = 0f;
+    private Player player;
     protected GameManager gameManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,16 +17,21 @@ public class Level : MonoBehaviour
 
         if (gameManager && gameManager.player){
             gameManager.player.SetActive(true);
-            gameManager.player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+
+            player = gameManager.player.GetComponent<Player>();
+            player.SetCurrentJob(JobManager.Job.NONE);
+            player.SetStoredJob(JobManager.Job.NONE);
+            player.UpdateMovementVector(Vector3.zero, true);
+            player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
         }
     }
 
     void Update()
     {
-        if (gameManager.player && gameManager.player.transform.position.y < depthToRespawn)
+        if (player && player.transform.position.y < depthToRespawn)
         {
-            gameManager.player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
-            gameManager.player.GetComponent<Player>().UpdateMovementVector(Vector3.zero, true);
+            player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+            player.UpdateMovementVector(Vector3.zero, true);
         }
     }
 }

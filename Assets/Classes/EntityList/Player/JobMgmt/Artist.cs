@@ -7,19 +7,25 @@ public class Artist : JobState
     {
         RED,
         BLUE,
-        YELLOW
+        NONE,
     }
-
-    public Artist(Player player): base(player) { }
+    
+    private Dictionary<Splotch, GameObject> splotches = new();
+    public Artist(Player player): base(player)
+    {
+        splotches.Add(Splotch.RED, null);
+        splotches.Add(Splotch.BLUE, null);
+        splotches.Add(Splotch.NONE, null);
+    }
 
     const float splotchDistanceCheck = 30f;
 
     // Raycasting Vars
     private Vector3 targetPosition;
     private Quaternion targetRotation;
-
     private Splotch currentSplotch = Splotch.BLUE;
-    public GameObject splotch = null;
+    private RaycastHit selectedActiveSplotchHit;
+    
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
@@ -29,19 +35,14 @@ public class Artist : JobState
     public override void UpdateState()
     {
         // Debug.Log("Updating Artist Ability State");
-        if (currentSplotch == Splotch.YELLOW)
-        {
 
-        }
-        else
-        {
-            if (splotch == null && CheckForDrawPosition())
-                SpawnSplotch(targetPosition);
-            else if (CheckForActiveSplotch())
-                DespawnSplotch();
-            else if (CheckForDrawPosition())
-                RepositionSplotch(targetPosition);
-        }
+        if (splotches[currentSplotch] == null && CheckForDrawPosition())
+            SpawnSplotch(targetPosition);
+        else if (CheckForActiveSplotch())
+            DespawnSplotch();
+        else if (CheckForDrawPosition())
+            RepositionSplotch(targetPosition);
+        
         player.ExitJobState();
     }
 
@@ -68,31 +69,25 @@ public class Artist : JobState
         {
             Splotch.RED => player.redSplotchPrefab,
             Splotch.BLUE => player.blueSplotchPrefab,
-            _ => player.blueSplotchPrefab,
+            _ => null,
         };
 
-        splotch = Object.Instantiate(prefab, position, targetRotation);
+        if (prefab)
+            splotches[currentSplotch] = Object.Instantiate(prefab, position, targetRotation);
     }
 
     void RepositionSplotch(Vector3 newPosition)
     {
-        Splotch activeSplotchType = GetSplotchType(splotch);
-
-        if (activeSplotchType != currentSplotch)
-        {
-            DespawnSplotch();
-            SpawnSplotch(newPosition);
-        }
-
-        splotch.transform.SetPositionAndRotation(newPosition, targetRotation);
+        Splotch activeSplotchType = GetSplotchType(splotches[currentSplotch]);
+        splotches[currentSplotch].transform.SetPositionAndRotation(newPosition, targetRotation);
     }
 
     void DespawnSplotch()
     {
         player.ignoreGravity = false;
         player.splotchMovement = Vector3.zero;
-        Object.Destroy(splotch);
-        splotch = null;
+        GameObject obj = selectedActiveSplotchHit.collider.gameObject.transform.parent.gameObject;
+        Object.Destroy(obj);
     }
 
     public bool CheckForDrawPosition()
@@ -116,14 +111,14 @@ public class Artist : JobState
         return Physics.Raycast(
             player.cam.transform.position, 
             player.cam.transform.forward, 
-            out RaycastHit hit, 
+            out selectedActiveSplotchHit, 
             splotchDistanceCheck) &&
-            hit.collider.gameObject.layer == 3;
+            selectedActiveSplotchHit.collider.gameObject.layer == 3;
     }
 
     public void CycleNextColor()
     {
-        currentSplotch = (Splotch) (((int) currentSplotch + 1) % 3);
+        currentSplotch = (Splotch) (((int) currentSplotch + 1) % 2);
     }
 
     public Color SplotchTypeToColor()
@@ -136,7 +131,6 @@ public class Artist : JobState
             {
                 Splotch.RED => new Color32(0xff, 0x24, 0x00, 0xef),
                 Splotch.BLUE => new Color32(0x00, 0x80, 0xfe, 0xef),
-                Splotch.YELLOW => new Color32(0xf9, 0xe0, 0x76, 0xef),
                 _ => Color.gray
             };
         }
@@ -154,6 +148,6 @@ public class Artist : JobState
         else if (obj.TryGetComponent<RedSplotch>(out _))
             return Splotch.RED;
         else
-            return Splotch.YELLOW;
+            return Splotch.NONE;
     }
 }

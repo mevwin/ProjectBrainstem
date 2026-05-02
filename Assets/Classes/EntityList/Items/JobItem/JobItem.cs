@@ -8,15 +8,13 @@ public class JobItem : Item
     {
         base.Pickup(player);
         // Debug.Log("Job Pickup: " + JobManager.JobEnumToString(job));
-        // if (player.CurrentJob == job || player.StoredJob == job)
-        //     return;
+        if (player.CurrentJob == job || player.StoredJob == job)
+            return;
 
-        // if (player.CurrentJob == JobManager.Job.NONE)
-        //     player.SetCurrentJob(job);
-        // else
-        //     player.SetStoredJob(job);
-
-        player.SetCurrentJob(job);
+        if (player.CurrentJob == JobManager.Job.NONE)
+            player.SetCurrentJob(job);
+        else
+            player.SetStoredJob(job);
 
         Destroy(gameObject);
     }
