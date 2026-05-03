@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuilderBlock : Item
@@ -6,15 +8,32 @@ public class BuilderBlock : Item
     [SerializeField] private GameObject model;
     [SerializeField] private GameObject destroyAnim;
 
+    public List<GameObject> blocks = new List<GameObject>();
+
     public override void Pickup(Player player)
     {
-        Despawn();
+        if (player.IsZoomHeld())
+        {
+            Despawn();
+        }
+        else
+        {
+            base.Pickup(player);
+            Vector3 position = player.transform.position + player.cam.transform.forward * 3;
+            Vector3 dir = position - transform.position;
+            float mag = dir.magnitude;
+            mag = Mathf.Clamp(mag, 0f, 10f);
+            dir = dir.normalized * mag * 10;
+            rigidBody.linearVelocity = dir;
+            rigidBody.angularVelocity *= 0.99f;
+        }
     }
 
     public override void Drop() { }
 
     public void Despawn()
     {
+        blocks.Remove(gameObject);
         model.SetActive(false);
         boxCollider.enabled = false;
         destroyAnim.SetActive(true);
