@@ -3,7 +3,9 @@ using UnityEngine;
 public class BridgeNote : Entity
 {
     Vector3 startPosition;
-    public GameObject bridge;
+    public GameObject Bridge;
+    public Musician musician;
+    bool hit;
 
     protected override void InitializeStates() { }
 
@@ -11,7 +13,7 @@ public class BridgeNote : Entity
     {
         base.Start();
 
-        startPosition = transform.position;
+        startPosition = transform.position - new Vector3(0f, 1.25f, 0f);
     }
 
     public override void Update()
@@ -27,15 +29,19 @@ public class BridgeNote : Entity
 
     public void OnCollisionEnter(Collision collision)
     {
+        if (hit) return;
         if (collision.transform.name != "Player")
-        {
+        {   
+            hit = true;
             Vector3 midpoint = (startPosition + transform.position) / 2;
-            float length = (startPosition - transform.position).magnitude;
-            GameObject bridgeObject = Object.Instantiate(bridge, midpoint, Quaternion.identity);
-            bridgeObject.transform.localScale = new Vector3(bridge.transform.localScale.x, bridge.transform.localScale.y, length);
-            float yRot = Mathf.Asin((transform.position.x - startPosition.x) / Mathf.Sqrt(Mathf.Pow(transform.position.x - startPosition.x, 2) + Mathf.Pow(transform.position.z - startPosition.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(transform.position.z - startPosition.z);
-            float xRot = Mathf.Asin((transform.position.y - startPosition.y) / Mathf.Sqrt(Mathf.Pow(transform.position.y - startPosition.y, 2) + Mathf.Pow(transform.position.z - startPosition.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(transform.position.z - startPosition.z) * -1;
+            Vector3 diff = transform.position - startPosition;
+            float length = diff.magnitude;
+            GameObject bridgeObject = Object.Instantiate(Bridge, midpoint, Quaternion.identity);
+            bridgeObject.transform.localScale = new Vector3(bridgeObject.transform.localScale.x, bridgeObject.transform.localScale.y, length);
+            float yRot = Mathf.Asin(diff.x / Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(diff.z);
+            float xRot = Mathf.Asin((diff.y) / Mathf.Sqrt(Mathf.Pow(diff.y, 2) + Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(diff.z) * -1;
             bridgeObject.transform.eulerAngles = new Vector3(xRot, yRot, 0f);
+            Musician.bridge = bridgeObject;
 
             Destroy(gameObject);
         }

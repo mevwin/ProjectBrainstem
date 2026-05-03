@@ -9,7 +9,7 @@ public class ProjectileNote : Entity
     {
         base.Start();
 
-        startPosition = transform.position;
+        startPosition = transform.position - new Vector3(0, 2f, 0);
     }
 
     public override void Update()
@@ -27,6 +27,14 @@ public class ProjectileNote : Entity
     {
         if (collision.transform.name != "Player")
         { 
+            Interactable obj = collision.transform.gameObject.GetComponent<Interactable>();
+            if (obj != null)
+            {
+                Debug.Log("Works");
+                obj.isActive = !obj.isActive;
+                Destroy(gameObject);
+            }
+
             Destroy(gameObject);
         }
     }
