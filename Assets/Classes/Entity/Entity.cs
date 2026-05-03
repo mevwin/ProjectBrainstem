@@ -4,6 +4,13 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
+    public enum Weight
+    {
+        LIGHT,
+        HEAVY,
+        IMMOVABLE
+    }
+
     [Header("==Entity Components==")]
     //[SerializeField] private Animator animator;
     [SerializeField] protected Rigidbody rigidBody;
@@ -15,6 +22,7 @@ public abstract class Entity : MonoBehaviour
     //[SerializedField] protected float rotationSpeed;
     public float movementSpeed;
     [NonSerialized] public bool ignoreGravity = false;
+    public Weight weight = Weight.IMMOVABLE;
 
     // [Header("==Game Stats==")]
     // public float currentHealth;
