@@ -10430,6 +10430,7 @@ MonoBehaviour:
   stateManager: {fileID: 6074706642034747607}
   audioManager: {fileID: 5474462412648063665}
   movementSpeed: 10
+  weight: 0
   jumpSpeed: 15
   groundDistanceCheck: 0.05
   model: {fileID: 4711174100783819944}
@@ -10451,8 +10452,6 @@ MonoBehaviour:
   artistCastMask:
     serializedVersion: 2
     m_Bits: 1
-  BridgeNote: {fileID: 0}
-  ProjectileNote: {fileID: 0}
   BridgeNote: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
   ProjectileNote: {fileID: 5341284671956597707, guid: 7c49b2b0bf3cf3a4083e5ca6551ed105, type: 3}
 --- !u!114 &7641687114105757430
@@ -10507,6 +10506,7 @@ MonoBehaviour:
   sensitivity: 0.5
   lowerBound: -85
   upperBound: 85
+  distance: 7
 --- !u!114 &6074706642034747607 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
