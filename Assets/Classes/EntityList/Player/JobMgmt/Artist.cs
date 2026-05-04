@@ -27,10 +27,7 @@ public class Artist : JobState
     private RaycastHit selectedActiveSplotchHit;
     
 
-    public override void EnterState(Dictionary<string, object> args = null)
-    {
-        // Debug.Log("Activated Artist Ability");
-    }
+    public override void EnterState(Dictionary<string, object> args = null) { }
 
     public override void UpdateState()
     {
@@ -49,23 +46,10 @@ public class Artist : JobState
         player.ExitJobState();
     }
 
-    public override void FixedUpdateState()
-    {
-        // Debug.Log("Fixed Updating Artist Ability State");
-    }
+    public override void FixedUpdateState() { }
 
-    public override void ExitState(Dictionary<string, object> args = null)
-    {
-        // Debug.Log("Exitted Artist Ability");
-    }
+    public override void ExitState(Dictionary<string, object> args = null) { }
 
-    /*
-    if splotch is not been activated, spawn a new splotch. blue splotch must be spawned on top of a flat surface that's horizontally or vertically flat
-
-    if splotch has been activated but player is not looking at it, reposition current splotch to new position
-
-    if splotch has been activated and player is looking at it, despawn splotch
-    */
     void SpawnSplotch(Vector3 position)
     {
         GameObject prefab = currentSplotch switch

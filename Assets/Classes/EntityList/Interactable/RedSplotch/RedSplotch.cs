@@ -12,8 +12,14 @@ public class RedSplotch : Interactable
     {
         if (other.gameObject.TryGetComponent(out Player player)) {
             player.initiatePullJump = true;
-            velocityEntered = Mathf.Max(Mathf.Abs(player.GetRigidbodyVelocity().y), MIN_SPEED);
-            Debug.Log(velocityEntered);
+            player.ignoreGravity = true;
+
+            Vector3 playerVelocity = player.GetRigidbodyVelocity();
+
+            velocityEntered = Mathf.Max(Mathf.Abs(playerVelocity.y), MIN_SPEED);
+            playerVelocity.y = 0f;
+            player.UpdateMovementVector(playerVelocity, true);
+            // Debug.Log(velocityEntered);
         }
     }
     
