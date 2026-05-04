@@ -10145,6 +10145,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ReticleCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7746485609001158887, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10426,6 +10430,7 @@ MonoBehaviour:
   stateManager: {fileID: 6074706642034747607}
   audioManager: {fileID: 5474462412648063665}
   movementSpeed: 10
+  weight: 0
   jumpSpeed: 15
   groundDistanceCheck: 0.05
   model: {fileID: 4711174100783819944}
@@ -10436,9 +10441,17 @@ MonoBehaviour:
   BlockProjection: {fileID: 9089790918068906717, guid: d69e0dfe45b25e5439feb06923770308, type: 3}
   BlockBuilt: {fileID: 9089790918068906717, guid: 5dc7545c9e8b33543b98d7ce462a646f, type: 3}
   athleteLineRenderer: {fileID: 7450535755680756154}
+  vaultSpotPrefab: {fileID: 149300055855002233, guid: 7457bfbd187b73641ae81a276a04291a, type: 3}
+  vaultSpotProjection: {fileID: 149300055855002233, guid: e63a7b18838eda742b49237274c5442d, type: 3}
   athleteSpeedBoost: 1.3
+  athleteCastMask:
+    serializedVersion: 2
+    m_Bits: 1
   blueSplotchPrefab: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
   redSplotchPrefab: {fileID: 8099610974155309151, guid: 026142c9e4ba44e4ba9a54cd2f055be3, type: 3}
+  artistCastMask:
+    serializedVersion: 2
+    m_Bits: 1
   BridgeNote: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
   ProjectileNote: {fileID: 5341284671956597707, guid: 7c49b2b0bf3cf3a4083e5ca6551ed105, type: 3}
 --- !u!114 &7641687114105757430
@@ -10493,6 +10506,7 @@ MonoBehaviour:
   sensitivity: 0.5
   lowerBound: -85
   upperBound: 85
+  distance: 7
 --- !u!114 &6074706642034747607 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}

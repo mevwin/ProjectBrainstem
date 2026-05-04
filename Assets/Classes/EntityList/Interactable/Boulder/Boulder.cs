@@ -1,8 +1,8 @@
-using System;
 using UnityEngine;
 
 public class Boulder : Interactable
 {
+    public GameObject ParticleParent;
     public float depthToRespawn = 0f;
     private Vector3 startPosition;
 
@@ -14,7 +14,8 @@ public class Boulder : Interactable
 
         // update the mass of the boulder based on its transform scale
         rigidBody.mass *= gameObject.transform.localScale.x;
-
+        
+        ParticleParent.transform.localScale = gameObject.transform.localScale;
     }
 
     public override void Update()
@@ -25,6 +26,10 @@ public class Boulder : Interactable
         {
             UpdateMovementVector(Vector3.zero, true);
             transform.position = startPosition;
+
+            ParticleParent.SetActive(false);
+            ParticleParent.SetActive(true);
+            ParticleParent.GetComponent<ParticleSystem>().Play();
         }
     }
 

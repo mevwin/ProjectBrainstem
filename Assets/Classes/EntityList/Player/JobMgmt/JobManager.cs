@@ -47,7 +47,12 @@ public class JobManager : StateManager
                 break;
             
             case Job.ATHLETE:
-                (state as Athlete).ProjectVaultStrength();
+                Athlete athleteState = state as Athlete;
+
+                if (nextModePressed)
+                    athleteState.ChangeMode();
+
+                athleteState.PrepAbility();
                 break;
             
             case Job.ARTIST:

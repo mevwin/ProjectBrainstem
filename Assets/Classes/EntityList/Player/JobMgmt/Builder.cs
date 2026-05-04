@@ -12,10 +12,9 @@ public class Builder : JobState
 
     private List<GameObject> blocks = new List<GameObject>();
     Vector3 spawnPos;
-
     private float blockScale = 1.2f;
 
-    // TODO: implement me
+    
     public override void EnterState(Dictionary<string, object> args = null)
     {
         Physics.Raycast(
@@ -64,15 +63,20 @@ public class Builder : JobState
             MAX_DISTANCE
         );
         if (hit.collider == null)
+        {
+            Object.Destroy(player.CurrentProjectedBlock);
             return;
+        }
         
         spawnPos = hit.point + forwardOffset * blockScale * hit.normal;
 
         if (player.CurrentProjectedBlock)
             player.CurrentProjectedBlock.transform.position = spawnPos;
         else
+        {
             player.CurrentProjectedBlock = Object.Instantiate(player.BlockProjection, spawnPos, Quaternion.identity);
             player.CurrentProjectedBlock.transform.localScale = Vector3.one * blockScale;
+        }
     }
 
     void UpdateBlockAge()

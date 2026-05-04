@@ -127,6 +127,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4298493208752352440}
     - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: weight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: boxCollider
       value: 
       objectReference: {fileID: 1229805253947770246}
