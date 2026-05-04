@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Name
-      value: MusicNote
+      value: BridgeNote
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalPosition.x
@@ -115,7 +115,7 @@ MonoBehaviour:
   stateManager: {fileID: 5618904555762242751}
   audioManager: {fileID: 5930916224773529305}
   movementSpeed: 0
-  bridge: {fileID: 6708847589025509218, guid: fde884b73ad6bfb429cd25ccb1d9d877, type: 3}
+  Bridge: {fileID: 6708847589025509218, guid: fde884b73ad6bfb429cd25ccb1d9d877, type: 3}
 --- !u!114 &5618904555762242751 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}

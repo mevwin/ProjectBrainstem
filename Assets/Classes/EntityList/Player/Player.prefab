@@ -10453,6 +10453,8 @@ MonoBehaviour:
     m_Bits: 1
   BridgeNote: {fileID: 0}
   ProjectileNote: {fileID: 0}
+  BridgeNote: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
+  ProjectileNote: {fileID: 5341284671956597707, guid: 7c49b2b0bf3cf3a4083e5ca6551ed105, type: 3}
 --- !u!114 &7641687114105757430
 MonoBehaviour:
   m_ObjectHideFlags: 0
