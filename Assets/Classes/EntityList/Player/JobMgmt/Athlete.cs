@@ -209,6 +209,8 @@ public class Athlete : JobState
 
         if (!isSpawningSpot)
             Object.Destroy(player.CurrentProjectedSpot);
+        else
+            player.athleteLineRenderer.gameObject.SetActive(false);
     }
 
     public void PrepAbility()
@@ -225,7 +227,8 @@ public class Athlete : JobState
             player.transform.position, 
             player.cam.transform.forward, 
             out hit,
-            SPOT_SPAWN_MAX_DISTANCE
+            SPOT_SPAWN_MAX_DISTANCE,
+            player.athleteCastMask
         );
 
         if (hit.collider != null && CheckForSpotPosition(hit))

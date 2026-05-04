@@ -10443,8 +10443,14 @@ MonoBehaviour:
   vaultSpotPrefab: {fileID: 149300055855002233, guid: 7457bfbd187b73641ae81a276a04291a, type: 3}
   vaultSpotProjection: {fileID: 149300055855002233, guid: e63a7b18838eda742b49237274c5442d, type: 3}
   athleteSpeedBoost: 1.3
+  athleteCastMask:
+    serializedVersion: 2
+    m_Bits: 1
   blueSplotchPrefab: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
   redSplotchPrefab: {fileID: 8099610974155309151, guid: 026142c9e4ba44e4ba9a54cd2f055be3, type: 3}
+  artistCastMask:
+    serializedVersion: 2
+    m_Bits: 1
   BridgeNote: {fileID: 0}
   ProjectileNote: {fileID: 0}
 --- !u!114 &7641687114105757430

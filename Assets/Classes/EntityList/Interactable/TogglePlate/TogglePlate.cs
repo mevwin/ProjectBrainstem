@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TogglePlate : Interactable
 {
-    [SerializeField] public bool locked;
+    public bool locked;
 
     public override void Start()
     {

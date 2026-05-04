@@ -45,12 +45,14 @@ public class Player : Entity
     public GameObject vaultSpotProjection;
     [NonSerialized] public GameObject CurrentProjectedSpot;
     public float athleteSpeedBoost = 1.35f;
+    public LayerMask athleteCastMask;
 
     [Header("Artist")]
     public GameObject blueSplotchPrefab;
     public GameObject redSplotchPrefab;
     [NonSerialized] public Vector3 splotchMovement;
     [NonSerialized] public float splotchMovementDecayRate = 15f;
+    public LayerMask artistCastMask;
 
     [Header("Musician")]
     public GameObject BridgeNote;

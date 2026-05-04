@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1564503496636699169, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalPosition.x
@@ -237,6 +237,10 @@ PrefabInstance:
     - target: {fileID: 4022077656946001722, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
       propertyPath: m_Name
       value: CreateParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022077656946001722, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

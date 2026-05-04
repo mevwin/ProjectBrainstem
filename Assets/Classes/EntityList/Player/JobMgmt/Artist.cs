@@ -95,8 +95,8 @@ public class Artist : JobState
             player.cam.transform.position, 
             player.cam.transform.forward, 
             out RaycastHit hit, 
-            splotchDistanceCheck) &&
-            hit.collider.gameObject.layer == 0
+            splotchDistanceCheck,
+            player.artistCastMask)
         ) {   
             targetPosition = hit.point;
             targetRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);

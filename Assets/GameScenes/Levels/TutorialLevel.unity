@@ -44857,6 +44857,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6361579211009798762, guid: ed5a205195cf89443b740f18f3f827a4, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9064151928314684056, guid: ed5a205195cf89443b740f18f3f827a4, type: 3}
       propertyPath: m_Name
       value: TogglePlate
