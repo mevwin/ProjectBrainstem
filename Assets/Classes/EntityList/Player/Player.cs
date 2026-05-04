@@ -52,7 +52,8 @@ public class Player : Entity
     public GameObject redSplotchPrefab;
     [NonSerialized] public Vector3 splotchMovement;
     [NonSerialized] public float splotchMovementDecayRate = 15f;
-    public LayerMask artistCastMask;
+    public LayerMask artistSpawnCastMask;
+    public LayerMask artistDeleteCastMask;
 
     [Header("Musician")]
     public GameObject BridgeNote;
@@ -161,7 +162,6 @@ public class Player : Entity
                         //     cam.transform.forward * 30f,
                         //     Color.red
                         // );
-
                         break;
                 }
             }

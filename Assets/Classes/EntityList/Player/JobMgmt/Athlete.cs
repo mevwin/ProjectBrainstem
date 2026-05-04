@@ -153,8 +153,7 @@ public class Athlete : JobState
     {
         GameObject targetGO = hit.collider.gameObject;
 
-        if (!targetGO.TryGetComponent<PoleVaultSpot>(out _) && 
-            !(targetGO.transform.parent != null && targetGO.transform.parent.gameObject.TryGetComponent<RedSplotch>(out _)))
+        if (!targetGO.TryGetComponent<PoleVaultSpot>(out _))
             return false;
         
         if (player.transform.position.y > targetGO.transform.position.y - 2f &&

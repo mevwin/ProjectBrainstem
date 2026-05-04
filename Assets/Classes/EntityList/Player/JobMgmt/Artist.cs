@@ -36,13 +36,16 @@ public class Artist : JobState
     {
         // Debug.Log("Updating Artist Ability State");
 
-        if (splotches[currentSplotch] == null && CheckForDrawPosition())
-            SpawnSplotch(targetPosition);
-        else if (CheckForActiveSplotch())
+        if (CheckForActiveSplotch())
             DespawnSplotch();
         else if (CheckForDrawPosition())
-            RepositionSplotch(targetPosition);
-        
+        {
+            if (splotches[currentSplotch] == null)
+                SpawnSplotch(targetPosition);
+            else
+                RepositionSplotch(targetPosition);
+        }
+
         player.ExitJobState();
     }
 
@@ -96,7 +99,7 @@ public class Artist : JobState
             player.cam.transform.forward, 
             out RaycastHit hit, 
             splotchDistanceCheck,
-            player.artistCastMask)
+            player.artistSpawnCastMask)
         ) {   
             targetPosition = hit.point;
             targetRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
@@ -111,8 +114,8 @@ public class Artist : JobState
             player.cam.transform.position, 
             player.cam.transform.forward, 
             out selectedActiveSplotchHit, 
-            splotchDistanceCheck) &&
-            selectedActiveSplotchHit.collider.gameObject.layer == 3;
+            splotchDistanceCheck,
+            player.artistDeleteCastMask);
     }
 
     public void CycleNextColor()
@@ -138,15 +141,5 @@ public class Artist : JobState
             color = Color.magenta;
         }
         return color;
-    }
-
-    Splotch GetSplotchType(GameObject obj)
-    {
-        if (obj.TryGetComponent<BlueSplotch>(out _))
-            return Splotch.BLUE;
-        else if (obj.TryGetComponent<RedSplotch>(out _))
-            return Splotch.RED;
-        else
-            return Splotch.NONE;
     }
 }

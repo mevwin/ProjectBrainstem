@@ -2,30 +2,27 @@ using UnityEngine;
 
 public class RedSplotch : Interactable
 {
+    private const float MIN_SPEED = 7f;
     private const float MAX_SPEED = 65f;
+    private float velocityEntered = 0f;
 
     protected override void InitializeStates() { }
 
     public override void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Player player) &&
-            player.abilityActive && player.CurrentJob == JobManager.Job.ATHLETE &&
-            gameObject == player.targetVaultSpot.transform.parent.gameObject
-        ) {
+        if (other.gameObject.TryGetComponent(out Player player)) {
             player.initiatePullJump = true;
+            velocityEntered = Mathf.Max(Mathf.Abs(player.GetRigidbodyVelocity().y), MIN_SPEED);
+            Debug.Log(velocityEntered);
         }
     }
     
     public void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Player player) &&
-            !player.ignoreGravity
-        ) {
-            Vector3 playerVelocity = player.GetRigidbodyVelocity();
-
-            if (playerVelocity.y > -1f) return;
+        if (other.gameObject.TryGetComponent(out Player player)) {
+            // Vector3 playerVelocity = player.GetRigidbodyVelocity();
             
-            float speed = Mathf.Min(playerVelocity.magnitude, MAX_SPEED);
+            float speed = Mathf.Min(velocityEntered, MAX_SPEED);
 
             player.splotchMovementDecayRate = speed;
 
@@ -33,13 +30,25 @@ public class RedSplotch : Interactable
             player.splotchMovement = splotchMovement;
             player.ignoreGravity = true;
         }
+        else if (other.gameObject.TryGetComponent(out BuilderBlock block))
+        {
+            float speed = Mathf.Max(block.GetRigidbodyVelocity().magnitude, MIN_SPEED);
+
+            if (block.weight == Weight.HEAVY)
+                speed = 0.5f;
+
+            Vector3 output = speed * transform.up;
+
+            block.UpdateMovementVector(output, true);
+        }
     }
 
     public override void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player))
+        {
             player.ignoreGravity = false;
-        else if (other.gameObject.TryGetComponent(out Interactable interactable))
-            interactable.ignoreGravity = false;
+            velocityEntered = 0;
+        }
     }
 }
