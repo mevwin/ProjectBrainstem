@@ -141,6 +141,7 @@ MonoBehaviour:
   stateManager: {fileID: 6695598500565562167}
   audioManager: {fileID: 4854608074896013649}
   movementSpeed: 0
+  weight: 2
   isActive: 0
   listeners: []
   ParticleParent: {fileID: 5629239711970605356}
@@ -242,7 +243,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1717357635040608102, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
