@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerModel : MonoBehaviour
@@ -13,6 +14,8 @@ public class PlayerModel : MonoBehaviour
     [SerializeField] private GameObject[] athletePrefabs;
     [SerializeField] private GameObject[] builderPrefabs;
     [SerializeField] private GameObject[] musicianPrefabs;
+    [SerializeField] private GameObject keytarPrefab;
+    [SerializeField] private GameObject trumpetPrefab;
 
     [Header("==Inspect Fields==")]
     [SerializeField] private float turnSpeed = 10f;
@@ -90,7 +93,7 @@ public class PlayerModel : MonoBehaviour
         }
     }
 
-    public void JobKitToggle(JobManager.Job job, bool toggle)
+    public void JobKitToggle(JobManager.Job job, bool toggle, Musician.Instrument instrument = Musician.Instrument.NONE)
     {
         GameObject[] kitToReset = null;
     
@@ -110,6 +113,8 @@ public class PlayerModel : MonoBehaviour
 
             case JobManager.Job.MUSICIAN:
                 kitToReset = musicianPrefabs;
+                ToggleMusicianInstrument(instrument);
+
                 break;
         }
 
@@ -118,6 +123,25 @@ public class PlayerModel : MonoBehaviour
         foreach (GameObject go in kitToReset)
         {
             go.SetActive(toggle);
+        }
+    }
+
+    public void ToggleMusicianInstrument(Musician.Instrument instrument)
+    {
+        if (instrument == Musician.Instrument.KEYTAR)
+        {
+            keytarPrefab.SetActive(true);
+            trumpetPrefab.SetActive(false);
+        }
+        else if (instrument == Musician.Instrument.TRUMPET)
+        {
+            keytarPrefab.SetActive(false);
+            trumpetPrefab.SetActive(true);
+        }
+        else
+        {
+            keytarPrefab.SetActive(false);
+            trumpetPrefab.SetActive(false);
         }
     }
 }

@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class Musician : JobState
 {
+    public enum Instrument
+    {
+        NONE,
+        KEYTAR,
+        TRUMPET
+    }
+
     GameObject CurrentNote;
     public static GameObject bridge;
 
@@ -27,32 +34,29 @@ public class Musician : JobState
         Vector3 targetPos = player.cam.transform.position + player.cam.transform.forward * 20;
 
         note.linearVelocity = (targetPos - player.transform.position) * 1.5f;
-    }
 
-    public override void UpdateState()
-    {
         player.ExitJobState();
     }
 
-    public override void FixedUpdateState()
-    {
+    public override void UpdateState() { }
 
-    }
+    public override void FixedUpdateState() { }
 
-    public override void ExitState(Dictionary<string, object> args = null)
-    {
-
-    }
+    public override void ExitState(Dictionary<string, object> args = null) { }
 
     public void ChangeInstrument()
     {
         if (CurrentNote == player.BridgeNote)
         {
             CurrentNote = player.ProjectileNote;
+            player.instrument = Instrument.TRUMPET;
         }
         else
         {
             CurrentNote = player.BridgeNote;
+            player.instrument = Instrument.KEYTAR;
         }
+
+        player.model.ToggleMusicianInstrument(player.instrument);
     }
 }

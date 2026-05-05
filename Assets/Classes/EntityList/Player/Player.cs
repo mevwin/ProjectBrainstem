@@ -20,7 +20,7 @@ public class Player : Entity
     [Header("==Player Fields==")]
     [SerializeField] private float jumpSpeed = 30f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
-    [SerializeField] private PlayerModel model;
+    public PlayerModel model;
     public Reticle reticle;
     public GameObject cam;
     [SerializeField] private Transform zoomOffset;
@@ -56,6 +56,7 @@ public class Player : Entity
     public LayerMask artistDeleteCastMask;
 
     [Header("Musician")]
+    [NonSerialized] public Musician.Instrument instrument = Musician.Instrument.TRUMPET;
     public GameObject BridgeNote;
     public GameObject ProjectileNote;
 
@@ -335,7 +336,7 @@ public class Player : Entity
         if (newJob == JobManager.Job.NONE)
             return;
 
-        model.JobKitToggle(newJob, true);
+        model.JobKitToggle(newJob, true, instrument);
     }
 
     public void SetStoredJob(JobManager.Job newJob)

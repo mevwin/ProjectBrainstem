@@ -14,7 +14,13 @@ public class JobItem : Item
         if (player.CurrentJob == JobManager.Job.NONE)
             player.SetCurrentJob(job);
         else
+        {
+            if (player.CurrentJob == JobManager.Job.NONE)
+            {
+                
+            }
             player.SetStoredJob(job);
+        }
 
         isActive = true;
         base.DetectActivation();
