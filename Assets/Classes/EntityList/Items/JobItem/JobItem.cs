@@ -16,6 +16,9 @@ public class JobItem : Item
         else
             player.SetStoredJob(job);
 
+        isActive = true;
+        base.DetectActivation();
+
         Destroy(gameObject);
     }
 
