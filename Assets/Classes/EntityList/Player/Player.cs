@@ -379,7 +379,8 @@ public class Player : Entity
     {
         if (Physics.Raycast(transform.position, Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized, out RaycastHit hit))
         {
-            if (hit.transform.gameObject.GetComponent<Item>() && hit.distance <= 3f)
+            Item item = hit.transform.gameObject.GetComponent<Item>();
+            if (item && hit.distance <= 3f && (item.weight == Entity.Weight.LIGHT || CurrentJob == JobManager.Job.ATHLETE || (CurrentJob == JobManager.Job.BUILDER && IsZoomHeld())))
             {
                 itemPresent = hit.transform.gameObject.GetComponent<Item>();
                 return;

@@ -89,17 +89,10 @@ public class Builder : JobState
         }
     }
 
+    // Swaps between 1.2 and 2.4
     public void ChangeBlockSize()
     {
-        switch (blockScale)
-        {
-            case 1.2f:
-                blockScale = 2.4f;
-                break;
-            case 2.4f:
-                blockScale = 1.2f;
-                break;
-        }
+        blockScale = 3.6f - blockScale;
     }
 
     public GameObject SpawnBlock()
@@ -167,6 +160,7 @@ public class Builder : JobState
 
         BuilderBlock blockScript = block.GetComponent<BuilderBlock>();
         blockScript.blocks = blocks;
+        if (blockScale > 2f) blockScript.weight = Entity.Weight.HEAVY;
 
         return block;
         // --------
