@@ -93,6 +93,7 @@ public class Builder : JobState
     public void ChangeBlockSize()
     {
         blockScale = 3.6f - blockScale;
+        Object.Destroy(player.CurrentProjectedBlock);
     }
 
     public GameObject SpawnBlock()

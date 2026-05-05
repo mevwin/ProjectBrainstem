@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Athlete : JobState
 {
+    public enum Mode
+    {
+        SPOT_SPAWN,
+        VAULT_JUMP
+    }
+
     public Athlete(Player player): base(player) { }
 
     private const float SPEED_INC_RATE = 50f;
@@ -13,7 +19,8 @@ public class Athlete : JobState
 
     private bool vaultActive = false;
     private bool canVault = false;
-    public bool isSpawningSpot = true;
+
+    public Mode currentMode = Mode.SPOT_SPAWN;
 
     // Runtime Variables
     private Quaternion targetRotation = Quaternion.identity;
@@ -33,46 +40,57 @@ public class Athlete : JobState
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        if (isSpawningSpot)
-        {
-            canVault = false;
+        canVault = false;
 
-            
-            if (hit.collider != null)
-            {
-                if (CheckForSpotPosition(hit))
-                {
-                    if (currentSpot == null)
-                        SpawnVaultSpot();
-                    else
-                        RepositionSpot();
-                }
-                else if (hit.collider.gameObject == currentSpot)
-                    DespawnSpot();
-            }
+        if (player.itemPresent)
+        {
+            player.itemPresent.Throw(player);
             player.ExitJobState();
+            return;
         }
-        else
+        
+        switch (currentMode)
         {
-            surfaces = player.ZoomDetection(POLE_MAX_DISTANCE);
-
-            canVault = player.IsGrounded() && CheckCollisionsForVaultSpot();
-
-            if (!canVault)
-            {
+            case Mode.SPOT_SPAWN:
+                if (hit.collider != null)
+                {
+                    if (CheckForSpotPosition(hit))
+                    {
+                        if (currentSpot == null)
+                            SpawnVaultSpot();
+                        else
+                            RepositionSpot();
+                    }
+                    else if (hit.collider.gameObject == currentSpot)
+                        DespawnSpot();
+                }
                 player.ExitJobState();
-                return;
-            }
 
-            currentAngle = 0f;
-            ungroundedTimer = 0f;
+                break;
 
-            defaultSpeed = player.movementSpeed;
-            vaultActive = false;
+            case Mode.VAULT_JUMP:
+                surfaces = player.ZoomDetection(POLE_MAX_DISTANCE);
 
-            targetRotation = Quaternion.LookRotation(targetPosition - player.transform.position);
+                canVault = player.IsGrounded() && CheckCollisionsForVaultSpot();
 
-            player.ChangeState("NoState");
+                if (!canVault)
+                {
+                    player.ExitJobState();
+                    return;
+                }
+                player.athleteLineRenderer.gameObject.SetActive(false);
+
+                currentAngle = 0f;
+                ungroundedTimer = 0f;
+
+                defaultSpeed = player.movementSpeed;
+                vaultActive = false;
+
+                targetRotation = Quaternion.LookRotation(targetPosition - player.transform.position);
+
+                player.ChangeState("NoState");
+
+                break;
         }
     }
 
@@ -153,8 +171,7 @@ public class Athlete : JobState
     {
         GameObject targetGO = hit.collider.gameObject;
 
-        if (!targetGO.TryGetComponent<PoleVaultSpot>(out _) && 
-            !(targetGO.transform.parent != null && targetGO.transform.parent.gameObject.TryGetComponent<RedSplotch>(out _)))
+        if (!targetGO.TryGetComponent<PoleVaultSpot>(out _))
             return false;
         
         if (player.transform.position.y > targetGO.transform.position.y - 2f &&
@@ -183,7 +200,7 @@ public class Athlete : JobState
         GameObject obj = hit.collider.gameObject;
 
         float dot = Vector3.Dot(hit.normal, Vector3.up);
-        Debug.Log($"dot: {dot}");
+        // Debug.Log($"dot: {dot}");
 
         return obj.layer == 0 && dot > 0.99f;
     }
@@ -205,20 +222,25 @@ public class Athlete : JobState
 
     public void ChangeMode()
     {
-        isSpawningSpot = !isSpawningSpot;
+        currentMode = (Mode) (((int) currentMode + 1) % 2);
 
-        if (!isSpawningSpot)
+        if (currentMode != Mode.SPOT_SPAWN)
             Object.Destroy(player.CurrentProjectedSpot);
-        else
+        else if (currentMode != Mode.VAULT_JUMP)
             player.athleteLineRenderer.gameObject.SetActive(false);
     }
 
     public void PrepAbility()
     {
-        if (isSpawningSpot)
-            ProjectVaultSpot();
-        else
-            ProjectVaultStrength();
+        switch(currentMode)
+        {
+            case Mode.SPOT_SPAWN:
+                ProjectVaultSpot();
+                break;
+            case Mode.VAULT_JUMP:
+                ProjectVaultStrength();
+                break;
+        }   
     }
 
     void ProjectVaultSpot()

@@ -52,7 +52,8 @@ public class Player : Entity
     public GameObject redSplotchPrefab;
     [NonSerialized] public Vector3 splotchMovement;
     [NonSerialized] public float splotchMovementDecayRate = 15f;
-    public LayerMask artistCastMask;
+    public LayerMask artistSpawnCastMask;
+    public LayerMask artistDeleteCastMask;
 
     [Header("Musician")]
     public GameObject BridgeNote;
@@ -70,7 +71,7 @@ public class Player : Entity
     public readonly Vector3 boxCastOffset = new(0, 0.65f, 0);
 
     // Item Detection
-    Item itemPresent;
+    [NonSerialized] public Item itemPresent;
 
     public override void Awake()
     {
@@ -161,7 +162,6 @@ public class Player : Entity
                         //     cam.transform.forward * 30f,
                         //     Color.red
                         // );
-
                         break;
                 }
             }

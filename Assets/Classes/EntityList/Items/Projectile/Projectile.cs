@@ -22,15 +22,4 @@ public class Projectile : Item
             shot = true;
         }
     }
-
-    public override void Drop()
-    {
-        if (shot) return;
-        base.Drop();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        shot = false;
-    }
 }

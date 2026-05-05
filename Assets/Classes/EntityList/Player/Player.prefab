@@ -10449,9 +10449,12 @@ MonoBehaviour:
     m_Bits: 1
   blueSplotchPrefab: {fileID: 8099610974155309151, guid: 52998dd62219e6143ae5b09600cf6486, type: 3}
   redSplotchPrefab: {fileID: 8099610974155309151, guid: 026142c9e4ba44e4ba9a54cd2f055be3, type: 3}
-  artistCastMask:
+  artistSpawnCastMask:
     serializedVersion: 2
     m_Bits: 1
+  artistDeleteCastMask:
+    serializedVersion: 2
+    m_Bits: 8
   BridgeNote: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
   ProjectileNote: {fileID: 5341284671956597707, guid: 7c49b2b0bf3cf3a4083e5ca6551ed105, type: 3}
 --- !u!114 &7641687114105757430

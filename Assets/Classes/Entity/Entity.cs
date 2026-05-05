@@ -76,7 +76,7 @@ public abstract class Entity : MonoBehaviour
         {
             output.y = input.y;
         }
-        else output.y = Mathf.Max(rigidBody.linearVelocity.y, -65f);
+        else output.y = Mathf.Max(rigidBody.linearVelocity.y, -55f);
         
         rigidBody.linearVelocity = output;
     }

@@ -4994,8 +4994,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 6.5660067, z: 0.9999999}
-  m_Center: {x: 0, y: 2.7830012, z: 0}
+  m_Size: {x: 1, y: 5.602166, z: 0.9999999}
+  m_Center: {x: 0, y: 2.30108, z: 0}
 --- !u!1001 &8747276392808622500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5018,15 +5018,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 4.6
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.10810811
+      value: 0.12432432
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.324324
+      value: 4.9729724
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5078,7 +5078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Constraints
-      value: 0
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_IsKinematic
@@ -5096,7 +5096,8 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 05011ccf8a6f02d4ca7a86d374c913dd, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
@@ -5110,17 +5111,12 @@ PrefabInstance:
       addedObject: {fileID: 3573386303221086863}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
-      insertIndex: 4
+      insertIndex: 3
       addedObject: {fileID: 2983065422847434042}
     - targetCorrespondingSourceObject: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 287911272277046321}
+      addedObject: {fileID: 1723063648263231039}
   m_SourcePrefab: {fileID: 100100000, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
---- !u!54 &2299256690589927366 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
-  m_PrefabInstance: {fileID: 8747276392808622500}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6535026430278869405 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
@@ -5154,14 +5150,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3626829e831d7664b9d79529b101ec39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 2299256690589927366}
-  collider: {fileID: 287911272277046321}
+  rigidBody: {fileID: 0}
+  collider: {fileID: 0}
   stateManager: {fileID: 8628277535389282091}
   audioManager: {fileID: 7496610717088228685}
   movementSpeed: 0
+  weight: 2
   isActive: 0
   listeners: []
---- !u!65 &287911272277046321
+--- !u!65 &1723063648263231039
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5180,8 +5177,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 18.135622, z: 0.9999999}
-  m_Center: {x: 0, y: 8.567795, z: 0}
+  m_Size: {x: 1.1817291, y: 11.919753, z: 1.0535272}
+  m_Center: {x: -0.03654159, y: 5.4598784, z: 0.019717034}
 --- !u!114 &8628277535389282091 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
