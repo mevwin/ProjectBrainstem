@@ -27,14 +27,24 @@ public class JobManager : StateManager
     public void PrepAbility(Job job, Dictionary<string, object> args = null)
     {
         stateMap.TryGetValue(JobEnumToString(job), out var state);
+
         Reticle reticle = null;
         bool nextModePressed = false;
+        bool nextModeHeld = false;
+        bool nextModeReleased = false;
+        Player player = null;
         if (args != null)
         {
             if (args.ContainsKey("Reticle"))
                 reticle = (Reticle) args["Reticle"];
-            if (args.ContainsKey("NextAbilityMode"))
-                nextModePressed = (bool) args["NextAbilityMode"];
+            if (args.ContainsKey("NextAbilityModePressed"))
+                nextModePressed = (bool) args["NextAbilityModePressed"];
+            if (args.ContainsKey("NextAbilityModeHeld"))
+                nextModeHeld = (bool) args["NextAbilityModeHeld"];
+            if (args.ContainsKey("NextAbilityModeReleased"))
+                nextModeReleased = (bool) args["NextAbilityModeReleased"];
+            if (args.ContainsKey("Player"))
+                player = (Player) args["Player"];
         }
         
         switch (job)
@@ -49,10 +59,20 @@ public class JobManager : StateManager
             case Job.ATHLETE:
                 Athlete athleteState = state as Athlete;
 
-                if (nextModePressed)
-                    athleteState.ChangeMode();
+                if (nextModeReleased && !player.abilityActive)
+                {
+                    player.abilityActive = true;
+                    player.jobManager.ChangeState(
+                        JobEnumToString(player.CurrentJob),
+                        new Dictionary<string, object>()
+                        {
+                            { "athleteMode", Athlete.Mode.SPOT_SPAWN }
+                        }
+                    );
+                    return;
+                }
 
-                athleteState.PrepAbility();
+                athleteState.PrepAbility(nextModeHeld);
                 break;
             
             case Job.ARTIST:

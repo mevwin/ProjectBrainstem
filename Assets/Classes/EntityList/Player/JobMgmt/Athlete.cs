@@ -42,6 +42,11 @@ public class Athlete : JobState
     {
         canVault = false;
 
+        if (args != null && args.ContainsKey("athleteMode"))
+            currentMode = (Mode) args["athleteMode"];
+        else
+            currentMode = Mode.VAULT_JUMP;
+
         if (player.itemPresent)
         {
             player.itemPresent.Throw(player);
@@ -64,6 +69,7 @@ public class Athlete : JobState
                     else if (hit.collider.gameObject == currentSpot)
                         DespawnSpot();
                 }
+                Object.Destroy(player.CurrentProjectedSpot);
                 player.ExitJobState();
 
                 break;
@@ -159,7 +165,6 @@ public class Athlete : JobState
     {
         if (!canVault) return;
 
-        //Debug.Log("Exitted Athlete Ability");
         player.poleVaultBoost = player.movementSpeed * output.normalized;
         player.poleVaultBoostDecayRate = targetDistance;
         player.movementSpeed = defaultSpeed;
@@ -230,17 +235,22 @@ public class Athlete : JobState
             player.athleteLineRenderer.gameObject.SetActive(false);
     }
 
-    public void PrepAbility()
+    public void PrepAbility(bool showProjectedSpot)
     {
-        switch(currentMode)
+        if (player.itemPresent) 
         {
-            case Mode.SPOT_SPAWN:
-                ProjectVaultSpot();
-                break;
-            case Mode.VAULT_JUMP:
-                ProjectVaultStrength();
-                break;
-        }   
+            player.athleteLineRenderer.gameObject.SetActive(false);
+            Object.Destroy(player.CurrentProjectedSpot);
+            return;
+        }
+
+        if (showProjectedSpot)
+        {
+            ProjectVaultSpot();
+            player.athleteLineRenderer.gameObject.SetActive(false);
+        }
+        else
+            ProjectVaultStrength();
     }
 
     void ProjectVaultSpot()

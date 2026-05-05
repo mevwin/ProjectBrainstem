@@ -26,7 +26,7 @@ public class Player : Entity
     [SerializeField] private Transform zoomOffset;
 
     [Header("==Job Fields==")]
-    [SerializeField] private JobManager jobManager;
+    public JobManager jobManager;
     public JobManager.Job CurrentJob { get;  private set; } = JobManager.Job.NONE;
     public JobManager.Job StoredJob { get;  private set; } = JobManager.Job.NONE;
 
@@ -137,33 +137,13 @@ public class Player : Entity
                     CurrentJob,
                     new Dictionary<string, object>()
                     {
-                        { "NextAbilityMode", NextAbilityModeWasPressed() },
-                        { "Reticle", reticle }
+                        { "NextAbilityModePressed", NextAbilityModeWasPressed() },
+                        { "NextAbilityModeHeld", NextAbilityModeHeld() },
+                        { "NextAbilityModeReleased", NextAbilityModeWasReleased() },
+                        { "Reticle", reticle },
+                        { "Player", this }
                     }
                 );
-
-                // Debugging Raycast Section
-                switch (CurrentJob)
-                {
-                    // case JobManager.Job.ATHLETE:
-                    //     DebugBoxCast.SimpleDrawBoxCast(
-                    //         cam.transform.position + boxCastOffset, 
-                    //         halfExtents * 0.5f,
-                    //         cam.transform.rotation,
-                    //         cam.transform.forward,
-                    //         20f,
-                    //         Color.red);
-
-                    //     break;
-
-                    case JobManager.Job.ARTIST:
-                        // Debug.DrawRay(
-                        //     cam.transform.position,
-                        //     cam.transform.forward * 30f,
-                        //     Color.red
-                        // );
-                        break;
-                }
             }
         }
         else
@@ -333,7 +313,17 @@ public class Player : Entity
 
     public bool NextAbilityModeWasPressed()
     {
-        return IsZoomHeld() && inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
+        return inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
+    }
+
+    public bool NextAbilityModeHeld()
+    {
+        return inputActions[InputKey.NEXT_ABILITY_MODE].IsPressed();
+    }
+
+    public bool NextAbilityModeWasReleased()
+    {
+        return inputActions[InputKey.NEXT_ABILITY_MODE].WasReleasedThisFrame();
     }
 
     public void SetCurrentJob(JobManager.Job newJob)
