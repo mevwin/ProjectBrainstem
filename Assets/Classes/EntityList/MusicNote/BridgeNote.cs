@@ -37,6 +37,7 @@ public class BridgeNote : Entity
         bridgeObject.transform.localScale = new Vector3(bridgeObject.transform.localScale.x, bridgeObject.transform.localScale.y, length);
         float yRot = Mathf.Asin(diff.x / Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(diff.z);
         float xRot = Mathf.Asin(diff.y / Mathf.Sqrt(Mathf.Pow(diff.y, 2) + Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(diff.z) * -1;
+        xRot = Mathf.Clamp(xRot, -45f, 45f);
         bridgeObject.transform.eulerAngles = new Vector3(xRot, yRot, 0f);
         Musician.bridge = bridgeParent;
 
