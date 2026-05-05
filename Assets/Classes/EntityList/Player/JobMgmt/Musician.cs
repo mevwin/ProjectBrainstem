@@ -25,8 +25,9 @@ public class Musician : JobState
             script.musician = this;
         }
         Vector3 targetPos = player.cam.transform.position + player.cam.transform.forward * 20;
+        Vector3 dir = (targetPos - player.transform.position).normalized;
 
-        note.linearVelocity = (targetPos - player.transform.position) * 1.5f;
+        note.linearVelocity = dir * 30f;
     }
 
     public override void UpdateState()
