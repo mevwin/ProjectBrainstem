@@ -111,7 +111,11 @@ public class Artist : JobState
     {
         Color color = Color.gray;
 
-        if (CheckForDrawPosition())
+        if (CheckForActiveSplotch())
+        {
+            color = Color.magenta;
+        }
+        else if (CheckForDrawPosition())
         {
             color = currentSplotch switch
             {
@@ -119,10 +123,6 @@ public class Artist : JobState
                 Splotch.BLUE => new Color32(0x00, 0x80, 0xfe, 0xef),
                 _ => Color.gray
             };
-        }
-        else if (CheckForActiveSplotch())
-        {
-            color = Color.magenta;
         }
         return color;
     }
