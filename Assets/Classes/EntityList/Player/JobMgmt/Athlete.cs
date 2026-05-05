@@ -36,6 +36,9 @@ public class Athlete : JobState
     
     private GameObject currentSpot;
     private RaycastHit hit;
+    private Quaternion spotRotation = Quaternion.identity;
+
+    private GameObject bridgeNote;
     
 
     public override void EnterState(Dictionary<string, object> args = null)
@@ -207,12 +210,19 @@ public class Athlete : JobState
         float dot = Vector3.Dot(hit.normal, Vector3.up);
         // Debug.Log($"dot: {dot}");
 
-        return obj.layer == 0 && dot > 0.99f;
+        targetPosition = hit.point;
+        spotRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+        if (obj.layer == 8)
+            bridgeNote = obj.transform.parent.gameObject;
+        else bridgeNote = null;
+
+        return dot > 0.85f;
     }
 
     void SpawnVaultSpot()
     {
-        currentSpot = Object.Instantiate(player.vaultSpotPrefab, targetPosition, Quaternion.identity);
+        currentSpot = Object.Instantiate(player.vaultSpotPrefab, targetPosition, spotRotation);
+        ToggleSpotBridgeParent();
     }
 
     void DespawnSpot()
@@ -222,7 +232,16 @@ public class Athlete : JobState
 
     void RepositionSpot()
     {
-        currentSpot.transform.position = targetPosition;
+        currentSpot.transform.SetPositionAndRotation(targetPosition, spotRotation);
+        ToggleSpotBridgeParent();
+    }
+
+    void ToggleSpotBridgeParent()
+    {
+        if (bridgeNote)
+            currentSpot.transform.SetParent(bridgeNote.transform, true);
+        else
+            currentSpot.transform.SetParent(null);
     }
 
     public void ChangeMode()
@@ -264,13 +283,11 @@ public class Athlete : JobState
         );
 
         if (hit.collider != null && CheckForSpotPosition(hit))
-        {   
-            targetPosition = hit.point;
-
+        {
             if (player.CurrentProjectedSpot)
-                player.CurrentProjectedSpot.transform.position = targetPosition;
+                player.CurrentProjectedSpot.transform.SetPositionAndRotation(targetPosition, spotRotation);
             else
-                player.CurrentProjectedSpot = Object.Instantiate(player.vaultSpotProjection, targetPosition, Quaternion.identity);
+                player.CurrentProjectedSpot = Object.Instantiate(player.vaultSpotProjection, targetPosition, spotRotation);
         }
         else Object.Destroy(player.CurrentProjectedSpot);
     }

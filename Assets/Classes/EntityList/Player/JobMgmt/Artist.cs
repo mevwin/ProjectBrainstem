@@ -25,6 +25,7 @@ public class Artist : JobState
     private Quaternion targetRotation;
     private Splotch currentSplotch = Splotch.BLUE;
     private RaycastHit selectedActiveSplotchHit;
+    private GameObject bridgeNote;
     
 
     public override void EnterState(Dictionary<string, object> args = null) { }
@@ -60,12 +61,16 @@ public class Artist : JobState
         };
 
         if (prefab)
+        {
             splotches[currentSplotch] = Object.Instantiate(prefab, position, targetRotation);
+            ToggleSplotchBridgeParent();
+        }
     }
 
     void RepositionSplotch(Vector3 newPosition)
     {
         splotches[currentSplotch].transform.SetPositionAndRotation(newPosition, targetRotation);
+        ToggleSplotchBridgeParent();
     }
 
     void DespawnSplotch()
@@ -74,6 +79,14 @@ public class Artist : JobState
         player.splotchMovement = Vector3.zero;
         GameObject obj = selectedActiveSplotchHit.collider.gameObject.transform.parent.gameObject;
         Object.Destroy(obj);
+    }
+
+    void ToggleSplotchBridgeParent()
+    {
+        if (bridgeNote)
+            splotches[currentSplotch].transform.SetParent(bridgeNote.transform, true);
+        else
+            splotches[currentSplotch].transform.SetParent(null);
     }
 
     public bool CheckForDrawPosition()
@@ -87,6 +100,12 @@ public class Artist : JobState
         ) {   
             targetPosition = hit.point;
             targetRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+
+            if (hit.collider.gameObject.layer == 8)
+                bridgeNote = hit.collider.gameObject.transform.parent.gameObject;
+            else
+                bridgeNote = null;
+
             return true;
         }
         return false;

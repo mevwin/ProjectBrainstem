@@ -36,12 +36,13 @@ public class BridgeNote : Entity
             Vector3 midpoint = (startPosition + transform.position) / 2;
             Vector3 diff = transform.position - startPosition;
             float length = diff.magnitude;
-            GameObject bridgeObject = Object.Instantiate(Bridge, midpoint, Quaternion.identity);
+            GameObject bridgeParent = Instantiate(Bridge, midpoint, Quaternion.identity);
+            GameObject bridgeObject = bridgeParent.transform.GetChild(0).gameObject;
             bridgeObject.transform.localScale = new Vector3(bridgeObject.transform.localScale.x, bridgeObject.transform.localScale.y, length);
             float yRot = Mathf.Asin(diff.x / Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(diff.z);
-            float xRot = Mathf.Asin((diff.y) / Mathf.Sqrt(Mathf.Pow(diff.y, 2) + Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(diff.z) * -1;
+            float xRot = Mathf.Asin(diff.y / Mathf.Sqrt(Mathf.Pow(diff.y, 2) + Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(diff.z) * -1;
             bridgeObject.transform.eulerAngles = new Vector3(xRot, yRot, 0f);
-            Musician.bridge = bridgeObject;
+            Musician.bridge = bridgeParent;
 
             Destroy(gameObject);
         }

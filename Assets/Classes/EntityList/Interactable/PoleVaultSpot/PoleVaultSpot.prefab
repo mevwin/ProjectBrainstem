@@ -260,7 +260,8 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: af1f230b75fe5ec4c895c331cfb3190b, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
@@ -291,11 +292,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5db50c677fd54c41b8d4855e96ea23a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 7898587103930447328}
+  rigidBody: {fileID: 0}
   collider: {fileID: 8339801999883379796}
   stateManager: {fileID: 416651600704085261}
   audioManager: {fileID: 1908608571040520043}
   movementSpeed: 0
+  weight: 2
   isActive: 0
   listeners: []
 --- !u!65 &8339801999883379796
@@ -344,10 +346,5 @@ MonoBehaviour:
 --- !u!4 &2937720463457211323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
-  m_PrefabInstance: {fileID: 797527807202188162}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &7898587103930447328 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
   m_PrefabInstance: {fileID: 797527807202188162}
   m_PrefabAsset: {fileID: 0}
