@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class JobItem : Item
@@ -15,9 +16,10 @@ public class JobItem : Item
             player.SetCurrentJob(job);
         else
         {
-            if (player.CurrentJob == JobManager.Job.NONE)
+            if (player.StoredJob != JobManager.Job.NONE)
             {
-                
+                string path = $"{JobManager.JobEnumToString(player.StoredJob)}Item";
+                Instantiate(Resources.Load(path), transform.position, Quaternion.identity);
             }
             player.SetStoredJob(job);
         }
