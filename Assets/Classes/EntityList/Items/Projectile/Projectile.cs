@@ -1,9 +1,7 @@
 using UnityEngine;
-using static JobManager;
 
 public class Projectile : Item
 {
-    private bool shot;
     public override void Pickup(Player player)
     {
         if (shot) return;

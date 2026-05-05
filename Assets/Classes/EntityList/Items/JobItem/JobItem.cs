@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,19 +9,22 @@ public class JobItem : Item
     public override void Pickup(Player player)
     {
         base.Pickup(player);
-        // Debug.Log("Job Pickup: " + JobManager.JobEnumToString(job));
-        if (player.CurrentJob == job || player.StoredJob == job)
+        if (player.CurrentJob == job || player.StoredJob == job || player.switchCooldownStarted)
             return;
 
         if (player.CurrentJob == JobManager.Job.NONE)
             player.SetCurrentJob(job);
-        else
+        else 
         {
             if (player.StoredJob != JobManager.Job.NONE)
             {
                 string path = $"{JobManager.JobEnumToString(player.StoredJob)}Item";
                 Instantiate(Resources.Load(path), transform.position, Quaternion.identity);
+
+                player.switchCooldownStarted = true;
+                player.StartCoroutine(player.JobSwitchCooldown());
             }
+
             player.SetStoredJob(job);
         }
 

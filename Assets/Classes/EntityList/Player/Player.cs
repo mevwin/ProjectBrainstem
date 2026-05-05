@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
-    private static WaitForSeconds _jobSwitchCooldown = new(1.0f);
+    private readonly WaitForSeconds _jobSwitchCooldown = new(0.5f);
 
     public enum InputKey
     {
@@ -69,8 +69,7 @@ public class Player : Entity
     // Player Flags
     bool hasJumped = false;
     [NonSerialized] public bool abilityActive = false;
-    bool canSwitchJobs = true;
-    bool switchCooldownStarted = false;
+    [NonSerialized] public bool switchCooldownStarted = false;
 
     // Box Cast Fields
     private readonly Vector3 halfExtents = new(3f, 10, 1f);
@@ -334,8 +333,6 @@ public class Player : Entity
 
     public void SetCurrentJob(JobManager.Job newJob)
     {
-        if (!canSwitchJobs) return;
-
         model.JobKitToggle(CurrentJob, false);
         model.JobKitSwitch(); 
         CurrentJob = newJob;
@@ -344,27 +341,11 @@ public class Player : Entity
             return;
 
         model.JobKitToggle(newJob, true, instrument);
-
-        if (!switchCooldownStarted)
-        {
-            canSwitchJobs = false;
-            switchCooldownStarted = true;
-            StartCoroutine(JobSwitchCooldown());
-        }
     }
 
     public void SetStoredJob(JobManager.Job newJob)
     {
-        if (!canSwitchJobs) return;
-
         StoredJob = newJob;
-
-        if (!switchCooldownStarted)
-        {
-            canSwitchJobs = false;
-            switchCooldownStarted = true;
-            StartCoroutine(JobSwitchCooldown());
-        }
     }
 
     public void ExitJobState()
@@ -383,10 +364,9 @@ public class Player : Entity
             distance);
     }
 
-    private IEnumerator JobSwitchCooldown()
+    public IEnumerator JobSwitchCooldown()
     {
         yield return _jobSwitchCooldown;
-        canSwitchJobs = true;
         switchCooldownStarted = false;
     }
 
