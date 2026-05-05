@@ -47,8 +47,13 @@ public class Athlete : JobState
 
         if (args != null && args.ContainsKey("athleteMode"))
             currentMode = (Mode) args["athleteMode"];
-        else
+        else if (!player.NextAbilityModeHeld())
             currentMode = Mode.VAULT_JUMP;
+        else
+        {
+            player.ExitJobState();
+            return;
+        }
 
         if (player.itemPresent)
         {
@@ -265,11 +270,15 @@ public class Athlete : JobState
 
         if (showProjectedSpot)
         {
+            currentMode = Mode.SPOT_SPAWN;
             ProjectVaultSpot();
             player.athleteLineRenderer.gameObject.SetActive(false);
         }
         else
+        {
+            currentMode = Mode.VAULT_JUMP;
             ProjectVaultStrength();
+        }
     }
 
     void ProjectVaultSpot()
