@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProjectileNote
       objectReference: {fileID: 0}
+    - target: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1564503496636699169, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2

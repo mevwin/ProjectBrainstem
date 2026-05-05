@@ -18,7 +18,7 @@ public class ProjectileNote : Entity
 
         if ((startPosition - transform.position).magnitude > 20f)
         {
-            Debug.Log("Decay");
+            // Debug.Log("Decay");
             Destroy(gameObject);
         }
     }

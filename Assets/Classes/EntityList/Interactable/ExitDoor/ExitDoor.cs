@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ExitDoor : Door
 {
-    [SerializeField] private ExitTrigger exitTrigger;
+    [SerializeField] protected ExitTrigger exitTrigger;
 
     public override void Start()
     {

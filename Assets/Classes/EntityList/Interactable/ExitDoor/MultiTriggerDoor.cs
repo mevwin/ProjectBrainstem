@@ -1,15 +1,9 @@
 using UnityEngine;
 
-public class MultiTriggerDoor : Door
+public class MultiTriggerDoor : ExitDoor
 {
-    [SerializeField] private ExitTrigger exitTrigger;
     [SerializeField] private int requiredTriggers = 1;
     private int triggers = 0;
-
-    public override void Start()
-    {
-        base.Start();
-    }
 
     public override void OnTriggerEvent(TriggerEventType eventType)
     {
@@ -22,8 +16,8 @@ public class MultiTriggerDoor : Door
             triggers--;
         }
         Debug.Log(triggers);
-        isActive = (triggers >= requiredTriggers);
-        exitTrigger.isActive = isActive;
-        gameObject.transform.position = isActive ? stopPoint.position : startPoint;
+        isActive = triggers >= requiredTriggers;
+        if (isActive)
+            base.OnTriggerEvent(eventType);
     }
 }
