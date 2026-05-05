@@ -71,7 +71,7 @@ public class Player : Entity
     public readonly Vector3 boxCastOffset = new(0, 0.65f, 0);
 
     // Item Detection
-    Item itemPresent;
+    [NonSerialized] public Item itemPresent;
 
     public override void Awake()
     {

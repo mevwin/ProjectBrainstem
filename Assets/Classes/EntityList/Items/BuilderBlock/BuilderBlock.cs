@@ -12,7 +12,12 @@ public class BuilderBlock : Item
 
     public override void Pickup(Player player)
     {
-        if (player.IsZoomHeld() && player.CurrentJob == JobManager.Job.BUILDER)
+        if (shot)
+        {
+            Drop();
+            return;
+        }
+        else if (player.IsZoomHeld() && player.CurrentJob == JobManager.Job.BUILDER)
         {
             Despawn();
         }
@@ -23,7 +28,7 @@ public class BuilderBlock : Item
             Vector3 dir = position - transform.position;
             float mag = dir.magnitude;
             mag = Mathf.Clamp(mag, 0f, 10f);
-            dir = dir.normalized * mag * 10;
+            dir = 10 * mag * dir.normalized;
             rigidBody.linearVelocity = dir;
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
