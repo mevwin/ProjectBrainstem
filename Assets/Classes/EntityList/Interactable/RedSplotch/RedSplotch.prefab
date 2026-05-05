@@ -5177,8 +5177,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1817291, y: 11.662129, z: 1.0535272}
-  m_Center: {x: -0.03654159, y: 5.3310676, z: 0.019717034}
+  m_Size: {x: 1.1817291, y: 11.919753, z: 1.0535272}
+  m_Center: {x: -0.03654159, y: 5.4598784, z: 0.019717034}
 --- !u!114 &8628277535389282091 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1069988902814140047, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
