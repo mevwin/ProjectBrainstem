@@ -45,13 +45,13 @@ public abstract class Entity : MonoBehaviour
     // Overridable Entity Functions
     public virtual void Update()
     {
-        if (Time.timeScale == 0f) return;
+        if (Time.timeScale == 0f || stateManager == null) return;
         stateManager.CurrentStateUpdate();
     }
 
     public virtual void FixedUpdate()
     {
-        if (Time.timeScale == 0f) return;
+        if (Time.timeScale == 0f || stateManager == null) return;
         stateManager.CurrentStateFixedUpdate();
     }
 

@@ -30,8 +30,8 @@ public class ProjectileNote : Entity
             Interactable obj = collision.transform.gameObject.GetComponent<Interactable>();
             if (obj != null)
             {
-                Debug.Log("Works");
                 obj.isActive = !obj.isActive;
+                obj.DetectActivation();
                 Destroy(gameObject);
             }
 
