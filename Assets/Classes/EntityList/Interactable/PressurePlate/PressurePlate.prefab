@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7389290228089433698, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Mass
       value: 10
@@ -149,5 +153,6 @@ MonoBehaviour:
   stateManager: {fileID: 8795534297971822060}
   audioManager: {fileID: 7324120566381823882}
   movementSpeed: 0
+  weight: 0
   isActive: 0
   listeners: []
