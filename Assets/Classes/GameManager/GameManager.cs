@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool debugMode;
 
     public GameObject player;
+    public Vector3 playerMainMenuPosition;
+    public Quaternion playerManuMenuRotation;
     [SerializeField] private GameObject BlockParent;
 
 
@@ -60,7 +62,11 @@ public class GameManager : MonoBehaviour
         pauseAction = InputSystem.actions.FindAction("UI/Pause");
 
         if (player)
-            player.SetActive(false);
+        {
+            TogglePlayerControls(false);
+            playerMainMenuPosition = player.transform.position;
+            playerManuMenuRotation = player.transform.rotation;
+        }
 
         // TODO: change to be set in inspector
         LoadGameState(GameState.MAIN_MENU);
@@ -109,6 +115,11 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
 
                 operation = SceneManager.LoadSceneAsync("MainMenu");
+
+                TogglePlayerControls(false);
+                player.transform.position = playerMainMenuPosition;
+                player.transform.rotation = playerManuMenuRotation;
+                player.SetActive(true);
                 
                 break;
 
@@ -182,6 +193,7 @@ public class GameManager : MonoBehaviour
     {
         pauseMenuCanvas.SetActive(false);
         player.SetActive(false);
+        player.GetComponent<Player>().inMenu = false;
         Time.timeScale = 1f;
         LoadGameState(GameState.MAIN_MENU);
     }
@@ -193,5 +205,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         LevelManager.GetManager().currentLevelIndex = 0;
         LoadGameState(GameState.IN_HUB);
+    }
+
+    public void TogglePlayerControls(bool toggle)
+    {
+        player.GetComponent<Player>().inMenu = !toggle;
+        player.GetComponent<Rigidbody>().useGravity = toggle;
+        player.GetComponent<CameraControl>().enabled = toggle;
     }
 }

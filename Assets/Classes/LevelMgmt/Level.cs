@@ -18,6 +18,8 @@ public class Level : MonoBehaviour
         if (gameManager && gameManager.player){
             gameManager.player.SetActive(true);
 
+            gameManager.TogglePlayerControls(true);
+
             player = gameManager.player.GetComponent<Player>();
             player.SetCurrentJob(JobManager.Job.NONE);
             player.SetStoredJob(JobManager.Job.NONE);

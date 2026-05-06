@@ -78,6 +78,8 @@ public class Player : Entity
     // Item Detection
     [NonSerialized] public Item itemPresent;
 
+    public bool inMenu = false;
+
     public override void Awake()
     {
         base.Awake();
@@ -104,9 +106,9 @@ public class Player : Entity
 
     public override void Update()
     {
+        if (Time.timeScale == 0f || inMenu) return;
         base.Update();
-        if (Time.timeScale == 0f) return;
-
+        
         if (HasJumped()) 
         {
             // PlayAudioSource("Footsteps");
@@ -188,8 +190,8 @@ public class Player : Entity
 
     public override void FixedUpdate()
     {
+        if (Time.timeScale == 0f || inMenu) return;
         base.FixedUpdate();
-        if (Time.timeScale == 0f) return;
         
         rigidBody.angularVelocity = Vector3.zero;
 
