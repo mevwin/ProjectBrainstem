@@ -10,6 +10,12 @@ public class BuilderBlock : Item
 
     public List<GameObject> blocks = new List<GameObject>();
 
+    public override void Update()
+    {
+        if (transform.position.y < -85f)
+            Despawn();
+    }
+
     public override void Pickup(Player player)
     {
         if (shot)

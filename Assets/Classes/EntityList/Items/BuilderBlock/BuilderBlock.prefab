@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: moveWithTransform
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1717357635040608102, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.266
+      objectReference: {fileID: 0}
     - target: {fileID: 4022077656946001722, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
       propertyPath: m_Name
       value: CreateParticles
