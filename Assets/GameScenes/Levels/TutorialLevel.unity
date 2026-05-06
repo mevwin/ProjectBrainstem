@@ -42841,7 +42841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 385346833}
   exitTrigger: {fileID: 0}
-  depthToRespawn: -85
+  depthToRespawn: 0
 --- !u!4 &1322833089
 Transform:
   m_ObjectHideFlags: 0
