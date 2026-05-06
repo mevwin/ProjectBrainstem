@@ -13,14 +13,14 @@ public class ControlsTooltip : MonoBehaviour
 
     public void ToggleTextbox(int index, bool toggle)
     {
-        textboxes[index].gameObject.SetActive(toggle);
+        textboxes[index].transform.parent.gameObject.SetActive(toggle);
     }
 
     public void ToggleAllTextboxes(bool toggle)
     {
         foreach(TextMeshProUGUI textbox in textboxes)
         {
-            textbox.gameObject.SetActive(toggle);
+            textbox.transform.parent.gameObject.SetActive(toggle);
         }
     }
 }

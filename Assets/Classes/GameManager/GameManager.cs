@@ -208,6 +208,7 @@ public class GameManager : MonoBehaviour
     public void ReturnToHubWorld()
     {
         pauseMenuCanvas.SetActive(false);
+        player.GetComponent<Player>().playerHud.zoomTooltip.ToggleAllTextboxes(false);
         player.SetActive(false);
         Time.timeScale = 1f;
         LevelManager.GetManager().currentLevelIndex = 0;
