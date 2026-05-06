@@ -21,8 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject eventSystem;
 
     [Header("==Loading Screen==")]
-    [SerializeField] private GameObject loadingScreenCanvas;
-    [SerializeField] private Slider progressBar;
+    [SerializeField] public LoadingScreen loadingScreen;
     
     [Header("==Pause Screen==")]
     [SerializeField] private GameObject pauseMenuCanvas;
@@ -34,6 +33,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public Vector3 playerMainMenuPosition;
     public Quaternion playerManuMenuRotation;
+    public Vector3 playerModelForward;
     [SerializeField] private GameObject BlockParent;
 
 
@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
             TogglePlayerControls(false);
             playerMainMenuPosition = player.transform.position;
             playerManuMenuRotation = player.transform.rotation;
+            playerModelForward = player.transform.forward;
         }
 
         // TODO: change to be set in inspector
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour
                 TogglePlayerControls(false);
                 player.transform.position = playerMainMenuPosition;
                 player.transform.rotation = playerManuMenuRotation;
+                player.GetComponent<Player>().model.transform.forward = playerModelForward;
                 player.SetActive(true);
                 
                 break;
@@ -149,26 +151,32 @@ public class GameManager : MonoBehaviour
 
         if (operation != null)
         {
-            loadingScreenCanvas.SetActive(true);
+            loadingScreen.gameObject.SetActive(true);
             StartCoroutine(LoadSceneAsync(operation));
         }
     }
 
     private IEnumerator LoadSceneAsync(AsyncOperation operation)
     {
+        loadingScreen.SetFadeAlpha(1f);
+        loadingScreen.progressBar.gameObject.SetActive(true);
+
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.95f);
-            if (progressBar != null)
+            if (loadingScreen.progressBar != null)
             {
-                progressBar.value = progress;
+                loadingScreen.progressBar.value = progress;
             }
 
             if (operation.progress >= 0.9f)
-                loadingScreenCanvas.SetActive(false);
-
+                loadingScreen.progressBar.gameObject.SetActive(false);
+        
             yield return null;
         }
+
+        yield return StartCoroutine(loadingScreen.Fade(0));
+        loadingScreen.gameObject.SetActive(false);
     }
 
     /** 
@@ -210,7 +218,7 @@ public class GameManager : MonoBehaviour
     public void TogglePlayerControls(bool toggle)
     {
         player.GetComponent<Player>().inMenu = !toggle;
-        player.GetComponent<Rigidbody>().useGravity = toggle;
+        player.GetComponent<Rigidbody>().isKinematic = !toggle;
         player.GetComponent<CameraControl>().enabled = toggle;
     }
 }
