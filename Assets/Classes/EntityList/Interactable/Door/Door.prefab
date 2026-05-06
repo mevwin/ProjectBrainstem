@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 539366399061798218}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: StopPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,6 +42,14 @@ PrefabInstance:
     - target: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 649372446572849659, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1564503496636699169, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       propertyPath: m_LocalScale.x
@@ -159,6 +167,7 @@ MonoBehaviour:
   stateManager: {fileID: 4600538591349019077}
   audioManager: {fileID: 2336495706210556835}
   movementSpeed: 0
+  weight: 2
   isActive: 0
   listeners: []
   stopPoint: {fileID: 539366399061798218}

@@ -61,6 +61,10 @@ PrefabInstance:
       value: CreateParticles
       objectReference: {fileID: 0}
     - target: {fileID: 4022077656946001722, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022077656946001722, guid: 69637a3bac092d145a0d23679f1ef6be, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -122,6 +126,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2353928907317575081, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: model
       value: 
@@ -142,13 +150,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuilderBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 4332435036736996979, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6021565819086291434, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: m_Mass
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 6488699858816721461, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8763401056587022358, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: m_Name
       value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763401056587022358, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -193,6 +213,10 @@ PrefabInstance:
       value: BlockDestruct
       objectReference: {fileID: 0}
     - target: {fileID: 1122768346978029904, guid: 3f7bf33653fa9cb448358098d70c8ffb, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1122768346978029904, guid: 3f7bf33653fa9cb448358098d70c8ffb, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -235,6 +259,10 @@ PrefabInstance:
     - target: {fileID: 4412960818483986592, guid: 3f7bf33653fa9cb448358098d70c8ffb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794380438978462813, guid: 3f7bf33653fa9cb448358098d70c8ffb, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
