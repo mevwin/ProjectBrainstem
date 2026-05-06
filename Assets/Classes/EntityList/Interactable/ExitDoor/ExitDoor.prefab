@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 3391318472897074553}
     m_Modifications:
     - target: {fileID: 4419601624791593631, guid: b01b8e2be3ee7334e81ce9d5b2bc4859, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419601624791593631, guid: b01b8e2be3ee7334e81ce9d5b2bc4859, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: daee32faa30776e418e5545a37f1842a, type: 2}
@@ -19,6 +23,14 @@ PrefabInstance:
     - target: {fileID: 7274930157308490657, guid: b01b8e2be3ee7334e81ce9d5b2bc4859, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7274930157308490657, guid: b01b8e2be3ee7334e81ce9d5b2bc4859, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7274930157308490657, guid: b01b8e2be3ee7334e81ce9d5b2bc4859, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.39
       objectReference: {fileID: 0}
     - target: {fileID: 7274930157308490657, guid: b01b8e2be3ee7334e81ce9d5b2bc4859, type: 3}
       propertyPath: m_LocalPosition.x
@@ -111,9 +123,10 @@ MonoBehaviour:
   stateManager: {fileID: 8390136870116160707}
   audioManager: {fileID: 7771878190982381221}
   movementSpeed: 0
+  weight: 2
   isActive: 0
   listeners: []
-  dungeonLevelList: {fileID: 0}
+  shrineLevelList: {fileID: 0}
 --- !u!114 &8390136870116160707 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5330398497838857495, guid: b01b8e2be3ee7334e81ce9d5b2bc4859, type: 3}
@@ -222,6 +235,7 @@ MonoBehaviour:
   stateManager: {fileID: 152204779908750287}
   audioManager: {fileID: 2137026736567718313}
   movementSpeed: 0
+  weight: 2
   isActive: 0
   listeners: []
   stopPoint: {fileID: 4231394531802244928}
