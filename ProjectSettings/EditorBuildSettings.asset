@@ -17,12 +17,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameScenes/HubWorld.unity
     guid: 902331ae9274f984d9d5a06969bc88db
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameScenes/Levels/TestPuzzle2.unity
     guid: 271ed076eb0320a40a0c5f6861909cc8
   - enabled: 1
     path: Assets/GameScenes/Levels/TutorialLevel.unity
     guid: ead1fdd30441f1e48a143dcdaa41c021
+  - enabled: 1
+    path: Assets/GameScenes/Levels/Artist-Athlete.unity
+    guid: 18f22c06bfeca5e4ea2040e9acc4b948
+  - enabled: 1
+    path: Assets/GameScenes/Levels/Artist-Builder.unity
+    guid: 5312699d8b5c7a14eb469d9b713a7102
+  - enabled: 1
+    path: Assets/GameScenes/Levels/Builder-Musician.unity
+    guid: 31bfd1efc8f4a484aacf6d269c4ab0df
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   m_UseUCBPForAssetBundles: 0

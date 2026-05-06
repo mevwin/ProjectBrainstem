@@ -327,7 +327,7 @@ PrefabInstance:
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: shrineLevelList
       value: 
-      objectReference: {fileID: 11400000, guid: 5a3e191838e149f4b88e531518ed540a, type: 2}
+      objectReference: {fileID: 11400000, guid: 17830a44f9cc22a48a1a6ea2ef921d73, type: 2}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: dungeonLevelList
       value: 
@@ -598,7 +598,7 @@ PrefabInstance:
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: shrineLevelList
       value: 
-      objectReference: {fileID: 11400000, guid: 5a3e191838e149f4b88e531518ed540a, type: 2}
+      objectReference: {fileID: 11400000, guid: 9385d7c49d8b30b4f97e7053ce91bedb, type: 2}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: dungeonLevelList
       value: 
@@ -687,7 +687,7 @@ PrefabInstance:
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: shrineLevelList
       value: 
-      objectReference: {fileID: 11400000, guid: 5a3e191838e149f4b88e531518ed540a, type: 2}
+      objectReference: {fileID: 11400000, guid: 3ce9a0c49f3192a4bb3798dd36755981, type: 2}
     - target: {fileID: 3918183723052189389, guid: 1dfe8d4d168137149bdaf6f9308c2e7d, type: 3}
       propertyPath: dungeonLevelList
       value: 
