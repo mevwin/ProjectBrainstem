@@ -25,6 +25,8 @@ public class Level : MonoBehaviour
             player.SetStoredJob(JobManager.Job.NONE);
             player.UpdateMovementVector(Vector3.zero, true);
             player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+            player.playerHud.iconManager1.SetIcon(JobManager.Job.NONE);
+            player.playerHud.iconManager2.SetIcon(JobManager.Job.NONE);
         }
     }
 

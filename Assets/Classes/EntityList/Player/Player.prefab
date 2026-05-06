@@ -10151,7 +10151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7746485609001158887, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
       propertyPath: m_Name
-      value: ReticleCanvas
+      value: PlayerHud
       objectReference: {fileID: 0}
     - target: {fileID: 7746485609001158887, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
       propertyPath: m_Layer
@@ -10166,15 +10166,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
---- !u!114 &3061168651233682707 stripped
+--- !u!114 &6867074862787585078 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2122356332164642144, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7513036936984327237, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
   m_PrefabInstance: {fileID: 3967507983618871411}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92d5c7077ad2585449a5ff5584a9f178, type: 3}
+  m_Script: {fileID: 11500000, guid: b66dca91f3319f148878807746fb5ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &7661661109451121206 stripped
@@ -10361,6 +10361,10 @@ PrefabInstance:
     - target: {fileID: 2274520299876992719, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381980514579721002, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.134
       objectReference: {fileID: 0}
     - target: {fileID: 2448689574291279616, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
       propertyPath: m_Layer
@@ -10729,6 +10733,10 @@ PrefabInstance:
     - target: {fileID: 6689493712077578072, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6692441344101186138, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2456
       objectReference: {fileID: 0}
     - target: {fileID: 6776628784704071063, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
       propertyPath: m_Layer
@@ -11102,7 +11110,7 @@ MonoBehaviour:
   jumpSpeed: 15
   groundDistanceCheck: 0.05
   model: {fileID: 4711174100783819944}
-  reticle: {fileID: 3061168651233682707}
+  playerHud: {fileID: 6867074862787585078}
   cam: {fileID: 6780200429520697166}
   zoomOffset: {fileID: 6629727507589140395}
   jobManager: {fileID: 7641687114105757430}
@@ -11125,6 +11133,7 @@ MonoBehaviour:
     m_Bits: 8
   BridgeNote: {fileID: 5341284671956597707, guid: 01e6df83d3752074fba58159d86c1899, type: 3}
   ProjectileNote: {fileID: 5341284671956597707, guid: 7c49b2b0bf3cf3a4083e5ca6551ed105, type: 3}
+  inMenu: 0
 --- !u!114 &7641687114105757430
 MonoBehaviour:
   m_ObjectHideFlags: 0

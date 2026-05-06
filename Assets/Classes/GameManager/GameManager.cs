@@ -220,5 +220,6 @@ public class GameManager : MonoBehaviour
         player.GetComponent<Player>().inMenu = !toggle;
         player.GetComponent<Rigidbody>().isKinematic = !toggle;
         player.GetComponent<CameraControl>().enabled = toggle;
+        player.GetComponent<Player>().playerHud.gameObject.SetActive(toggle);
     }
 }

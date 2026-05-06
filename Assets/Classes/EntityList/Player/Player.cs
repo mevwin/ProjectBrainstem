@@ -174,7 +174,7 @@ public class Player : Entity
         if (SwitchJobWasPressed())
         {
             JobManager.Job storedJob = StoredJob;
-            StoredJob = CurrentJob;
+            SetStoredJob(CurrentJob);
             SetCurrentJob(storedJob);
         }
 
@@ -342,12 +342,15 @@ public class Player : Entity
         if (newJob == JobManager.Job.NONE)
             return;
 
+        playerHud.iconManager1.SetIcon(newJob);
+
         model.JobKitToggle(newJob, true, instrument);
     }
 
     public void SetStoredJob(JobManager.Job newJob)
     {
         StoredJob = newJob;
+        playerHud.iconManager2.SetIcon(newJob);
     }
 
     public void ExitJobState()
