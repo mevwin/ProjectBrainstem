@@ -3,6 +3,8 @@ using UnityEngine;
 public class ExitDoor : Door
 {
     [SerializeField] protected ExitTrigger exitTrigger;
+    [SerializeField] protected ParticleSystem pSystem1;
+    [SerializeField] protected ParticleSystem pSystem2;
 
     public override void Start()
     {
@@ -16,5 +18,8 @@ public class ExitDoor : Door
         exitTrigger.gameObject.transform.SetParent(null, true);
         base.OnTriggerEvent(eventType);
         exitTrigger.isActive = isActive;
+
+        pSystem1.gameObject.SetActive(isActive);
+        pSystem2.gameObject.SetActive(isActive);
     }
 }
