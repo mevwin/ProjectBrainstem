@@ -24,7 +24,7 @@ public class Player : Entity
     [SerializeField] private float jumpSpeed = 30f;
     [SerializeField] private float groundDistanceCheck = 0.05f;
     public PlayerModel model;
-    public Reticle reticle;
+    public PlayerHud playerHud;
     public GameObject cam;
     [SerializeField] private Transform zoomOffset;
 
@@ -100,7 +100,7 @@ public class Player : Entity
         InitializeInputActionDict();
         InitializeJobStates();
 
-        reticle.Toggle(false);
+        playerHud.reticle.Toggle(false);
         athleteLineRenderer.gameObject.SetActive(false);
     }
 
@@ -147,7 +147,7 @@ public class Player : Entity
                         { "NextAbilityModePressed", NextAbilityModeWasPressed() },
                         { "NextAbilityModeHeld", NextAbilityModeHeld() },
                         { "NextAbilityModeReleased", NextAbilityModeWasReleased() },
-                        { "Reticle", reticle },
+                        { "Reticle", playerHud.reticle },
                         { "Player", this }
                     }
                 );
@@ -165,7 +165,7 @@ public class Player : Entity
                 if (CurrentProjectedSpot)
                     Destroy(CurrentProjectedSpot);
             
-                reticle.Toggle(false);
+                playerHud.reticle.Toggle(false);
                 athleteLineRenderer.gameObject.SetActive(false);
             }
         }
