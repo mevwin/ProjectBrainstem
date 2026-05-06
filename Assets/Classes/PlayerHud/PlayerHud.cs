@@ -6,4 +6,6 @@ public class PlayerHud : MonoBehaviour
     public Reticle reticle;
     public IconManager iconManager1;
     public IconManager iconManager2;
+    public ControlsTooltip zoomTooltip;
+    public ControlsTooltip noZoomTooltip;
 }

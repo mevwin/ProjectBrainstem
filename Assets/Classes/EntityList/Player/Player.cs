@@ -121,17 +121,12 @@ public class Player : Entity
         // Detection
         DetectItem();
 
-        // TEMP DELETE LATER
-        //if (Input.GetKeyDown("k"))
-        //{
-        //    Vector3 midpoint = (startPosition + transform.position) / 2;
-        //    float length = (startPosition - transform.position).magnitude;
-        //    GameObject bridgeObject = Object.Instantiate(bridge, midpoint, Quaternion.identity);
-        //    bridgeObject.transform.localScale = new Vector3(bridge.transform.localScale.x, bridge.transform.localScale.y, length);
-        //    float yRot = Mathf.Asin((transform.position.x - startPosition.x) / Mathf.Sqrt(Mathf.Pow(transform.position.x - startPosition.x, 2) + Mathf.Pow(transform.position.z - startPosition.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(transform.position.z - startPosition.z);
-        //    float xRot = Mathf.Asin((transform.position.y - startPosition.y) / Mathf.Sqrt(Mathf.Pow(transform.position.y - startPosition.y, 2) + Mathf.Pow(transform.position.z - startPosition.z, 2))) * Mathf.Rad2Deg * Mathf.Sign(transform.position.z - startPosition.z) * -1;
-        //    bridgeObject.transform.eulerAngles = new Vector3(xRot, yRot, 0f);
-        //}
+        if (itemPresent && !IsZoomHeld())
+        {
+            playerHud.noZoomTooltip.ToggleTextbox(0, true);
+            playerHud.noZoomTooltip.UpdateTextbox(0, "Pickup");
+        }
+        else playerHud.noZoomTooltip.ToggleTextbox(0, false);
 
         // Zoom-In Effect
         if (IsZoomHeld() && !abilityActive)
@@ -167,6 +162,8 @@ public class Player : Entity
             
                 playerHud.reticle.Toggle(false);
                 athleteLineRenderer.gameObject.SetActive(false);
+
+                playerHud.zoomTooltip.ToggleAllTextboxes(false);
             }
         }
 
@@ -181,6 +178,7 @@ public class Player : Entity
         if (IsAbilityPressed() && IsZoomHeld() && CurrentJob > JobManager.Job.NONE && !abilityActive)
         {
             abilityActive = true;
+            playerHud.zoomTooltip.ToggleAllTextboxes(false);
             jobManager.ChangeState(JobManager.JobEnumToString(CurrentJob));
         }
 
@@ -386,7 +384,7 @@ public class Player : Entity
         if (Physics.Raycast(transform.position, Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized, out RaycastHit hit))
         {
             Item item = hit.transform.gameObject.GetComponent<Item>();
-            if (item && hit.distance <= 3f && (item.weight == Entity.Weight.LIGHT || CurrentJob == JobManager.Job.ATHLETE || (CurrentJob == JobManager.Job.BUILDER && IsZoomHeld())))
+            if (item && hit.distance <= 3f && (item.weight == Weight.LIGHT || CurrentJob == JobManager.Job.ATHLETE || (CurrentJob == JobManager.Job.BUILDER && IsZoomHeld())))
             {
                 itemPresent = hit.transform.gameObject.GetComponent<Item>();
                 return;

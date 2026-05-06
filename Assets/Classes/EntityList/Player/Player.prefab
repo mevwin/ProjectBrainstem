@@ -19731,6 +19731,10 @@ PrefabInstance:
       propertyPath: m_UiScaleMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2590530060225235572, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6727493088977318469, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -19824,6 +19828,10 @@ PrefabInstance:
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7746485609001158887, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8117193353409014125, guid: 5e9d72aac0f71814f82018c8699814cc, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -20577,7 +20585,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2289840355526983501, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2c2efdd0aeee6044bce1b90ee49a403, type: 3}

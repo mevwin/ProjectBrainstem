@@ -24,7 +24,7 @@ public class Artist : JobState
     private Vector3 targetPosition;
     private Quaternion targetRotation;
     private Splotch currentSplotch = Splotch.BLUE;
-    private RaycastHit selectedActiveSplotchHit;
+    public RaycastHit selectedActiveSplotchHit;
     private GameObject bridgeNote;
     
 
@@ -138,8 +138,8 @@ public class Artist : JobState
         {
             color = currentSplotch switch
             {
-                Splotch.RED => new Color32(0xff, 0x24, 0x00, 0xef),
-                Splotch.BLUE => new Color32(0x00, 0x80, 0xfe, 0xef),
+                Splotch.RED => new Color32(0xff, 0x24, 0x00, 0xff),
+                Splotch.BLUE => new Color32(0x10, 0x80, 0xfe, 0xff),
                 _ => Color.gray
             };
         }

@@ -194,6 +194,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
         Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
+        player.GetComponent<Player>().playerHud.gameObject.SetActive(Time.timeScale != 0f);
         pauseMenuCanvas.SetActive(Time.timeScale == 0f);
     }
 
