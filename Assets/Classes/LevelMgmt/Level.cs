@@ -3,7 +3,6 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     [SerializeField] protected Transform playerSpawnPoint;
-    [SerializeField] private ExitTrigger exitTrigger;
     [SerializeField] private float depthToRespawn = 0f;
     private Player player;
     protected GameManager gameManager;
