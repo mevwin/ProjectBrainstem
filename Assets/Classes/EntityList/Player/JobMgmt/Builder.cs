@@ -67,6 +67,9 @@ public class Builder : JobState
             Object.Destroy(player.CurrentProjectedBlock);
             return;
         }
+
+        if (hit.collider.gameObject.layer == 10 && player.WasInteractPressed())
+            hit.collider.gameObject.GetComponent<BuilderBlock>().Despawn();
         
         spawnPos = hit.point + forwardOffset * blockScale * hit.normal;
 

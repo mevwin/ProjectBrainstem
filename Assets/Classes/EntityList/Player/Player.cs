@@ -313,7 +313,7 @@ public class Player : Entity
         return  !IsZoomHeld() &&
                 !abilityActive &&
                 StoredJob > JobManager.Job.NONE &&
-                inputActions[InputKey.NEXT_ABILITY_MODE].WasPerformedThisFrame();
+                NextAbilityModeWasPressed();
     }
 
     public bool NextAbilityModeWasPressed()
@@ -374,6 +374,11 @@ public class Player : Entity
     }
 
     // Interact
+    public bool WasInteractPressed()
+    {
+        return inputActions[InputKey.INTERACT].WasPressedThisFrame();
+    }
+
     public bool HasGrabbed()
     {
         return inputActions[InputKey.INTERACT].IsPressed() && (itemPresent != null);
