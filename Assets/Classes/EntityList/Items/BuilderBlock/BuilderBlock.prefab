@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: destroyAnim
       value: 
       objectReference: {fileID: 8050772661485782058}
+    - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: pickupExcludeLayers.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
     - target: {fileID: 4332435036736996979, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: m_Name
       value: BuilderBlock

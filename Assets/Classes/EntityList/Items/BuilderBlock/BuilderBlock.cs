@@ -1,33 +1,27 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BuilderBlock : Item
 {
     [SerializeField] private BoxCollider boxCollider;
     [SerializeField] private GameObject model;
     [SerializeField] private GameObject destroyAnim;
+    [SerializeField] private LayerMask pickupExcludeLayers;
 
-    public List<GameObject> blocks = new List<GameObject>();
+    public List<GameObject> blocks = new();
 
     public override void Update()
     {
-        if (transform.position.y < -85f)
+        if (transform.position.y < -55f)
             Despawn();
     }
 
     public override void Pickup(Player player)
     {
         if (shot)
-        {
             Drop();
-            return;
-        }
         else if (player.IsZoomHeld() && player.CurrentJob == JobManager.Job.BUILDER)
-        {
             Despawn();
-        }
         else
         {
             base.Pickup(player);
@@ -38,12 +32,15 @@ public class BuilderBlock : Item
             dir = 10 * mag * dir.normalized;
             rigidBody.linearVelocity = dir;
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+
+            rigidBody.excludeLayers = pickupExcludeLayers;
         }
     }
 
     public override void Drop()
     {
         rigidBody.constraints = RigidbodyConstraints.None;
+        rigidBody.excludeLayers = 0;
     }
 
     public void Despawn()

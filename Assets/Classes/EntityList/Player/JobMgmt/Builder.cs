@@ -84,7 +84,7 @@ public class Builder : JobState
 
     void UpdateBlockAge()
     {
-        if (blocks.Count > 5)
+        if (blocks.Count > MAX_BLOCKS)
         {
             var oldest = blocks[0];
             blocks.RemoveAt(0);
@@ -146,8 +146,6 @@ public class Builder : JobState
         float v1 = initVUp - (G * t1);
 
         // Part 2, original delta Y to ground, with starting velocity V1
-
-
 
         // dY = v0t + .5 g t^2
         float t2 = (-v1 - Mathf.Sqrt((v1 * v1) - (4 * -G * .5f * vertDisplacement)) / -G);
