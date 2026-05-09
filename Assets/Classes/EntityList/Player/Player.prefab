@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7281303310830117434}
   - component: {fileID: 630418814480643832}
   m_Layer: 11
-  m_Name: Particle System
+  m_Name: SkyboxParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5000,7 +5000,7 @@ GameObject:
   - component: {fileID: 5315769992203556722}
   - component: {fileID: 1718476591512880895}
   m_Layer: 0
-  m_Name: Particle System (1)
+  m_Name: HeadParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9866,7 +9866,7 @@ GameObject:
   - component: {fileID: 5852306403166636304}
   - component: {fileID: 6243587313849550822}
   m_Layer: 11
-  m_Name: Particle System
+  m_Name: AmbientParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14699,7 +14699,7 @@ GameObject:
   - component: {fileID: 6650453491038350527}
   - component: {fileID: 2792495468081310933}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: BodyParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20729,10 +20729,10 @@ PrefabInstance:
       addedObject: {fileID: 7057238894678216296}
     - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: 3
-      addedObject: {fileID: 7873186822399306370}
-    - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3686355605403004176}
+    - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 7873186822399306370}
     - targetCorrespondingSourceObject: {fileID: 2582113322258860089, guid: b72973f57501d7146b7e6847eb69e398, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6571695529832023508}

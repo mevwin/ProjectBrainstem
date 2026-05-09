@@ -31,7 +31,7 @@ public class Level : MonoBehaviour
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (player && player.transform.position.y < depthToRespawn && !gameManager.respawningPlayer)
         {
@@ -40,7 +40,7 @@ public class Level : MonoBehaviour
                 gameManager.respawningPlayer = true;
                 StartCoroutine(RespawnPlayer());
             }
-            else
+            else // for debugging in editor
             {
                 player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
                 player.UpdateMovementVector(Vector3.zero, true);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -37,6 +38,9 @@ public class PlayerModel : MonoBehaviour
         if (Time.deltaTime == 0f) return;
 
         delta = model.transform.position - lastPos;
+        delta.x = (float) Math.Round(delta.x, 2);
+        delta.y = (float) Math.Round(delta.y, 2);
+        delta.z = (float) Math.Round(delta.z, 2);
 
         // follow position
         transform.position = model.transform.position;
