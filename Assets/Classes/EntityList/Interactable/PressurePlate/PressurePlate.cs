@@ -10,7 +10,7 @@ public class PressurePlate : Interactable
     [SerializeField] protected float toggleOffset = 2.5f;
     [NonSerialized] public Vector3 pressedPos = Vector3.zero;
     [NonSerialized] public Vector3 unpressedPos = Vector3.zero;
-    [NonSerialized] public List<GameObject> objectsPressed = new();
+    public List<GameObject> objectsPressed = new();
 
     public override void Start()
     {

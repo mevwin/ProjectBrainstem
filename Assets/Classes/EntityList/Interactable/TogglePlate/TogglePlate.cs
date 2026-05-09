@@ -15,7 +15,7 @@ public class TogglePlate : Interactable
     {
         base.Start();
 
-        SetStartingState("Unflipped");
+        SetStartingState("Unflipped");        
         unflippedColor = meshRenderer.materials[2].color;
         flippedPos.y = -toggleOffset;
     }

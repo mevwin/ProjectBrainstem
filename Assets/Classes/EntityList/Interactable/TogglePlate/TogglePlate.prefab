@@ -275,8 +275,7 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
-  listeners:
-  - {fileID: 0}
+  listeners: []
   meshRenderer: {fileID: 4156811882340961253}
   meshParent: {fileID: 5104713118499261505}
-  locked: 0
+  permaLock: 0

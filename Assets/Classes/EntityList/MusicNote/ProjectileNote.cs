@@ -27,15 +27,22 @@ public class ProjectileNote : Entity
     {
         if (collision.transform.name != "Player")
         { 
-            Interactable obj = collision.transform.gameObject.GetComponent<Interactable>();
-            if (obj != null)
+            collision.transform.gameObject.TryGetComponent(out Lever lever);
+            if (lever != null)
             {
-                obj.isActive = !obj.isActive;
-                obj.DetectActivation();
-                Destroy(gameObject);
+                lever.isActive = !lever.isActive;
+                lever.DetectActivation();
             }
 
-            Destroy(gameObject);
+            // collision.transform.gameObject.TryGetComponent(out TogglePlate togglePlate);
+            // if (togglePlate != null)
+            // {
+            //     string stateKey = togglePlate.isActive ? "Flipped" : "Unflipped";
+            //     togglePlate.ChangeState(stateKey);
+            // }
+
+            transform.position = new Vector3(0, -999f, 0);
+            Destroy(gameObject, 0.5f);
         }
     }
 }

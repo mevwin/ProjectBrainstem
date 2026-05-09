@@ -33,9 +33,9 @@ public class Level : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (player && player.transform.position.y < depthToRespawn && !gameManager.respawningPlayer)
+        if (player && player.transform.position.y < depthToRespawn)
         {
-            if (gameManager)
+            if (gameManager && !gameManager.respawningPlayer)
             {
                 gameManager.respawningPlayer = true;
                 StartCoroutine(RespawnPlayer());
