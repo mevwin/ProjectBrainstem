@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     public Quaternion playerManuMenuRotation;
     public Vector3 playerModelForward;
     [SerializeField] private GameObject BlockParent;
+    [NonSerialized] public bool respawningPlayer = false;
 
 
     void Awake()
@@ -74,7 +76,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if ((currentGameState == GameState.IN_PUZZLE || currentGameState == GameState.IN_HUB)
-            && pauseAction.WasPressedThisFrame())
+            && pauseAction.WasPressedThisFrame() && !respawningPlayer)
         {
             TogglePauseMenu();
         }

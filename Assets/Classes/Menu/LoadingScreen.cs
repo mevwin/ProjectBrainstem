@@ -8,16 +8,13 @@ public class LoadingScreen : Menu
     public Slider progressBar;
     public Image fadeImage;
 
-    public const float FADE_DURATION = 0.5f;
-    public const float FADE_OUT_DURATION = 0.5f;
-
     protected override void InitializeButtonFunction() { }
 
-    public IEnumerator Fade(float target)
+    public IEnumerator Fade(float target, float duration = 0.5f)
     {
         while(fadeImage.color.a != target)
         {
-            float newAlpha = Mathf.MoveTowards(fadeImage.color.a, target, FADE_DURATION * Time.fixedDeltaTime);
+            float newAlpha = Mathf.MoveTowards(fadeImage.color.a, target, duration * Time.fixedDeltaTime);
             SetFadeAlpha(newAlpha);
 
             yield return null;

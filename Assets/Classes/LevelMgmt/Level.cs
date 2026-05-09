@@ -1,10 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 public class Level : MonoBehaviour
 {
     [SerializeField] protected Transform playerSpawnPoint;
     [SerializeField] private float depthToRespawn = 0f;
-    private Player player;
+    [SerializeField] Player player;
+
     protected GameManager gameManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,10 +33,33 @@ public class Level : MonoBehaviour
 
     void Update()
     {
-        if (player && player.transform.position.y < depthToRespawn)
+        if (player && player.transform.position.y < depthToRespawn && !gameManager.respawningPlayer)
         {
-            player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
-            player.UpdateMovementVector(Vector3.zero, true);
+            if (gameManager)
+            {
+                gameManager.respawningPlayer = true;
+                StartCoroutine(RespawnPlayer());
+            }
+            else
+            {
+                player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+                player.UpdateMovementVector(Vector3.zero, true);
+            }
         }
+    }
+
+    private IEnumerator RespawnPlayer()
+    {
+        gameManager.loadingScreen.gameObject.SetActive(true);
+        player.inMenu = true;
+        yield return StartCoroutine(gameManager.loadingScreen.Fade(1f, 1f));
+
+        player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+        player.UpdateMovementVector(Vector3.zero, true);
+
+        yield return StartCoroutine(gameManager.loadingScreen.Fade(0f, 2f));
+        player.inMenu = false;
+        gameManager.loadingScreen.gameObject.SetActive(false);
+        gameManager.respawningPlayer = false;
     }
 }
