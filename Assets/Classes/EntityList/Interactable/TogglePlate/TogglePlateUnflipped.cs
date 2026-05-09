@@ -3,11 +3,20 @@ using UnityEngine;
 
 public class TogglePlateUnflipped : InteractableState
 {
-    public TogglePlateUnflipped(TogglePlate plate) : base(plate) { }
+    TogglePlate plate;
+
+    public TogglePlateUnflipped(TogglePlate plate) : base(plate)
+    {
+        this.plate = (TogglePlate) interactable;
+    }
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
+        Material[] materials = plate.meshRenderer.materials;
+        materials[2].color = plate.unflippedColor;
+        plate.meshRenderer.materials = materials;
 
+        plate.meshParent.transform.localPosition += Vector3.up * plate.toggleOffset;
     }
 
     public override void UpdateState()

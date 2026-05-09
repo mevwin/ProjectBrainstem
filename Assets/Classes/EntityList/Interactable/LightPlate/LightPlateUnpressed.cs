@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class LightPlateUnpressed : InteractableState
 {
-    public LightPlateUnpressed(LightPlate plate) : base(plate) { }
+    LightPlate plate;
+
+    public LightPlateUnpressed(LightPlate plate) : base(plate)
+    {
+        this.plate = (LightPlate) interactable;
+    }
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-
+        
     }
 
     public override void UpdateState()
@@ -23,6 +28,7 @@ public class LightPlateUnpressed : InteractableState
     public override void OnTriggerEnterState(Collider other)
     {
         base.OnTriggerEnterState(other);
+        plate.meshParent.transform.localPosition += Vector3.up * plate.toggleOffset;
 
         Entity ent = other.gameObject.GetComponent<Entity>();
 

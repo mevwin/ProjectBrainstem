@@ -1,10 +1,11 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BuilderBlock : Item
 {
-    [SerializeField] private Collider boxCollider;
+    [SerializeField] private BoxCollider boxCollider;
     [SerializeField] private GameObject model;
     [SerializeField] private GameObject destroyAnim;
 
@@ -49,7 +50,8 @@ public class BuilderBlock : Item
     {
         blocks.Remove(gameObject);
         model.SetActive(false);
-        boxCollider.enabled = false;
+
+        gameObject.layer = 12;
         destroyAnim.SetActive(true);
         Destroy(gameObject, 1.23f);
     }

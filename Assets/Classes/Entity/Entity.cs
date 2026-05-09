@@ -60,6 +60,11 @@ public abstract class Entity : MonoBehaviour
         stateManager.CurrentStateOnTriggerEnter(other);
     }
 
+    public virtual void OnTriggerStay(Collider other)
+    {
+        stateManager.CurrentStateOnTriggerStay(other);
+    }
+
     public virtual void OnTriggerExit(Collider other)
     {
         stateManager.CurrentStateOnTriggerExit(other);

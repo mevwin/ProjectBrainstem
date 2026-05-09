@@ -1,7 +1,12 @@
+using System;
 using UnityEngine;
 
 public class TogglePlate : Interactable
 {
+    public MeshRenderer meshRenderer;
+    public GameObject meshParent;
+    [NonSerialized] public Color unflippedColor;
+    [NonSerialized] public float toggleOffset = 2.5f;
     public bool locked;
 
     public override void Start()
@@ -9,6 +14,7 @@ public class TogglePlate : Interactable
         base.Start();
 
         SetStartingState("Unflipped");
+        unflippedColor = meshRenderer.materials[2].color;
     }
 
     protected override void InitializeStates()

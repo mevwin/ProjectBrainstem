@@ -2,27 +2,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HeavyPlateUnpressed : InteractableState
-{
-    public HeavyPlateUnpressed(HeavyPlate plate) : base(plate) { }
+{  
+    HeavyPlate plate;
 
-    public override void EnterState(Dictionary<string, object> args = null)
+    public HeavyPlateUnpressed(HeavyPlate plate) : base(plate)
     {
-
+        this.plate = (HeavyPlate) interactable;
     }
 
-    public override void UpdateState()
-    {
-        
-    }
+    public override void EnterState(Dictionary<string, object> args = null) { }
 
-    public override void FixedUpdateState()
-    {
+    public override void UpdateState() { }
 
-    }
+    public override void FixedUpdateState() { }
 
     public override void OnTriggerEnterState(Collider other)
     {
         base.OnTriggerEnterState(other);
+        plate.meshParent.transform.localPosition += Vector3.up * plate.toggleOffset;
 
         Entity ent = other.gameObject.GetComponent<Entity>();
 

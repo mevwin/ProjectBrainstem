@@ -1,7 +1,13 @@
+using System;
 using UnityEngine;
 
 public class HeavyPlate : Interactable
 {
+    public MeshRenderer meshRenderer;
+    public GameObject meshParent;
+    [NonSerialized] public float toggleOffset = 2.5f;
+
+
     public override void Start()
     {
         base.Start();

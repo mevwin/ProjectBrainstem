@@ -1375,6 +1375,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1094882872257498039, guid: 35efb7f314a2294498bd6356322a9875, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1454999524954008162, guid: 35efb7f314a2294498bd6356322a9875, type: 3}
       propertyPath: m_Name
       value: floatingisland
@@ -1433,6 +1437,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2268374914757996760, guid: 35efb7f314a2294498bd6356322a9875, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706691847332714961, guid: 35efb7f314a2294498bd6356322a9875, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -3,7 +3,12 @@ using UnityEngine;
 
 public class PressurePlateUnpressed : InteractableState
 {
-    public PressurePlateUnpressed(PressurePlate plate) : base(plate) { }
+    PressurePlate plate;
+
+    public PressurePlateUnpressed(PressurePlate plate) : base(plate)
+    {
+        this.plate = (PressurePlate) interactable;
+    }
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
@@ -17,13 +22,13 @@ public class PressurePlateUnpressed : InteractableState
 
     public override void FixedUpdateState()
     {
-
     }
 
     public override void OnTriggerEnterState(Collider other)
     {
         base.OnTriggerEnterState(other);
 
+        plate.activeCollider = other.gameObject;
         interactable.isActive = true;
         interactable.DetectActivation();
         interactable.ChangeState("Pressed");

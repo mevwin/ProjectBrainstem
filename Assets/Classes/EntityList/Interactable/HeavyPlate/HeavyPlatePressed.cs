@@ -3,26 +3,24 @@ using UnityEngine;
 
 public class HeavyPlatePressed : InteractableState
 {
-    public HeavyPlatePressed(HeavyPlate plate) : base(plate) { }
+    HeavyPlate plate;
 
-    public override void EnterState(Dictionary<string, object> args = null)
+    public HeavyPlatePressed(HeavyPlate plate) : base(plate)
     {
-
+        this.plate = (HeavyPlate) interactable;
     }
 
-    public override void UpdateState()
-    {
+    public override void EnterState(Dictionary<string, object> args = null) { }
 
-    }
+    public override void UpdateState() { }
 
-    public override void FixedUpdateState()
-    {
-        
-    }
+    public override void FixedUpdateState() { }
 
     public override void OnTriggerExitState(Collider other)
     {
         base.OnTriggerExitState(other);
+        plate.meshParent.transform.localPosition += Vector3.down * plate.toggleOffset;
+
         interactable.isActive = false;
         interactable.DetectActivation();
         interactable.ChangeState("Unpressed");
