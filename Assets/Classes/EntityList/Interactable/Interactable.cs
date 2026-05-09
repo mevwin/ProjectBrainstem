@@ -7,7 +7,7 @@ public abstract class Interactable : Entity
 
     [SerializeField] private List<MonoBehaviour> listeners = new();
 
-    private readonly List<ITriggerListener> cachedListeners = new();
+    protected readonly List<ITriggerListener> cachedListeners = new();
 
     public override void Awake()
     {

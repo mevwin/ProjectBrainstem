@@ -49,10 +49,8 @@ public class BuilderBlock : Item
     public void Despawn()
     {
         blocks.Remove(gameObject);
-        model.SetActive(false);
-
-        gameObject.layer = 12;
         destroyAnim.SetActive(true);
-        Destroy(gameObject, 1.23f);
+        destroyAnim.transform.parent = null;
+        Destroy(gameObject);
     }
 }

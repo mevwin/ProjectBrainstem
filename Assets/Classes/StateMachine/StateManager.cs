@@ -49,11 +49,6 @@ public class StateManager : MonoBehaviour
         currentState?.OnTriggerEnterState(other);
     }
 
-    public void CurrentStateOnTriggerStay(Collider other)
-    {
-        currentState?.OnTriggerStayState(other);
-    }
-
     public void CurrentStateOnTriggerExit(Collider other)
     {
         currentState?.OnTriggerExitState(other);

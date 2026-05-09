@@ -41,8 +41,6 @@ public abstract class State
     /// <param name="other"></param>
     public virtual void OnTriggerEnterState(Collider other) { }
 
-    public virtual void OnTriggerStayState(Collider other) { }
-
     /// <summary>
     /// Used for entities with trigger colliders
     /// Called whenever another collider exits a collision with this entity

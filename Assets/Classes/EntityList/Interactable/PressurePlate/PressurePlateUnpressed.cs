@@ -3,39 +3,33 @@ using UnityEngine;
 
 public class PressurePlateUnpressed : InteractableState
 {
-    PressurePlate plate;
+    PressurePlate pressurePlate;
 
     public PressurePlateUnpressed(PressurePlate plate) : base(plate)
     {
-        this.plate = (PressurePlate) interactable;
+        pressurePlate = plate;
     }
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
+        Material[] materials = pressurePlate.meshRenderer.materials;
+        materials[2].color = pressurePlate.unpressedColor;
+        pressurePlate.meshRenderer.materials = materials;
 
+        pressurePlate.meshParent.transform.localPosition = pressurePlate.unpressedPos;
     }
 
-    public override void UpdateState()
-    {
-        
-    }
+    public override void UpdateState() { }
 
-    public override void FixedUpdateState()
-    {
-    }
+    public override void FixedUpdateState() { }
 
     public override void OnTriggerEnterState(Collider other)
     {
         base.OnTriggerEnterState(other);
 
-        plate.activeCollider = other.gameObject;
-        interactable.isActive = true;
-        interactable.DetectActivation();
+        pressurePlate.objectsPressed.Add(other.gameObject);
         interactable.ChangeState("Pressed");
     }
 
-    public override void ExitState(Dictionary<string, object> args = null)
-    {
-
-    }
+    public override void ExitState(Dictionary<string, object> args = null) { }
 }

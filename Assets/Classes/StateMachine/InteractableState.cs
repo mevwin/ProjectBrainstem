@@ -8,7 +8,5 @@ public abstract class InteractableState : State
 
     public override void OnTriggerEnterState(Collider other) { }
 
-    public override void OnTriggerStayState(Collider other) { }
-
     public override void OnTriggerExitState(Collider other) { }
 }

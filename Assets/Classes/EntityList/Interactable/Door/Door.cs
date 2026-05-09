@@ -6,13 +6,6 @@ public class Door : Interactable, ITriggerListener
 
     public virtual void OnTriggerEvent(TriggerEventType eventType)
     {
-        if (eventType == TriggerEventType.Activated)
-        {
-            isActive = true;
-        }
-        else if (eventType == TriggerEventType.Deactivated)
-        {
-            isActive = false;
-        }
+        isActive = eventType == TriggerEventType.Activated;
     }
 }

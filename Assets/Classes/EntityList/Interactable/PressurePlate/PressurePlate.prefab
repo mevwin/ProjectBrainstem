@@ -270,11 +270,13 @@ MonoBehaviour:
   stateManager: {fileID: 8795534297971822060}
   audioManager: {fileID: 7324120566381823882}
   movementSpeed: 0
-  weight: 0
+  weight: 2
   isActive: 0
   listeners: []
   meshRenderer: {fileID: 796787812892017850}
   meshParent: {fileID: 7529720148517534924}
+  toggleOffset: 2.5
+  objectsPressed: []
 --- !u!64 &8501076182774372059
 MeshCollider:
   m_ObjectHideFlags: 0

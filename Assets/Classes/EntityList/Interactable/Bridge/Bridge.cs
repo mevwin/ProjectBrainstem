@@ -7,7 +7,7 @@ public class Bridge : Interactable, ITriggerListener
 
     public virtual void OnTriggerEvent(TriggerEventType eventType)
     {
-        isActive = !isActive;
+        isActive = eventType == TriggerEventType.Activated;
         bridgeObj.SetActive(isActive);
     }
 }
