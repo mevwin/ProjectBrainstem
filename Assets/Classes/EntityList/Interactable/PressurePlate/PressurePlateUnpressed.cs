@@ -12,11 +12,7 @@ public class PressurePlateUnpressed : InteractableState
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        Material[] materials = pressurePlate.meshRenderer.materials;
-        materials[2].color = pressurePlate.unpressedColor;
-        pressurePlate.meshRenderer.materials = materials;
-
-        pressurePlate.meshParent.transform.localPosition = pressurePlate.unpressedPos;
+        pressurePlate.TogglePlateMaterial(Color.white);
     }
 
     public override void UpdateState() { }
@@ -28,7 +24,9 @@ public class PressurePlateUnpressed : InteractableState
         base.OnTriggerEnterState(other);
 
         pressurePlate.objectsPressed.Add(other.gameObject);
-        interactable.ChangeState("Pressed");
+        pressurePlate.isActive = true;
+        pressurePlate.DetectActivation();
+        pressurePlate.ChangeState("Pressed");
     }
 
     public override void ExitState(Dictionary<string, object> args = null) { }

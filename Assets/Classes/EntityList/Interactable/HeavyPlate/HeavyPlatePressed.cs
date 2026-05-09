@@ -7,23 +7,34 @@ public class HeavyPlatePressed : InteractableState
 
     public HeavyPlatePressed(HeavyPlate plate) : base(plate)
     {
-        this.plate = (HeavyPlate) interactable;
+        this.plate = plate;
     }
 
-    public override void EnterState(Dictionary<string, object> args = null) { }
+    public override void EnterState(Dictionary<string, object> args = null)
+    {
+        plate.TogglePlateMaterial(plate.unpressedColor);
+    }
 
     public override void UpdateState() { }
 
     public override void FixedUpdateState() { }
 
+    public override void OnTriggerEnterState(Collider other)
+    {
+        if (plate.IsEntityCorrectWeight(other.gameObject, Entity.Weight.HEAVY))
+            plate.objectsPressed.Add(other.gameObject);
+    }
+
     public override void OnTriggerExitState(Collider other)
     {
-        base.OnTriggerExitState(other);
-        plate.meshParent.transform.localPosition += Vector3.down * plate.toggleOffset;
+        plate.objectsPressed.Remove(other.gameObject);
 
-        interactable.isActive = false;
-        interactable.DetectActivation();
-        interactable.ChangeState("Unpressed");
+        if (plate.objectsPressed.Count == 0)
+        {
+            plate.ChangeState("Unpressed");
+            plate.isActive = false;
+            plate.DetectActivation();
+        }
     }
 
     public override void ExitState(Dictionary<string, object> args = null)

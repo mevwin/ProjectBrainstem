@@ -7,27 +7,17 @@ public class TogglePlateUnflipped : InteractableState
 
     public TogglePlateUnflipped(TogglePlate plate) : base(plate)
     {
-        this.plate = (TogglePlate) interactable;
+        this.plate = plate;
     }
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        Material[] materials = plate.meshRenderer.materials;
-        materials[2].color = plate.unflippedColor;
-        plate.meshRenderer.materials = materials;
-
-        plate.meshParent.transform.localPosition += Vector3.up * plate.toggleOffset;
+        plate.TogglePlateMaterial(Color.white);
     }
 
-    public override void UpdateState()
-    {
-        
-    }
+    public override void UpdateState() { }
 
-    public override void FixedUpdateState()
-    {
-
-    }
+    public override void FixedUpdateState() { }
 
     public override void OnTriggerEnterState(Collider other)
     {

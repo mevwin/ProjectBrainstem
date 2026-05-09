@@ -14,6 +14,7 @@ public class MultiTriggerDoor : ExitDoor
         else if (eventType == TriggerEventType.Deactivated)
         {
             triggers--;
+            if (triggers < 0) triggers = 0;
         }
         Debug.Log(triggers);
         isActive = triggers >= requiredTriggers;

@@ -17,6 +17,7 @@ public class MultiTriggerBridge : Interactable, ITriggerListener
         else if (eventType == TriggerEventType.Deactivated)
         {
             triggers--;
+            if (triggers < 0) triggers = 0;
         }
         isActive = triggers >= requiredTriggers;
         bridgeObj.SetActive(isActive);

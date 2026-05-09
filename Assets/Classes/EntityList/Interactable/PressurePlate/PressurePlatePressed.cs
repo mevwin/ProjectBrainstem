@@ -4,7 +4,6 @@ using UnityEngine;
 public class PressurePlatePressed : InteractableState
 {
     PressurePlate pressurePlate;
-    
 
     public PressurePlatePressed(PressurePlate plate) : base(plate)
     {
@@ -13,17 +12,10 @@ public class PressurePlatePressed : InteractableState
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        Material[] materials = pressurePlate.meshRenderer.materials;
-        materials[2].color = Color.white;
-        pressurePlate.meshRenderer.materials = materials;
-
-        pressurePlate.meshParent.transform.localPosition = pressurePlate.pressedPos;
+        pressurePlate.TogglePlateMaterial(Color.white);
     }
 
-    public override void UpdateState()
-    {
-
-    }
+    public override void UpdateState() { }
 
     public override void FixedUpdateState() { }
 
@@ -39,7 +31,11 @@ public class PressurePlatePressed : InteractableState
         pressurePlate.objectsPressed.Remove(other.gameObject);
 
         if (pressurePlate.objectsPressed.Count == 0)
+        {
             interactable.ChangeState("Unpressed");
+            pressurePlate.isActive = false;
+            pressurePlate.DetectActivation();
+        }
     }
 
     public override void ExitState(Dictionary<string, object> args = null)

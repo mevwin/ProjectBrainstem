@@ -7,11 +7,10 @@ public class PressurePlate : Interactable
     public MeshRenderer meshRenderer;
     public GameObject meshParent;
     [NonSerialized] public Color unpressedColor;
-    [SerializeField] private float toggleOffset = 2.5f;
+    [SerializeField] protected float toggleOffset = 2.5f;
     [NonSerialized] public Vector3 pressedPos = Vector3.zero;
     [NonSerialized] public Vector3 unpressedPos = Vector3.zero;
-
-    public List<GameObject> objectsPressed = new();
+    [NonSerialized] public List<GameObject> objectsPressed = new();
 
     public override void Start()
     {
@@ -28,11 +27,7 @@ public class PressurePlate : Interactable
         isActive = objectsPressed.Count > 0;
 
         if (meshParent.transform.localPosition == pressedPos && !isActive)
-        {
             ChangeState("Unpressed");
-        }
-
-        DetectActivation();
     }
 
     protected override void InitializeStates()
@@ -44,5 +39,21 @@ public class PressurePlate : Interactable
     public override void DetectActivation()
     {
         base.DetectActivation();
+    }
+
+    public void TogglePlateMaterial(Color pressedColor)
+    {
+        Material[] materials = meshRenderer.materials;
+
+        materials[2].color = isActive ? pressedColor : unpressedColor;
+        meshRenderer.materials = materials;
+
+        meshParent.transform.localPosition = isActive ? pressedPos : unpressedPos;
+    }
+
+    public bool IsEntityCorrectWeight(GameObject go, Weight desiredWeight)
+    {
+        go.TryGetComponent(out Entity ent);
+        return ent != null && ent.weight == desiredWeight;
     }
 }

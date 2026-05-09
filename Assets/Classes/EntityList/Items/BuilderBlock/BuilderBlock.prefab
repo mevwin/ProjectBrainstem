@@ -160,11 +160,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6021565819086291434, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: m_Mass
-      value: 1000
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 6021565819086291434, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: m_AngularDrag
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6488699858816721461, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: m_Layer

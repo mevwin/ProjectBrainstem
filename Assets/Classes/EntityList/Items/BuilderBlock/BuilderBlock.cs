@@ -51,6 +51,9 @@ public class BuilderBlock : Item
         blocks.Remove(gameObject);
         destroyAnim.SetActive(true);
         destroyAnim.transform.parent = null;
-        Destroy(gameObject);
+        Destroy(destroyAnim, 1.23f);
+
+        transform.position = new Vector3(0, -999f, 0);
+        Destroy(gameObject, 0.1f);
     }
 }
