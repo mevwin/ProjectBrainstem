@@ -29,17 +29,7 @@ public class ProjectileNote : Entity
         { 
             collision.transform.gameObject.TryGetComponent(out Lever lever);
             if (lever != null)
-            {
-                lever.isActive = !lever.isActive;
-                lever.DetectActivation();
-            }
-
-            // collision.transform.gameObject.TryGetComponent(out TogglePlate togglePlate);
-            // if (togglePlate != null)
-            // {
-            //     string stateKey = togglePlate.isActive ? "Flipped" : "Unflipped";
-            //     togglePlate.ChangeState(stateKey);
-            // }
+                lever.Pickup(null);
 
             transform.position = new Vector3(0, -999f, 0);
             Destroy(gameObject, 0.5f);
