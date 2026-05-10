@@ -116,7 +116,7 @@ MonoBehaviour:
   stateManager: {fileID: 2359205665603738941}
   audioManager: {fileID: 0}
   movementSpeed: 0
-  weight: 2
+  weight: 0
   isActive: 0
   listeners: []
 --- !u!65 &-5755859689199898748
