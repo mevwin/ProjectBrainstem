@@ -4972,8 +4972,16 @@ PrefabInstance:
       value: MultiTriggerBridge
       objectReference: {fileID: 0}
     - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.18150556
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 11.00037
+      value: 0.03402569
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0432
       objectReference: {fileID: 0}
     - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4981,7 +4989,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5
+      value: -6.0099
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234562129123010964, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11704,8 +11716,16 @@ PrefabInstance:
       value: MultiTriggerBridge (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.23666607
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 11.416277
+      value: 0.045220304
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0516
       objectReference: {fileID: 0}
     - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11713,11 +11733,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2985307706572785020, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.208328
+      value: -5.2102
       objectReference: {fileID: 0}
     - target: {fileID: 4572434505738640185, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6234562129123010964, guid: f9d4a4c95faf6f3458f7e6a1744218dd, type: 3}
       propertyPath: m_IsActive

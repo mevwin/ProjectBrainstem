@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 0}
-  collider: {fileID: 2579945198491693021}
+  collider: {fileID: 0}
   stateManager: {fileID: 0}
   audioManager: {fileID: 0}
   movementSpeed: 0
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 3673412004510422934}
   - component: {fileID: 3527554100568338856}
   - component: {fileID: 2658225210296388051}
-  - component: {fileID: 2579945198491693021}
+  - component: {fileID: 3157557162784801932}
   m_Layer: 0
   m_Name: BridgeObj
   m_TagString: Untagged
@@ -81,13 +81,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5553774462593465214}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.20000002, y: 0.1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 435787950333365308}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &3527554100568338856
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5553774462593465214}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 8454141783929918580, guid: 87c3e29bba2442d4ba15971d355761ff, type: 3}
 --- !u!23 &2658225210296388051
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -119,7 +119,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: de0185c969394ef4b87d35aaa0f99571, type: 2}
+  - {fileID: 2100000, guid: 42d44c7fb5dd72a44a10a908c52699e9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,8 +142,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2579945198491693021
-BoxCollider:
+--- !u!64 &3157557162784801932
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -159,6 +160,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8454141783929918580, guid: 87c3e29bba2442d4ba15971d355761ff, type: 3}

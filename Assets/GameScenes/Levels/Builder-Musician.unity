@@ -3635,18 +3635,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 435787950333365308, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 435787950333365308, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 435787950333365308, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 435787950333365308, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 82.5
       objectReference: {fileID: 0}
@@ -3688,19 +3676,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3673412004510422934, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
       propertyPath: m_LocalScale.x
-      value: 23.500551
+      value: 0.120091684
       objectReference: {fileID: 0}
     - target: {fileID: 3673412004510422934, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 0.48872137
       objectReference: {fileID: 0}
     - target: {fileID: 3673412004510422934, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.25
+      value: 11.5059
       objectReference: {fileID: 0}
     - target: {fileID: 3673412004510422934, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673412004510422934, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1978
       objectReference: {fileID: 0}
     - target: {fileID: 4086173677024592736, guid: 39d3f8560cdf7084aabcdf56117bcd32, type: 3}
       propertyPath: m_Name
@@ -16739,6 +16731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 385346833}
   depthToRespawn: -85
+  player: {fileID: 0}
 --- !u!4 &1322833089
 Transform:
   m_ObjectHideFlags: 0
