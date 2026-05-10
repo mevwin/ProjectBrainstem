@@ -76,6 +76,7 @@ public class Player : Entity
     public readonly Vector3 boxCastOffset = new(0, 0.65f, 0);
 
     // Item Detection
+    public bool inTutorial = false;
     [NonSerialized] public Item itemPresent;
 
     public bool inMenu = false;
@@ -121,6 +122,10 @@ public class Player : Entity
         // Detection
         DetectItem();
 
+        if (inTutorial && IsZoomHeld())
+            DetectTutorialItems();
+        else playerHud.tutorialParent.SetActive(false);
+
         if (itemPresent && !IsZoomHeld())
         {
             playerHud.noZoomTooltip.ToggleTextbox(0, true);
@@ -131,6 +136,7 @@ public class Player : Entity
         // Zoom-In Effect
         if (IsZoomHeld() && !abilityActive)
         {
+            if (inTutorial) playerHud.noZoomTooltip.ToggleTextbox(1, false);
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, zoomOffset.localPosition, Time.deltaTime * 25f);
 
             if (!abilityActive)
@@ -151,6 +157,12 @@ public class Player : Entity
         else
         {
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
+
+            if (inTutorial)
+            {
+                playerHud.noZoomTooltip.ToggleTextbox(1, true);
+                playerHud.noZoomTooltip.UpdateTextbox(1, "Zoom-In/Prep Ability");
+            }
 
             if (ZoomWasReleased())
             {
@@ -388,7 +400,7 @@ public class Player : Entity
     {
         if (Physics.Raycast(transform.position, Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized, out RaycastHit hit))
         {
-            Item item = hit.transform.gameObject.GetComponent<Item>();
+            hit.transform.gameObject.TryGetComponent(out Item item);
             if (item && hit.distance <= 3f && (item.weight == Weight.LIGHT || CurrentJob == JobManager.Job.ATHLETE || (CurrentJob == JobManager.Job.BUILDER && IsZoomHeld())))
             {
                 itemPresent = hit.transform.gameObject.GetComponent<Item>();
@@ -415,6 +427,37 @@ public class Player : Entity
     public void RemoveItem()
     {
         itemPresent = null;
+    }
+
+    public void DetectTutorialItems()
+    {
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward.normalized, out RaycastHit hit, 18f))
+        {
+            hit.transform.gameObject.TryGetComponent(out Interactable interactable);
+            if (interactable && interactable.showTooltip)
+            {
+                playerHud.tutorialHeader.text = interactable.tooltipHeader;
+                playerHud.tutorialBody.text = interactable.tooltipBody;
+                playerHud.tutorialParent.SetActive(true);
+            }
+            else if (hit.transform.gameObject.layer == 3)
+            {
+                if (hit.transform.parent.gameObject.TryGetComponent(out BlueSplotch blueSplotch))
+                {
+                    playerHud.tutorialHeader.text = blueSplotch.tooltipHeader;
+                    playerHud.tutorialBody.text = blueSplotch.tooltipBody;
+                    playerHud.tutorialParent.SetActive(true);
+                }
+                else if (hit.transform.parent.gameObject.TryGetComponent(out RedSplotch redSplotch))
+                {
+                    playerHud.tutorialHeader.text = redSplotch.tooltipHeader;
+                    playerHud.tutorialBody.text = redSplotch.tooltipBody;
+                    playerHud.tutorialParent.SetActive(true);
+                }
+                else playerHud.tutorialParent.SetActive(false);
+            }
+            else playerHud.tutorialParent.SetActive(false);
+        }
     }
 
     // Debug

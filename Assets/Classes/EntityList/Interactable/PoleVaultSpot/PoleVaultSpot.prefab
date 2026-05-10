@@ -120,6 +120,10 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Pole Vault Spot
+  tooltipBody: As the Athlete, Marketus can run towards the spot and initaties a
+    Vault Jump. The farther Marketus is from the spot, the stronger the Vault Jump.
   listeners: []
 --- !u!65 &8339801999883379796
 BoxCollider:

@@ -325,6 +325,10 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 0
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Lever
+  tooltipBody: Activate it by interacting with it or hitting it with a Musician's
+    Trumpet Toot.
   listeners: []
   gapTime: 1.2
   model: {fileID: 8031176065477896664}

@@ -227,6 +227,7 @@ public class Athlete : JobState
     void SpawnVaultSpot()
     {
         currentSpot = Object.Instantiate(player.vaultSpotPrefab, targetPosition, spotRotation);
+        currentSpot.GetComponent<PoleVaultSpot>().showTooltip = player.inTutorial;
         ToggleSpotBridgeParent();
     }
 

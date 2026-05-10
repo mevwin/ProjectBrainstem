@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerHud : MonoBehaviour
@@ -8,4 +9,7 @@ public class PlayerHud : MonoBehaviour
     public IconManager iconManager2;
     public ControlsTooltip zoomTooltip;
     public ControlsTooltip noZoomTooltip;
+    public GameObject tutorialParent;
+    public TextMeshProUGUI tutorialHeader;
+    public TextMeshProUGUI tutorialBody;
 }

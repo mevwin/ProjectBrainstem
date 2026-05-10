@@ -151,6 +151,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8050772661485782058}
     - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: tooltipBody
+      value: 'These blocks come in two sizes: light or heavy. Light Blocks can be
+        picked up with no restriction, but Heavy Blocks can only be picked up and
+        thrown by the Athlete.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
+      propertyPath: tooltipHeader
+      value: Builder Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 3995209737126346897, guid: f9c453e37ab7b364f88bfef8bba71c22, type: 3}
       propertyPath: pickupExcludeLayers.m_Bits
       value: 2048
       objectReference: {fileID: 0}

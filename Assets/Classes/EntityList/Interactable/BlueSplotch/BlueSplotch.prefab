@@ -10000,6 +10000,10 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Blue Splotch
+  tooltipBody: Enter the field and move along its path. Moveable objects are also
+    affected.
   listeners: []
   elevateSpeed: 10
 --- !u!65 &287911272277046321

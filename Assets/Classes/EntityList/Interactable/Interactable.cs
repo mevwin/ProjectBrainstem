@@ -4,6 +4,9 @@ using UnityEngine;
 public abstract class Interactable : Entity
 {
     public bool isActive = false;
+    public bool showTooltip = false;
+    public string tooltipHeader = "";
+    public string tooltipBody = "";
 
     [SerializeField] private List<MonoBehaviour> listeners = new();
 

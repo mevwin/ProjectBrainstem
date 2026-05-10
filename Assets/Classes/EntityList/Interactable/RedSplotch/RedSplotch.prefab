@@ -5157,6 +5157,9 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Red Splotch
+  tooltipBody: Bounces any objects that enter it.
   listeners: []
 --- !u!65 &1723063648263231039
 BoxCollider:

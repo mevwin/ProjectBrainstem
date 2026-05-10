@@ -290,6 +290,9 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Heavy Plate
+  tooltipBody: Can only be activated by placing heavy objects on top of it.
   listeners: []
   meshRenderer: {fileID: 9219246589473673198}
   meshParent: {fileID: 7063793811904364757}

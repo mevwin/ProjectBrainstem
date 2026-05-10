@@ -275,6 +275,10 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Toggle Plate
+  tooltipBody: Activated by having objects placed on it. It maintains its status
+    once its been interacted with only once.
   listeners: []
   meshRenderer: {fileID: 4156811882340961253}
   meshParent: {fileID: 5104713118499261505}

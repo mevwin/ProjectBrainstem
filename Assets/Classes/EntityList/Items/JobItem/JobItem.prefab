@@ -136,6 +136,9 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 0
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: 
+  tooltipBody: 
   listeners: []
   job: 0
 --- !u!135 &2812900811649580152

@@ -121,6 +121,9 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: 
+  tooltipBody: 
   listeners: []
   shrineLevelList: {fileID: 0}
 --- !u!114 &8390136870116160707 stripped
@@ -233,8 +236,11 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Portal
+  tooltipBody: This is your exit/end goal for every level. It must first be unlocked
+    by activating various levers and plates scattered across the level.
   listeners: []
-  stopPoint: {fileID: 4231394531802244928}
   exitTrigger: {fileID: 3918183723052189389}
   pSystem1: {fileID: 1597395825600412508}
   pSystem2: {fileID: 5653084659793695264}
@@ -263,11 +269,6 @@ Transform:
 --- !u!65 &3903574680033211694 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 858094560978468644, guid: 1f9262fa8c1c6dd4f9db2be9ca4c6c52, type: 3}
-  m_PrefabInstance: {fileID: 4450919868124252682}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4231394531802244928 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 539366399061798218, guid: 1f9262fa8c1c6dd4f9db2be9ca4c6c52, type: 3}
   m_PrefabInstance: {fileID: 4450919868124252682}
   m_PrefabAsset: {fileID: 0}
 --- !u!198 &5653084659793695264 stripped

@@ -274,6 +274,9 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Light Plate
+  tooltipBody: Can only be activated by placing light objects on top of it.
   listeners: []
   meshRenderer: {fileID: 7083713966895291522}
   meshParent: {fileID: 7258485008058007446}

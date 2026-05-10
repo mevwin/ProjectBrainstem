@@ -64,6 +64,7 @@ public class Artist : JobState
         {
             splotches[currentSplotch] = Object.Instantiate(prefab, position, targetRotation);
             ToggleSplotchBridgeParent();
+            splotches[currentSplotch].GetComponent<Interactable>().showTooltip = player.inTutorial;
         }
     }
 

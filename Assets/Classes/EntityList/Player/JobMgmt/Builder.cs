@@ -164,6 +164,8 @@ public class Builder : JobState
         blockScript.blocks = blocks;
         if (blockScale > 2f) blockScript.weight = Entity.Weight.HEAVY;
 
+        blockScript.showTooltip = player.inTutorial;
+
         return block;
         // --------
     }

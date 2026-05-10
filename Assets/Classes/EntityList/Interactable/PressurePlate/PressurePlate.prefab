@@ -272,6 +272,10 @@ MonoBehaviour:
   movementSpeed: 0
   weight: 2
   isActive: 0
+  showTooltip: 0
+  tooltipHeader: Pressure Plate
+  tooltipBody: Activates when objects on top of it. The player can also stand on
+    it.
   listeners: []
   meshRenderer: {fileID: 796787812892017850}
   meshParent: {fileID: 7529720148517534924}
