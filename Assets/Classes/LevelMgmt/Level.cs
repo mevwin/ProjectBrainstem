@@ -28,6 +28,7 @@ public class Level : MonoBehaviour
             player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
             player.playerHud.iconManager1.SetIcon(JobManager.Job.NONE);
             player.playerHud.iconManager2.SetIcon(JobManager.Job.NONE);
+            gameManager.respawningPlayer = false;
         }
     }
 
@@ -40,11 +41,11 @@ public class Level : MonoBehaviour
                 gameManager.respawningPlayer = true;
                 StartCoroutine(RespawnPlayer());
             }
-            else // for debugging in editor
-            {
-                player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
-                player.UpdateMovementVector(Vector3.zero, true);
-            }
+            // else // for debugging in editor
+            // {
+            //     player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+            //     player.UpdateMovementVector(Vector3.zero, true);
+            // }
         }
     }
 
@@ -57,7 +58,9 @@ public class Level : MonoBehaviour
         player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
         player.UpdateMovementVector(Vector3.zero, true);
 
-        yield return StartCoroutine(gameManager.loadingScreen.Fade(0f, 2f));
+        yield return new WaitForSeconds(0.5f);
+
+        yield return StartCoroutine(gameManager.loadingScreen.Fade(0f, 1f));
         player.inMenu = false;
         gameManager.loadingScreen.gameObject.SetActive(false);
         gameManager.respawningPlayer = false;

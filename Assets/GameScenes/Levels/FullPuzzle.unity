@@ -5755,6 +5755,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3918183723052189389, guid: 39e496979c39c0b4caa7fe0a503bdab5, type: 3}
+      propertyPath: shrineLevelList
+      value: 
+      objectReference: {fileID: 11400000, guid: 176c63bc3aa0a5f48b0fb0a46ba140a3, type: 2}
     - target: {fileID: 8552414870351844423, guid: 39e496979c39c0b4caa7fe0a503bdab5, type: 3}
       propertyPath: m_Enabled
       value: 0
