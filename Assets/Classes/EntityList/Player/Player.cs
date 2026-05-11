@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : Entity
 {
@@ -213,10 +214,6 @@ public class Player : Entity
         if (abilityActive && CurrentJob > JobManager.Job.NONE)
             jobManager.CurrentStateFixedUpdate();
 
-        // Decrease poleVaultBoost overtime
-        if (poleVaultBoost.magnitude > 0)
-            poleVaultBoost = Vector3.MoveTowards(poleVaultBoost, Vector3.zero, poleVaultBoostDecayRate * Time.fixedDeltaTime);
-
         if (splotchMovement.magnitude > 0)
             splotchMovement = Vector3.MoveTowards(splotchMovement, Vector3.zero, splotchMovementDecayRate * Time.fixedDeltaTime);
 
@@ -374,6 +371,29 @@ public class Player : Entity
             cam.transform.forward,
             cam.transform.rotation,
             distance);
+    }
+
+    public IEnumerator AthleteJumpUITimer()
+    {
+        playerHud.noZoomTooltip.ToggleTextbox(1, true);
+
+        float speed = poleVaultBoost.magnitude;
+        Slider slider = playerHud.noZoomTooltip.djSlider;
+
+        slider.maxValue = speed;
+        slider.value = speed;
+
+        // Decrease poleVaultBoost overtime
+        while (poleVaultBoost.magnitude > 0)
+        {
+            poleVaultBoost = Vector3.MoveTowards(poleVaultBoost, Vector3.zero, poleVaultBoostDecayRate * Time.fixedDeltaTime);
+            slider.value = poleVaultBoost.magnitude;
+            
+            yield return new WaitForFixedUpdate();
+        }
+
+        poleVaultBoost = Vector3.zero;
+        playerHud.noZoomTooltip.ToggleTextbox(1, false);
     }
 
     public IEnumerator JobSwitchCooldown()

@@ -177,6 +177,7 @@ public class Athlete : JobState
         player.poleVaultBoostDecayRate = targetDistance;
         player.movementSpeed = defaultSpeed;
         player.initiatePullJump = false;
+        player.StartCoroutine(player.AthleteJumpUITimer());
         player.ChangeState("Move");
     }
 

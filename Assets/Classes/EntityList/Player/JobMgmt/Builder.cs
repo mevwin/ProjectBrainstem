@@ -26,17 +26,6 @@ public class Builder : JobState
         );
         if (hit.collider == null) 
             return;
-        // else if (blocks.Contains(hit.collider.gameObject)) // TODO: add another button to destroy existing button
-        // {
-        //     GameObject block = hit.collider.gameObject;
-
-        //     var tempList = blocks.ToList();
-
-        //     block.GetComponent<BuilderBlock>().Despawn();
-        //     tempList.Remove(block);
-            
-        //     blocks = new Queue<GameObject>(tempList);
-        // }
         else
         {
             GameObject block = SpawnBlock();
