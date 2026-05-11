@@ -180,6 +180,13 @@ public class Player : Entity
         // Input Check For Job Abilities
         if (SwitchJobWasPressed())
         {
+            if (CurrentJob == JobManager.Job.ATHLETE)
+            {
+                poleVaultBoost = Vector3.zero;
+                StopCoroutine(AthleteJumpUITimer());
+                playerHud.noZoomTooltip.ToggleTextbox(1, false);
+            }
+
             JobManager.Job storedJob = StoredJob;
             SetStoredJob(CurrentJob);
             SetCurrentJob(storedJob);
@@ -213,6 +220,13 @@ public class Player : Entity
 
         if (abilityActive && CurrentJob > JobManager.Job.NONE)
             jobManager.CurrentStateFixedUpdate();
+
+        if (IsGrounded() && poleVaultBoost.magnitude > 0)
+        {
+            poleVaultBoost = Vector3.zero;
+            StopCoroutine(AthleteJumpUITimer());
+            playerHud.noZoomTooltip.ToggleTextbox(1, false);
+        }
 
         if (splotchMovement.magnitude > 0)
             splotchMovement = Vector3.MoveTowards(splotchMovement, Vector3.zero, splotchMovementDecayRate * Time.fixedDeltaTime);
