@@ -201,6 +201,7 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         pauseMenuCanvas.SetActive(false);
+        player.GetComponent<Player>().SetCurrentJob(JobManager.Job.NONE);
         player.SetActive(false);
         player.GetComponent<Player>().inMenu = false;
         Time.timeScale = 1f;
