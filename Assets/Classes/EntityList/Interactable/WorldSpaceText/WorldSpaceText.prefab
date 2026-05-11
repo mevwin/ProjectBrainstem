@@ -57,6 +57,7 @@ MonoBehaviour:
   tooltipBody: 
   listeners: []
   canvasParent: {fileID: 7467956387336440464}
+  fadeDuration: 0.2
 --- !u!1 &5762313399355498817
 GameObject:
   m_ObjectHideFlags: 0
