@@ -20,7 +20,10 @@ public class ExitTrigger : Interactable
                 LevelManager levelManager = LevelManager.GetManager();
 
                 if (shrineLevelList)
+                {
+                    levelManager.currentLevelIndex = 0;
                     levelManager.SetShrineList(shrineLevelList);
+                }
 
                 gameManager.LoadGameState(GameManager.GameState.IN_PUZZLE);
             }

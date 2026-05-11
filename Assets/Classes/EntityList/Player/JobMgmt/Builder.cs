@@ -10,13 +10,14 @@ public class Builder : JobState
     private const float forwardOffset = 0.5f;
     private readonly Vector3 spawnOffset = new(0f, 0.65f, 0f);
 
-    private List<GameObject> blocks = new List<GameObject>();
+    private List<GameObject> blocks = new();
     Vector3 spawnPos;
     private float blockScale = 1.2f;
 
     
     public override void EnterState(Dictionary<string, object> args = null)
     {
+        blocks.RemoveAll(item => item == null);
         Physics.Raycast(
             player.transform.position + spawnOffset, 
             player.cam.transform.forward, 
