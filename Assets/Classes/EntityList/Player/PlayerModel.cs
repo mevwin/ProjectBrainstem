@@ -45,7 +45,7 @@ public class PlayerModel : MonoBehaviour
         // follow position
         transform.position = model.transform.position;
 
-        if (playerScript.IsZoomHeld())
+        if (playerScript.IsZoomHeld() && !playerScript.inMenu)
         {
             zoomHeldForward = Vector3.ProjectOnPlane(playerScript.cam.transform.forward, Vector3.up).normalized;
             transform.forward = zoomHeldForward;
@@ -82,7 +82,7 @@ public class PlayerModel : MonoBehaviour
 
     IEnumerator ResetState()
     {
-        yield return new WaitForSeconds(4.1f);
+        yield return new WaitForSeconds(3.9f);
         BodyAnimator.SetBool("goIdle", false);
         BodyAnimator.SetBool("goSpin", false);
         idleTimer = 0f;
