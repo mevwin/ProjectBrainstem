@@ -9,7 +9,8 @@ public class PlayerHud : MonoBehaviour
     public IconManager iconManager2;
     public ControlsTooltip zoomTooltip;
     public ControlsTooltip noZoomTooltip;
-    public GameObject tutorialParent;
+    public GameObject controlsHUD;
+    public GameObject tutorialTextboxParent;
     public TextMeshProUGUI tutorialHeader;
     public TextMeshProUGUI tutorialBody;
 }

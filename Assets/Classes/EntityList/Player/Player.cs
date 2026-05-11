@@ -103,6 +103,8 @@ public class Player : Entity
 
         playerHud.reticle.Toggle(false);
         athleteLineRenderer.gameObject.SetActive(false);
+
+        playerHud.controlsHUD.SetActive(inTutorial);
     }
 
     public override void Update()
@@ -124,7 +126,7 @@ public class Player : Entity
 
         if (inTutorial && IsZoomHeld())
             DetectTutorialItems();
-        else playerHud.tutorialParent.SetActive(false);
+        else playerHud.tutorialTextboxParent.SetActive(false);
 
         if (itemPresent && !IsZoomHeld())
         {
@@ -136,7 +138,7 @@ public class Player : Entity
         // Zoom-In Effect
         if (IsZoomHeld() && !abilityActive)
         {
-            if (inTutorial) playerHud.noZoomTooltip.ToggleTextbox(1, false);
+            playerHud.controlsHUD.SetActive(false);
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, zoomOffset.localPosition, Time.deltaTime * 25f);
 
             if (!abilityActive)
@@ -158,12 +160,6 @@ public class Player : Entity
         {
             cam.transform.localPosition = Vector3.MoveTowards(cam.transform.localPosition, Vector3.zero, Time.deltaTime * 25f);
 
-            if (inTutorial)
-            {
-                playerHud.noZoomTooltip.ToggleTextbox(1, true);
-                playerHud.noZoomTooltip.UpdateTextbox(1, "Zoom-In/Prep Ability");
-            }
-
             if (ZoomWasReleased())
             {
                 if (CurrentProjectedBlock)
@@ -176,6 +172,7 @@ public class Player : Entity
                 athleteLineRenderer.gameObject.SetActive(false);
 
                 playerHud.zoomTooltip.ToggleAllTextboxes(false);
+                playerHud.controlsHUD.SetActive(inTutorial);
             }
         }
 
@@ -434,11 +431,11 @@ public class Player : Entity
         if (Physics.Raycast(cam.transform.position, cam.transform.forward.normalized, out RaycastHit hit, 18f))
         {
             hit.transform.gameObject.TryGetComponent(out Interactable interactable);
-            if (interactable && interactable.showTooltip)
+            if (interactable)
             {
                 playerHud.tutorialHeader.text = interactable.tooltipHeader;
                 playerHud.tutorialBody.text = interactable.tooltipBody;
-                playerHud.tutorialParent.SetActive(true);
+                playerHud.tutorialTextboxParent.SetActive(true);
             }
             else if (hit.transform.gameObject.layer == 3)
             {
@@ -446,17 +443,17 @@ public class Player : Entity
                 {
                     playerHud.tutorialHeader.text = blueSplotch.tooltipHeader;
                     playerHud.tutorialBody.text = blueSplotch.tooltipBody;
-                    playerHud.tutorialParent.SetActive(true);
+                    playerHud.tutorialTextboxParent.SetActive(true);
                 }
                 else if (hit.transform.parent.gameObject.TryGetComponent(out RedSplotch redSplotch))
                 {
                     playerHud.tutorialHeader.text = redSplotch.tooltipHeader;
                     playerHud.tutorialBody.text = redSplotch.tooltipBody;
-                    playerHud.tutorialParent.SetActive(true);
+                    playerHud.tutorialTextboxParent.SetActive(true);
                 }
-                else playerHud.tutorialParent.SetActive(false);
+                else playerHud.tutorialTextboxParent.SetActive(false);
             }
-            else playerHud.tutorialParent.SetActive(false);
+            else playerHud.tutorialTextboxParent.SetActive(false);
         }
     }
 

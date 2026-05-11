@@ -5,15 +5,17 @@ public class WorldSpaceText : Interactable, ITriggerListener
 {
     [SerializeField] private GameObject canvasParent;
     [SerializeField] private float fadeDuration = 0.2f;
+    [SerializeField] private bool disableOnStart = true;
 
     public override void Start()
     {
-        foreach (Transform transform in canvasParent.transform)
+        if (disableOnStart)
         {
-
+            foreach (Transform transform in canvasParent.transform)
+            {
                 transform.gameObject.GetComponent<CanvasRenderer>().SetAlpha(0f);
-  
-        }   
+            }
+        }
     }
 
     protected override void InitializeStates() { }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PauseMenu : Menu
 {
     [SerializeField] private GameObject ControlDiagramParent;
+    [SerializeField] private Player player;
     bool toggle = false;
 
     public override void Start()
@@ -23,5 +24,6 @@ public class PauseMenu : Menu
     {
         toggle = !toggle;
         ControlDiagramParent.SetActive(toggle);
+        player.inTutorial = toggle; 
     }
 }

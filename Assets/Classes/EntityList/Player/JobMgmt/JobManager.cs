@@ -82,7 +82,7 @@ public class JobManager : StateManager
                 if (nextModeReleased && !player.abilityActive)
                 {
                     player.abilityActive = true;
-                    player.jobManager.ChangeState(
+                    ChangeState(
                         JobEnumToString(player.CurrentJob),
                         new Dictionary<string, object>()
                         {
@@ -128,6 +128,11 @@ public class JobManager : StateManager
                 reticle.ChangeColor(Color.white);
 
                 break;
+
+            default:
+                reticle.Toggle(true);
+                reticle.ChangeColor(new Color(1, 1, 1, 0.5f));
+                return;
         }
     }
 
