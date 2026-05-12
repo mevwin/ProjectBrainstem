@@ -183,8 +183,8 @@ public class Player : Entity
         {
             if (CurrentJob == JobManager.Job.ATHLETE)
                 poleVaultBoost = Vector3.zero;
-            else if (CurrentJob == JobManager.Job.MUSICIAN)
-                Destroy(activeBridge);
+            // else if (CurrentJob == JobManager.Job.MUSICIAN)
+            //     Destroy(activeBridge);
 
             JobManager.Job storedJob = StoredJob;
             SetStoredJob(CurrentJob);
