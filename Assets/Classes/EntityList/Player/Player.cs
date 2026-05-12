@@ -63,6 +63,7 @@ public class Player : Entity
     [NonSerialized] public Musician.Instrument instrument = Musician.Instrument.TRUMPET;
     public GameObject BridgeNote;
     public GameObject ProjectileNote;
+    [NonSerialized] public GameObject activeBridge;
 
     // Private Vars
     readonly Dictionary<InputKey, InputAction> inputActions = new();
@@ -182,6 +183,8 @@ public class Player : Entity
         {
             if (CurrentJob == JobManager.Job.ATHLETE)
                 poleVaultBoost = Vector3.zero;
+            else if (CurrentJob == JobManager.Job.MUSICIAN)
+                Destroy(activeBridge);
 
             JobManager.Job storedJob = StoredJob;
             SetStoredJob(CurrentJob);

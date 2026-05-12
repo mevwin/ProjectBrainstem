@@ -5,6 +5,7 @@ public class BridgeNote : Entity
     Vector3 startPosition;
     public GameObject Bridge;
     public Musician musician;
+    public Player player;
     bool hit;
 
     protected override void InitializeStates() { }
@@ -40,6 +41,7 @@ public class BridgeNote : Entity
         xRot = Mathf.Clamp(xRot, -45f, 45f);
         bridgeObject.transform.eulerAngles = new Vector3(xRot, yRot, 0f);
         Musician.bridge = bridgeParent;
+        player.activeBridge = bridgeParent;
 
         Destroy(gameObject);
     }

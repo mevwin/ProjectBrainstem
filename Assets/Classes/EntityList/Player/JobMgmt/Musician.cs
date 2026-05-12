@@ -30,6 +30,7 @@ public class Musician : JobState
         {
             BridgeNote script = note.gameObject.GetComponent<BridgeNote>();
             script.musician = this;
+            script.player = player;
         }
         Vector3 targetPos = player.cam.transform.position + player.cam.transform.forward * 20;
         Vector3 dir = (targetPos - player.transform.position).normalized;
