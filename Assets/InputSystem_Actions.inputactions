@@ -1021,7 +1021,7 @@
                 {
                     "name": "",
                     "id": "446a557f-c466-47b3-80f5-a95ed36c83b9",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
