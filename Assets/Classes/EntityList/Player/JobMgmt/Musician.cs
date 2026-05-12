@@ -12,6 +12,7 @@ public class Musician : JobState
 
     GameObject CurrentNote;
     public static GameObject bridge;
+    private GameObject currentBridgeNote;
 
     public Musician(Player player) : base(player)
     {
@@ -20,14 +21,25 @@ public class Musician : JobState
 
     public override void EnterState(Dictionary<string, object> args = null)
     {
-        if (bridge != null && CurrentNote == player.BridgeNote)
+        if (CurrentNote == player.BridgeNote)
         {
-            Object.Destroy(bridge);
-            bridge = null;
+            if (bridge != null)
+            {
+                Object.Destroy(bridge);
+                bridge = null;
+            }
+
+            if (currentBridgeNote)
+            {
+                player.ExitJobState();
+                return;
+            }
         }
+
         Rigidbody note = Object.Instantiate(CurrentNote, player.transform.position + player.cam.transform.forward, Quaternion.identity).GetComponent<Rigidbody>();
         if (CurrentNote == player.BridgeNote)
         {
+            currentBridgeNote = note.gameObject;
             BridgeNote script = note.gameObject.GetComponent<BridgeNote>();
             script.musician = this;
             script.player = player;
