@@ -11052,6 +11052,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -487794487756633494, guid: 39e496979c39c0b4caa7fe0a503bdab5, type: 3}
+      propertyPath: requiredTriggers
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 416275654626882747, guid: 39e496979c39c0b4caa7fe0a503bdab5, type: 3}
       propertyPath: m_Name
       value: MultiTriggerDoor
